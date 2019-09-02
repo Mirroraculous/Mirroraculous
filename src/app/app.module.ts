@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
+// import { OverlayModule } from '@angular/cdk/overlay';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 @NgModule({
   declarations: [
@@ -12,7 +16,8 @@ import { OverlayComponent } from './components/overlay/overlay.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

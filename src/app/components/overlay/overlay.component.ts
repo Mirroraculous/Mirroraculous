@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { MatDialogModule } from '@angular/material/dialog';
+
+// import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-overlay',
@@ -7,12 +9,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
   styleUrls: ['./overlay.component.scss']
 })
 export class OverlayComponent implements OnInit {
-  overlay: OverlayModule;
-  constructor() { }
+  // overlay: OverlayModule = new OverlayModule();
+  constructor(public dialog: MatDialogModule) { }
 
   ngOnInit() {
+
   }
-  createOverlay(){
-    this.overlay
+  dialogCreator(){
+    let dialogRef= this.dialog.open()
   }
 }
