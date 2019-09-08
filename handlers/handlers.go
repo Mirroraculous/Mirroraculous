@@ -35,3 +35,14 @@ func GetCalendar(context *gin.Context) {
 }
 
 // AddEvent and UpdateEvent
+func AddEvent(context *gin.Context) {
+	fmt.Println("Hello from AddEvent")
+}
+
+func UpdateEvent(context *gin.Context) {
+	fmt.Println("Hello from UpdateEvent")
+}
+
+func DeleteEvent(context *gin.Context) {
+	fmt.Println("Hello from DeleteEvent")
+}
