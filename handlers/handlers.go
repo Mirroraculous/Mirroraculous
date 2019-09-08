@@ -11,9 +11,6 @@ import (
 	"github.com/mirroraculous/mirroraculous/datamock"
 )
 
-// RegisterUser registers a user
-// Needs to check that user does not already exist
-// Logs in user after successful registration
 func RegisterUser(context *gin.Context) {
 	fmt.Println("Hello from register")
 	user, status, e := convertHTTPBodyToUser(context.Request.Body)
@@ -22,17 +19,25 @@ func RegisterUser(context *gin.Context) {
 		return
 	}
 	context.JSON(http.StatusOK, datamock.AddUser(user.Name, user.Pwd))
-	LoginUser(nil)
 }
 
 // LoginUser logs in a user
 // Needs to respond with the status and user token (if applicable)
 func LoginUser(context *gin.Context) {
 	fmt.Println("Hello from login")
+	user, status, e := convertHTTPBodyToUser(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e)
+		return
+	}
+	token, e := datamock.LoginUser(user.Name, user.Pwd)
+	if e != nil {
+		context.JSON(400, e)
+		return
+	}
+	context.JSON(http.StatusOK, token)
 }
 
-// GetUser gets the user's details
-// Needs to have the user token in header
 func GetUser(context *gin.Context) {
 	fmt.Println("Hello from GetUser")
 	token := context.Request.Header.Get("x-auth-token")
@@ -41,7 +46,6 @@ func GetUser(context *gin.Context) {
 		context.JSON(400, e)
 	}
 	context.JSON(http.StatusOK, user)
-	fmt.Println(token)
 }
 
 // GetCalendar gets the calendar events for a user
