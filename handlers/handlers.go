@@ -1,9 +1,14 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mirroraculous/mirroraculous/datamock"
 )
 
 // RegisterUser registers a user
@@ -11,6 +16,12 @@ import (
 // Logs in user after successful registration
 func RegisterUser(context *gin.Context) {
 	fmt.Println("Hello from register")
+	user, status, e := convertHTTPBodyToUser(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e)
+		return
+	}
+	context.JSON(http.StatusOK, datamock.AddUser(user.Name, user.Pwd))
 	LoginUser(nil)
 }
 
@@ -24,6 +35,13 @@ func LoginUser(context *gin.Context) {
 // Needs to have the user token in header
 func GetUser(context *gin.Context) {
 	fmt.Println("Hello from GetUser")
+	token := context.Request.Header.Get("x-auth-token")
+	user, e := datamock.GetUser(token)
+	if e != nil {
+		context.JSON(400, e)
+	}
+	context.JSON(http.StatusOK, user)
+	fmt.Println(token)
 }
 
 // GetCalendar gets the calendar events for a user
@@ -45,4 +63,20 @@ func UpdateEvent(context *gin.Context) {
 
 func DeleteEvent(context *gin.Context) {
 	fmt.Println("Hello from DeleteEvent")
+}
+
+func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) {
+	body, e := ioutil.ReadAll(httpBody)
+	if e != nil {
+		return datamock.Users{}, http.StatusInternalServerError, e
+	}
+
+	var tmp datamock.Users
+
+	e = json.Unmarshal(body, &tmp)
+	if e != nil {
+		return datamock.Users{}, http.StatusBadRequest, e
+	}
+
+	return tmp, http.StatusOK, nil
 }

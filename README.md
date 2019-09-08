@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Backend
+
+### Installing dependancies
+
+The backend is written in Go which follows a specific pathing convention for its packages. After installing Go, run the following commands to install the required packages: 
+- `go get github.com/rs/xid` 
+- `go get github.com/gin-gonic/gin`
+
+### Pathing for the project
+
+Once this is done, navigate to Go's github package directory (typically: `<home>/go/src/github.com/`). Once in there, make a new folder `mirroraculous` and clone the repo into that new directory. 
+
+### Running the server
+
+When all set up, you can run the server with `go run main.go` when in the root directory of the project. 
