@@ -76,14 +76,13 @@ export class OverlayComponent implements OnInit {
   }
   ngOnInit() {
     const timer2 = timer(4000);
-    const timer3 = timer(6000);
-    const timerLength = timer(7000);
+    const timer3 = timer(6500);
+    const timerLength = timer(7500);
     const timer4 = timer(8000);    
     timer2.subscribe(
       val =>{
         this.showGreeting2 = false;
         this.showGreeting3 = true;
-        console.log(this.showGreeting2, this.showGreeting3);
       }
     );
     timer3.subscribe(
