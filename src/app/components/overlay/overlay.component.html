@@ -1,4 +1,5 @@
 
-<div #overlayContainer>
-    <p>Hello</p>
+<div *ngIf = '!remove' [@showGreeting]= 'showGreeting? true: false'
+ class = "overlay"(@showGreeting.done)="onAnimationEvent($event)">
+    <h1 >Hello User</h1>
 </div>
