@@ -25,3 +25,16 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Mirraculous Style Guides
+
+## Prettier Code Formatter (version 1.18.2)
+
+Prettier supports Java, Angular, CSS and many more platforms. Please see the [Prettier Homepage] (https://prettier.io/) for more information. 
+
+## TSLint (version 5.19.0)
+
+TSLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality errors. Please see [TSLint Homepage] (https://palantir.github.io/tslint/) for more information.
+
+
+
