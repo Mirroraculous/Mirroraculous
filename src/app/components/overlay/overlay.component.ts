@@ -27,12 +27,39 @@ import {
       transition('true => false',[
         animate('.5s')
       ]),
+    ]),
+    trigger('showGreeting2',[
+      state('false',style({
+        opacity:0,
+      })),
+      state('true',style({
+        opacity:1,
+      })),
+      transition('true => false',[
+        animate('.5s')
+      ]),
+    ]),
+    trigger('showGreeting3',[
+      state('false',style({
+        opacity:0,
+      })),
+      state('true',style({
+        opacity:1,
+      })),
+      transition('true => false',[
+        animate('.5s')
+      ]),
+      transition('false => true',[
+        animate('.5s')
+      ]),
     ])
   ],
 })
 export class OverlayComponent implements OnInit {
   // overlay: OverlayModule = new OverlayModule();
   showGreeting;
+  showGreeting2;
+  showGreeting3;
   startTime;
   stopTime;
   remove;
@@ -40,25 +67,38 @@ export class OverlayComponent implements OnInit {
   timer: Observable<any>;
   constructor(public dialog: MatDialogModule) {
     this.showGreeting = true;
+    this.showGreeting2 = true;
+    this.showGreeting3 = false;
     this.remove = false;
-    this.remove2 = false;
    }
   onAnimationEvent ( event: AnimationEvent ) {
-    if(event.toState){
-      
-    }
+    console.log(event);
   }
   ngOnInit() {
     const timer2 = timer(4000);
-    const timerLength = timer(5000);
+    const timer3 = timer(6000);
+    const timerLength = timer(7000);
+    const timer4 = timer(8000);    
     timer2.subscribe(
       val =>{
-        this.remove2 = true;
+        this.showGreeting2 = false;
+        this.showGreeting3 = true;
+        console.log(this.showGreeting2, this.showGreeting3);
       }
-    )
+    );
+    timer3.subscribe(
+      val =>{
+        this.showGreeting3 = false;
+      }
+    );
     timerLength.subscribe(
       val =>{
       this.showGreeting = false;
+      }
+    );
+    timer4.subscribe(
+      val =>{
+        this.remove = true;
       }
     );
     }
