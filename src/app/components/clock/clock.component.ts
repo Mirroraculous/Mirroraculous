@@ -25,10 +25,10 @@ export class ClockComponent implements OnInit {
   private setTime(){          
     this.nowish = new Date();
     this.minutes = this.leftPadZero(this.nowish.getMinutes());
-    this.seconds = this.leftPadZero(this.nowish.getSeconds());
-    this.hours =  this.leftPadZero(this.nowish.getHours()%12);
-    this.militaryHours = this.leftPadZero(this.nowish.getHours());
-    if (this.nowish.getHours()>12){
+    this.seconds = this.leftPadZero(this.nowish.getSeconds());    
+    this.militaryHours = this.nowish.getHours();
+    this.hours =  this.militaryHours%12;
+    if (this.militaryHours>12){
       this.extension = "PM";
     }
     else{
