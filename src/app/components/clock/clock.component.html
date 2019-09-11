@@ -1,8 +1,18 @@
-<h1 class = "clock"><span>{{hours}}:</span><span>{{minutes}}:</span><span>{{seconds}}</span><span> {{extension}}</span></h1>
-<div class = "options-group">
-    <mat-icon aria-hidden="false" aria-label="Example home icon">settings_applications</mat-icon>
-    <div *ngIf="">
-
+<div class = "clock">
+    <h1>
+        <span *ngIf = "!military">{{hours}}:</span>
+        <span *ngIf = "military">{{miltaryHours}}:</span>
+        <span>{{minutes}}:</span>
+        <span>{{seconds}}</span>
+        <span *ngIf ="!military" class = "smoller"> {{extension}}</span>
+    </h1>
+    <div class = "options-group">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="updateShow('clock')">settings_applications</mat-icon>
+        <div *ngIf="showClockOptions">
+            <p (click) = "clockChoice('military')">Military Time</p>
+            <p (click) = "clockChoice('')">Standard Time</p>
+        </div>
     </div>
 </div>
+
     
