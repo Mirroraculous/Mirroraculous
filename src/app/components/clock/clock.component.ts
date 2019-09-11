@@ -11,6 +11,8 @@ export class ClockComponent implements OnInit {
   hours;
   minutes;
   seconds;
+  extension;
+  military = false;
   timerId= null;
   constructor() { }
 
@@ -18,11 +20,21 @@ export class ClockComponent implements OnInit {
     this.setTime();    
     this.timerId = this.updateTime();
   }
-  private setTime(){
+  private setTime(){          
     this.nowish = new Date();
-    this.hours = this.leftPadZero(this.nowish.getHours());
     this.minutes = this.leftPadZero(this.nowish.getMinutes());
     this.seconds = this.leftPadZero(this.nowish.getSeconds());
+    if(this.military){
+      this.hours = this.leftPadZero(this.nowish.getHours());
+    }else{
+      if (this.nowish.getHours()>12){
+        this.extension = "PM";
+      }
+      else{
+        this.extension = "AM";
+      }
+      this.hours = this.nowish.getHours()%12;
+    }
   }
   ngOnDestroy() {
     clearInterval(this.timerId);
