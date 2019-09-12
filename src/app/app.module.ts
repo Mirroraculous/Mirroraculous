@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ClockComponent } from './components/clock/clock.component';
 
 import {MatIconModule} from '@angular/material/icon';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -20,7 +21,8 @@ import {MatIconModule} from '@angular/material/icon';
     AppComponent,
     OverlayComponent,
     HomeComponent,
-    ClockComponent
+    ClockComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
