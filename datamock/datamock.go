@@ -26,13 +26,20 @@ type Users struct {
 	ID       string `json:"id"`
 	Name     string `json:"name"`
 	Pwd      string `json:"pwd"`
-	Calendar []Events
+	Calendar []Days
 }
 
 type Events struct {
 	ID    string `json:"id"`
 	Time  string `json:"time"`
 	Event string `json:"event"`
+}
+
+type Days struct {
+	ID    string `json:"id"`
+	Day   string `json:"day"`
+	Date  string `json:"date"`
+	Event []Events
 }
 
 func GetUser(id string) (Users, error) {
@@ -90,4 +97,17 @@ func AddEvent(id string, time string, event string) error {
 	mtx.Unlock()
 
 	return nil
+}
+
+func getCalendar(userId string) (Days, error) {
+	var ret []Days
+	mtx.RLock()
+	defer mtx.RUnlock()
+	for _, n := range users {
+		if n.ID == id {
+			ret = n.Calendar
+			return ret, nil
+		}
+	}
+	return ret, errors.New("User ID doesn't exist")
 }

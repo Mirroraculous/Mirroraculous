@@ -54,6 +54,12 @@ func GetUser(context *gin.Context) {
 // Default timeframe is x
 func GetCalendar(context *gin.Context) {
 	fmt.Println("Hello from GetCalendar")
+	token := context.Request.Header.Get("x-auth-token")
+	calendar, e := datamock.GetCalendar(token)
+	if e != nil {
+		context.JSON(400, e)
+	}
+	context.JSON(http.StatusOK, calendar)
 }
 
 // AddEvent and UpdateEvent
