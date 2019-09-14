@@ -72,7 +72,7 @@ func AddUser(name string, pwd string) string {
 		ID:       xid.New().String(),
 		Name:     name,
 		Pwd:      pwd,
-		Calendar: []Events{},
+		Calendar: []Days{},
 	}
 	mtx.Lock()
 	users = append(users, tmp)
@@ -80,8 +80,8 @@ func AddUser(name string, pwd string) string {
 	return tmp.ID
 }
 
-func AddEvent(id string, time string, event string) error {
-	user, e := GetUser(id)
+func AddEvent(id string, cid string, time string, event string) error {
+	calendar, e := GetCalendar(id)
 	if e != nil {
 		return e
 	}
@@ -92,14 +92,19 @@ func AddEvent(id string, time string, event string) error {
 		Event: event,
 	}
 
-	mtx.Lock()
-	user.Calendar = append(user.Calendar, tmp)
-	mtx.Unlock()
+	mtx.RLock()
+	defer mtx.RUnlock()
+
+	for _, n := range calendar {
+		if n.ID == cid {
+			n.Event = append(n.Event, tmp)
+		}
+	}
 
 	return nil
 }
 
-func getCalendar(userId string) (Days, error) {
+func GetCalendar(id string) ([]Days, error) {
 	var ret []Days
 	mtx.RLock()
 	defer mtx.RUnlock()

@@ -57,6 +57,7 @@ func GetCalendar(context *gin.Context) {
 	token := context.Request.Header.Get("x-auth-token")
 	calendar, e := datamock.GetCalendar(token)
 	if e != nil {
+		fmt.Println(e)
 		context.JSON(400, e)
 	}
 	context.JSON(http.StatusOK, calendar)
