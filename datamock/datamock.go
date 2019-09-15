@@ -2,16 +2,18 @@ package datamock
 
 import (
 	"errors"
+	"fmt"
 	"sync"
 
 	"github.com/rs/xid"
 )
 
 var (
-	users  []Users
-	events []Events
-	mtx    sync.RWMutex
-	once   sync.Once
+	users    []Users
+	events   []Events
+	mtx      sync.RWMutex
+	once     sync.Once
+	calendar []Days
 )
 
 func init() {
@@ -20,13 +22,13 @@ func init() {
 
 func initUsers() {
 	users = []Users{}
+	calendar = []Days{}
 }
 
 type Users struct {
-	ID       string `json:"id"`
-	Name     string `json:"name"`
-	Pwd      string `json:"pwd"`
-	Calendar []Days
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	Pwd  string `json:"pwd"`
 }
 
 type Events struct {
@@ -36,7 +38,7 @@ type Events struct {
 }
 
 type Days struct {
-	ID    string `json:"id"`
+	UID   string `json:"uid"`
 	Day   string `json:"day"`
 	Date  string `json:"date"`
 	Event []Events
@@ -69,10 +71,9 @@ func LoginUser(name string, pwd string) (string, error) {
 
 func AddUser(name string, pwd string) string {
 	tmp := Users{
-		ID:       xid.New().String(),
-		Name:     name,
-		Pwd:      pwd,
-		Calendar: []Days{},
+		ID:   xid.New().String(),
+		Name: name,
+		Pwd:  pwd,
 	}
 	mtx.Lock()
 	users = append(users, tmp)
@@ -81,11 +82,6 @@ func AddUser(name string, pwd string) string {
 }
 
 func AddEvent(id string, date string, time string, event string) error {
-	calendar, e := GetCalendar(id)
-	if e != nil {
-		return e
-	}
-
 	tmp := Events{
 		ID:    xid.New().String(),
 		Time:  time,
@@ -98,7 +94,7 @@ func AddEvent(id string, date string, time string, event string) error {
 	found := false
 
 	for _, n := range calendar {
-		if n.Date == date {
+		if n.Date == date && n.UID == id {
 			n.Event = append(n.Event, tmp)
 			found = true
 		}
@@ -106,7 +102,7 @@ func AddEvent(id string, date string, time string, event string) error {
 
 	if !found {
 		newDay := Days{
-			ID:    xid.New().String(),
+			UID:   id,
 			Day:   "random day",
 			Date:  date,
 			Event: []Events{},
@@ -116,19 +112,24 @@ func AddEvent(id string, date string, time string, event string) error {
 
 		calendar = append(calendar, newDay)
 	}
-
+	fmt.Println(tmp)
+	fmt.Println(calendar)
 	return nil
 }
 
 func GetCalendar(id string) ([]Days, error) {
 	var ret []Days
+	found := false
 	mtx.RLock()
 	defer mtx.RUnlock()
-	for _, n := range users {
-		if n.ID == id {
-			ret = n.Calendar
-			return ret, nil
+	for _, n := range calendar {
+		if n.UID == id {
+			found = true
+			ret = append(ret, n)
 		}
 	}
-	return ret, errors.New("User ID doesn't exist")
+	if !found {
+		return ret, errors.New("User ID doesn't exist")
+	}
+	return ret, nil
 }

@@ -33,6 +33,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 The backend is written in Go which follows a specific pathing convention for its packages. After installing Go, run the following commands to install the required packages: 
 - `go get github.com/rs/xid` 
 - `go get github.com/gin-gonic/gin`
+- `go get -u google.golang.org/api/calendar/v3`
+- `go get -u golang.org/x/oauth2/google`
 
 ### Pathing for the project
 
