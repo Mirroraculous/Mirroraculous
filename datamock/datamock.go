@@ -80,7 +80,7 @@ func AddUser(name string, pwd string) string {
 	return tmp.ID
 }
 
-func AddEvent(id string, cid string, time string, event string) error {
+func AddEvent(id string, date string, time string, event string) error {
 	calendar, e := GetCalendar(id)
 	if e != nil {
 		return e
@@ -95,10 +95,26 @@ func AddEvent(id string, cid string, time string, event string) error {
 	mtx.RLock()
 	defer mtx.RUnlock()
 
+	found := false
+
 	for _, n := range calendar {
-		if n.ID == cid {
+		if n.ID == date {
 			n.Event = append(n.Event, tmp)
+			found = true
 		}
+	}
+
+	if !found {
+		newDay := Days{
+			ID:    xid.New().String(),
+			Day:   "random day",
+			Date:  date,
+			Event: []Events{},
+		}
+
+		newDay.Event = append(newDay.Event, tmp)
+
+		calendar = append(calendar, newDay)
 	}
 
 	return nil
