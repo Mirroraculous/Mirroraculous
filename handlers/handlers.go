@@ -66,6 +66,13 @@ func GetCalendar(context *gin.Context) {
 // AddEvent and UpdateEvent
 func AddEvent(context *gin.Context) {
 	fmt.Println("Hello from AddEvent")
+	userID := context.Request.Header.Get("x-auth-token")
+	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e)
+		return
+	}
+	context.JSON(http.StatusOK, datamock.AddEvent(userID, event.Date, event.Time, event.Event))
 }
 
 func UpdateEvent(context *gin.Context) {
@@ -90,4 +97,26 @@ func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) 
 	}
 
 	return tmp, http.StatusOK, nil
+}
+
+func convertHTTPBodyToEvent(httpBody io.ReadCloser) (EventBody, int, error) {
+	body, e := ioutil.ReadAll(httpBody)
+	if e != nil {
+		return EventBody{}, http.StatusInternalServerError, e
+	}
+
+	var tmp EventBody
+
+	e = json.Unmarshal(body, &tmp)
+	if e != nil {
+		return EventBody{}, http.StatusBadRequest, e
+	}
+
+	return tmp, http.StatusOK, nil
+}
+
+type EventBody struct {
+	Date  string `json:"date"`
+	Time  string `json:"time"`
+	Event string `json:"event"`
 }

@@ -98,7 +98,7 @@ func AddEvent(id string, date string, time string, event string) error {
 	found := false
 
 	for _, n := range calendar {
-		if n.ID == date {
+		if n.Date == date {
 			n.Event = append(n.Event, tmp)
 			found = true
 		}
