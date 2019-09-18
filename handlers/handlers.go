@@ -18,7 +18,12 @@ func RegisterUser(context *gin.Context) {
 		context.JSON(status, e)
 		return
 	}
-	context.JSON(http.StatusOK, datamock.AddUser(user.Name, user.Pwd))
+	token, e := datamock.AddUser(user.Name, user.Email, user.Pwd)
+	if e != nil {
+		context.JSON(status, e)
+		return
+	}
+	context.JSON(http.StatusOK, token)
 }
 
 // LoginUser logs in a user
@@ -30,7 +35,7 @@ func LoginUser(context *gin.Context) {
 		context.JSON(status, e)
 		return
 	}
-	token, e := datamock.LoginUser(user.Name, user.Pwd)
+	token, e := datamock.LoginUser(user.Email, user.Pwd)
 	if e != nil {
 		context.JSON(400, e)
 		return

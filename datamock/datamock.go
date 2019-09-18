@@ -2,7 +2,6 @@ package datamock
 
 import (
 	"errors"
-	"fmt"
 	"sync"
 
 	"github.com/rs/xid"
@@ -26,9 +25,10 @@ func initUsers() {
 }
 
 type Users struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-	Pwd  string `json:"pwd"`
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Pwd   string `json:"password"`
 }
 
 type Events struct {
@@ -57,9 +57,9 @@ func GetUser(id string) (Users, error) {
 	return ret, errors.New("User ID doesn't exist")
 }
 
-func LoginUser(name string, pwd string) (string, error) {
+func LoginUser(email string, pwd string) (string, error) {
 	for _, n := range users {
-		if n.Name == name {
+		if n.Email == email {
 			if n.Pwd == pwd {
 				return n.ID, nil
 			}
@@ -69,16 +69,24 @@ func LoginUser(name string, pwd string) (string, error) {
 	return "", errors.New("Username not found")
 }
 
-func AddUser(name string, pwd string) string {
+func AddUser(name string, email string, pwd string) (string, error) {
 	tmp := Users{
-		ID:   xid.New().String(),
-		Name: name,
-		Pwd:  pwd,
+		ID:    xid.New().String(),
+		Name:  name,
+		Email: email,
+		Pwd:   pwd,
 	}
 	mtx.Lock()
+	defer mtx.Unlock()
+	for _, n := range users {
+		if n.Email == email {
+			return "", errors.New("User already exists")
+		}
+	}
+
 	users = append(users, tmp)
-	mtx.Unlock()
-	return tmp.ID
+
+	return tmp.ID, nil
 }
 
 func AddEvent(id string, date string, time string, event string) error {
@@ -112,8 +120,7 @@ func AddEvent(id string, date string, time string, event string) error {
 
 		calendar = append(calendar, newDay)
 	}
-	fmt.Println(tmp)
-	fmt.Println(calendar)
+
 	return nil
 }
 

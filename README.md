@@ -35,6 +35,7 @@ The backend is written in Go which follows a specific pathing convention for its
 - `go get github.com/gin-gonic/gin`
 - `go get -u google.golang.org/api/calendar/v3`
 - `go get -u golang.org/x/oauth2/google`
+- `go get github.com/dgrijalva/jwt-go`
 
 ### Pathing for the project
 
