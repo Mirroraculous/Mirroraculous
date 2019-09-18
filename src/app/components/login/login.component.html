@@ -1,12 +1,21 @@
 <h3>Log In</h3>
-
+<!-- This is my recommended html format -->
+ <form>
+  <label for="password">
+    Password
+  </label>
+  <input id="password" type="text" formControlName="password">  
+  <label for="email">
+    Email
+  </label>
+  <input id="email" type="text" formControlName="email">  
+  <!-- originally you had register as a submit type when it shouldnt be, this should be a routeLink to login -->
+  <button class="button" type="submit">Register</button>
+  <button class="button" type="submit">Log in</button>
+ </form>
   <div>
-    <label for="email">
-      Email
-    </label>
-    <input id="email" type="text" formControlName="email">
   </div>
-
+<!-- The below was your code -->
   <div>
     <label for="password">
       Password
