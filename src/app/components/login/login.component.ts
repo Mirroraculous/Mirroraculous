@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  // where you store form info and what you send to the backend
+  DTO;
   //import service through the constructor
   constructor() { }
 
