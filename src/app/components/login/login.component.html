@@ -1,14 +1,18 @@
 <h3>Log In</h3>
 <!-- This is my recommended html format -->
  <form>
-  <label for="password">
+  <!-- <label for="password">
     Password
-  </label>
-  <input id="password" type="text" formControlName="password">  
-  <label for="email">
+  </label> -->
+  
+  <input placeholder = "email"type="text" formControlName="email"> 
+  <!-- here you also added ids to the inputs haphazardly. Instead you should assign a generic class
+  which you will use for all inputs or large chunks then make scss for that instead of using id. Id's are 
+  typically a bad practice. -->
+  <input placeholder = "password" type="text" formControlName="password">  
+  <!-- <label for="email">
     Email
-  </label>
-  <input id="email" type="text" formControlName="email">  
+  </label> --> 
   <!-- originally you had register as a submit type when it shouldnt be, this should be a routeLink to login -->
   <!-- also made the buttons have the class button which is a waste of a class -->
   <button >Register</button>
