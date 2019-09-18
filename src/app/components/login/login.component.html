@@ -10,13 +10,14 @@
   </label>
   <input id="email" type="text" formControlName="email">  
   <!-- originally you had register as a submit type when it shouldnt be, this should be a routeLink to login -->
-  <button class="button" type="submit">Register</button>
-  <button class="button" type="submit">Log in</button>
+  <!-- also made the buttons have the class button which is a waste of a class -->
+  <button >Register</button>
+  <button (click)="aSubmittedDataFunction()" type="submit">Log in</button>
  </form>
-  <div>
-  </div>
+  <!-- <div>
+  </div> -->
 <!-- The below was your code -->
-  <div>
+  <!-- <div>
     <label for="password">
       Password
     </label>
@@ -27,4 +28,4 @@
 </form>
 
   <button class="button" type="submit">Log in</button>
-</form>
+</form> -->
