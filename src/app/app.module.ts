@@ -8,19 +8,26 @@ import { OverlayComponent } from './components/overlay/overlay.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './components/home/home.component';
+import { ClockComponent } from './components/clock/clock.component';
+
+import {MatIconModule} from '@angular/material/icon';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    OverlayComponent
+    OverlayComponent,
+    HomeComponent,
+    ClockComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
