@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -8,25 +9,44 @@ import (
 
 var jwtSecret = []byte("supersecretdevkey")
 
-func GetToken(id string) string {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":  id,
-		"iat": time.Now().Unix(),
-		"epx": time.Now().Add(time.Hour).Unix(),
-	})
-	tokenString, _ := token.SignedString(jwtSecret)
-	return tokenString
+type Claims struct {
+	ID string `json:"id"`
+	jwt.StandardClaims
 }
 
-func VerifyToken(tokenString string) bool {
-	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-		}
+func MakeToken(id string) (string, int) {
+	claims := &Claims{
+		ID: id,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(time.Hour * 6).Unix(),
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, e := token.SignedString(jwtSecret)
+	if e != nil {
+		return "Server Error", 500
+	}
+	return tokenString, 200
+}
 
-		return hmacSampleSecret, nil 
+func VerifyToken(tokenString string) (string, int) {
+	claims := &Claims{}
+	token, e := jwt.ParseWithClaims(tokenString, claims, func(t *jwt.Token) (interface{}, error) {
+		return jwtSecret, nil
 	})
+	if e != nil {
+		if e == jwt.ErrSignatureInvalid {
+			return "Invalid Token", 401
+		}
+		return "Server Error", 500
+	}
+	if !token.Valid {
+		return "Invalid Token", 401
+	}
+	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) < 0*time.Second {
+		return "Expired Token", 401
+	}
+	fmt.Println(claims.ID)
+	return claims.ID, 200
 
-	claims, ok := token.Claims.(jwt.MapClaims)
-	
 }

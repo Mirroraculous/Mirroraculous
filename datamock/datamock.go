@@ -69,7 +69,7 @@ func LoginUser(email string, pwd string) (string, error) {
 	return "", errors.New("Username not found")
 }
 
-func AddUser(name string, email string, pwd string) (string, error) {
+func AddUser(name string, email string, pwd string) (string, int) {
 	tmp := Users{
 		ID:    xid.New().String(),
 		Name:  name,
@@ -80,13 +80,13 @@ func AddUser(name string, email string, pwd string) (string, error) {
 	defer mtx.Unlock()
 	for _, n := range users {
 		if n.Email == email {
-			return "", errors.New("User already exists")
+			return "User already exists", 400
 		}
 	}
 
 	users = append(users, tmp)
 
-	return tmp.ID, nil
+	return tmp.ID, 200
 }
 
 func AddEvent(id string, date string, time string, event string) error {
@@ -124,7 +124,7 @@ func AddEvent(id string, date string, time string, event string) error {
 	return nil
 }
 
-func GetCalendar(id string) ([]Days, error) {
+func GetCalendar(id string) ([]Days, int) {
 	var ret []Days
 	found := false
 	mtx.RLock()
@@ -136,7 +136,7 @@ func GetCalendar(id string) ([]Days, error) {
 		}
 	}
 	if !found {
-		return ret, errors.New("User ID doesn't exist")
+		return ret, 400
 	}
-	return ret, nil
+	return ret, 200
 }
