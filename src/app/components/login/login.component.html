@@ -1,37 +1,14 @@
 <h3>Log In</h3>
-<!-- This is my recommended html format -->
- <form>
-  <!-- <label for="password">
-    Password
-  </label> -->
+ <!-- <form> -->
+ 
   
-  <input class ="inputs" placeholder = "email"type="text" formControlName="email"> 
-  <!-- here you also added ids to the inputs haphazardly. Instead you should assign a generic class
-  which you will use for all inputs or large chunks then make scss for that instead of using id. Id's are 
-  typically a bad practice. -->
-  <input class ="inputs" placeholder = "password" type="text" formControlName="password">  
-  <!-- <label for="email">
-    Email
-  </label> --> 
-  <!-- originally you had register as a submit type when it shouldnt be, this should be a routeLink to login -->
-  <!-- also made the buttons have the class button which is a waste of a class -->
+  <input [(ngModel)]="DTO.email" class ="inputs" placeholder = "email">
+
+  <input [(ngModel)]="DTO.password" class ="inputs" placeholder = "password">  
+ 
   <p>
     <a routerLink="/register">Register</a>
   </p>
-  <button (click)="aSubmittedDataFunction()" type="submit">Log in</button>
- </form>
-  <!-- <div>
-  </div> -->
-<!-- The below was your code -->
-  <!-- <div>
-    <label for="password">
-      Password
-    </label>
-    <input id="password" type="text" formControlName="password">
-  </div>
+  <button (click)="aSubmittedDataFunction()">Log in</button>
 
-  <button class="button" type="submit">Register</button>
-</form>
-
-  <button class="button" type="submit">Log in</button>
-</form> -->
+ <!-- </form> -->

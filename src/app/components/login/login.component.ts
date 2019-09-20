@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { LoginService } from '../../Services/login.service';
 //import service here as well
+interface DTO{
+  email: string;
+  password: string;
+}
 
 
 @Component({
@@ -10,22 +14,29 @@ import { LoginService } from '../../Services/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  DTO: DTO={
+    email: "",
+    password: "",
+  }
 
   // where you store form info and what you send to the backend
-  DTO;
   //import service through the constructor
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService) { 
+    
+  }
 
   ngOnInit() {
   }
   //gets called when user hits a submit key
   aSubmittedDataFunction(){
+    console.log("anything");
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
         if (val === 200){
-
+          console.log(val);
         }
         else{
+          console.log(val);
         }
       }
     );
