@@ -145,7 +145,7 @@ func UpdateEvent(uid string, eid string, time string, event string) int {
 	found := false
 	mtx.RLock()
 	defer mtx.RUnlock()
-	for _, day := range calendar {
+	for i, day := range calendar {
 		if day.UID == uid {
 			var tmp []Events
 			for _, events := range day.Event {
@@ -162,6 +162,7 @@ func UpdateEvent(uid string, eid string, time string, event string) int {
 				}
 			}
 			day.Event = tmp
+			calendar[i] = day
 		}
 	}
 	if found {
@@ -174,7 +175,7 @@ func DeleteEvent(uid string, eid string) int {
 	found := false
 	mtx.RLock()
 	defer mtx.RUnlock()
-	for _, day := range calendar {
+	for i, day := range calendar {
 		if day.UID == uid {
 			var tmp []Events
 			for _, events := range day.Event {
@@ -185,6 +186,7 @@ func DeleteEvent(uid string, eid string) int {
 				}
 			}
 			day.Event = tmp
+			calendar[i] = day
 		}
 	}
 	if found {

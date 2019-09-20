@@ -118,8 +118,8 @@ func UpdateEvent(context *gin.Context) {
 		return
 	}
 	eventID := context.Params.ByName("id")
-	status := datamock.UpdateEvent(id, eventID, event.Time, event.Event)
-	context.JSON(status)
+	status = datamock.UpdateEvent(id, eventID, event.Time, event.Event)
+	context.JSON(status, "")
 }
 
 // DeleteEvent deletes a specific event; responds status
@@ -133,8 +133,8 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 	eventID := context.Params.ByName("id")
-	status := datamock.DeleteEvent(id, eventID)
-	context.JSON(status)
+	status = datamock.DeleteEvent(id, eventID)
+	context.JSON(status, "")
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) {
