@@ -9,8 +9,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mirroraculous/mirroraculous/datamock"
+	"github.com/mirroraculous/mirroraculous/middleware"
 )
 
+// RegisterUser adds a new user, responds with user token
+// POST name, email, password to :3000/api/user
 func RegisterUser(context *gin.Context) {
 	fmt.Println("Hello from register")
 	user, status, e := convertHTTPBodyToUser(context.Request.Body)
@@ -18,11 +21,17 @@ func RegisterUser(context *gin.Context) {
 		context.JSON(status, e)
 		return
 	}
-	context.JSON(http.StatusOK, datamock.AddUser(user.Name, user.Pwd))
+	id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	token, status := middleware.MakeToken(id)
+	context.JSON(status, token)
 }
 
-// LoginUser logs in a user
-// Needs to respond with the status and user token (if applicable)
+// LoginUser logs in a user, responds with the user token
+// POST email and password to :3000/api/auth
 func LoginUser(context *gin.Context) {
 	fmt.Println("Hello from login")
 	user, status, e := convertHTTPBodyToUser(context.Request.Body)
@@ -30,57 +39,102 @@ func LoginUser(context *gin.Context) {
 		context.JSON(status, e)
 		return
 	}
-	token, e := datamock.LoginUser(user.Name, user.Pwd)
+	id, e := datamock.LoginUser(user.Email, user.Pwd)
 	if e != nil {
 		context.JSON(400, e)
 		return
 	}
-	context.JSON(http.StatusOK, token)
+	token, status := middleware.MakeToken(id)
+	context.JSON(status, token)
 }
 
+// GetUser responds with the user account information
+// GET to :3000/api/auth
 func GetUser(context *gin.Context) {
 	fmt.Println("Hello from GetUser")
 	token := context.Request.Header.Get("x-auth-token")
-	user, e := datamock.GetUser(token)
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	user, e := datamock.GetUser(id)
 	if e != nil {
 		context.JSON(400, e)
+		return
 	}
 	context.JSON(http.StatusOK, user)
 }
 
 // GetCalendar gets the calendar events for a user
-// Needs user token in header
-// If timeframe is specified, will return that timeframe
-// Default timeframe is x
+// GET to :3000/api/calendar
 func GetCalendar(context *gin.Context) {
 	fmt.Println("Hello from GetCalendar")
 	token := context.Request.Header.Get("x-auth-token")
-	calendar, e := datamock.GetCalendar(token)
-	if e != nil {
-		fmt.Println(e)
-		context.JSON(400, e)
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
 	}
-	context.JSON(http.StatusOK, calendar)
+	calendar, status := datamock.GetCalendar(id)
+	if status != 200 {
+		context.JSON(status, "No calendar found for user")
+		return
+	}
+	context.JSON(status, calendar)
 }
 
-// AddEvent and UpdateEvent
+// AddEvent adds an event on a day for the user; responds status
+// POST date, time, event to :3000/api/calendar
 func AddEvent(context *gin.Context) {
 	fmt.Println("Hello from AddEvent")
-	userID := context.Request.Header.Get("x-auth-token")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
 	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
 	if e != nil {
 		context.JSON(status, e)
 		return
 	}
-	context.JSON(http.StatusOK, datamock.AddEvent(userID, event.Date, event.Time, event.Event))
+	context.JSON(http.StatusOK, datamock.AddEvent(id, event.Date, event.Time, event.Event))
 }
 
+// UpdateEvent updates a specific event; responds status
+// PUT time, event to :3000/api/calendar/:id
 func UpdateEvent(context *gin.Context) {
 	fmt.Println("Hello from UpdateEvent")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e)
+		return
+	}
+	eventID := context.Params.ByName("id")
+	status = datamock.UpdateEvent(id, eventID, event.Time, event.Event)
+	context.JSON(status, "")
 }
 
+// DeleteEvent deletes a specific event; responds status
+// DELETE to :3000/api/calendar/:id
 func DeleteEvent(context *gin.Context) {
 	fmt.Println("Hello from DeleteEvent")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	eventID := context.Params.ByName("id")
+	status = datamock.DeleteEvent(id, eventID)
+	context.JSON(status, "")
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) {
