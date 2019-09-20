@@ -13,6 +13,7 @@ import { ClockComponent } from './components/clock/clock.component';
 
 import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -30,6 +31,7 @@ import { LoginComponent } from './components/login/login.component';
     MatDialogModule,
     BrowserAnimationsModule,
     MatIconModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

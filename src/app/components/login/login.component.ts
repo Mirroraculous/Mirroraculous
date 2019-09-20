@@ -20,15 +20,15 @@ export class LoginComponent implements OnInit {
   }
   //gets called when user hits a submit key
   aSubmittedDataFunction(){
-    // this.loginService.checkUserPassCombo(this.DTO).subscribe(
-    //   val => {
-    //     if (val === 200){
+    this.loginService.checkUserPassCombo(this.DTO).subscribe(
+      val => {
+        if (val === 200){
 
-    //     }
-    //     else{
-    //     }
-    //   }
-    // );
-    // put a call here to a service that posts values to the backend. Enpoint is POST "localhost:3000/api/auth"
+        }
+        else{
+        }
+      }
+    );
+    //put a call here to a service that posts values to the backend. Enpoint is POST "localhost:3000/api/auth"
   }
 }
