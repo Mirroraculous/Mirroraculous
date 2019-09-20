@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class LoginService {
 
-  private url = "localhost:3000/api/auth";  // URL to web api
+  private url = "http://localhost:3000/api/auth";  // URL to web api
 
   constructor(
     private http: HttpClient) { }
@@ -17,7 +17,7 @@ export class LoginService {
 
   /** GET email and pass combo. Will 404 if id not found */
   checkUserPassCombo(userPassCombo) {
-    return this.http.get<any>(this.url, userPassCombo).pipe(
+    return this.http.post<any>(this.url, userPassCombo).pipe(
       catchError(this.handleError<any>(`userPassCombo`, userPassCombo))
     );
   }
