@@ -140,3 +140,55 @@ func GetCalendar(id string) ([]Days, int) {
 	}
 	return ret, 200
 }
+
+func UpdateEvent(uid string, eid string, time string, event string) int {
+	found := false
+	mtx.RLock()
+	defer mtx.RUnlock()
+	for _, day := range calendar {
+		if day.UID == uid {
+			var tmp []Events
+			for _, events := range day.Event {
+				if events.ID != eid {
+					tmp = append(tmp, events)
+				} else {
+					tmpEvent := Events{
+						ID:    events.ID,
+						Time:  time,
+						Event: event,
+					}
+					found = true
+					tmp = append(tmp, tmpEvent)
+				}
+			}
+			day.Event = tmp
+		}
+	}
+	if found {
+		return 200
+	}
+	return 404
+}
+
+func DeleteEvent(uid string, eid string) int {
+	found := false
+	mtx.RLock()
+	defer mtx.RUnlock()
+	for _, day := range calendar {
+		if day.UID == uid {
+			var tmp []Events
+			for _, events := range day.Event {
+				if events.ID != eid {
+					tmp = append(tmp, events)
+				} else {
+					found = true
+				}
+			}
+			day.Event = tmp
+		}
+	}
+	if found {
+		return 200
+	}
+	return 404
+}

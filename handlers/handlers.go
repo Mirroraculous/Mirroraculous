@@ -84,7 +84,7 @@ func GetCalendar(context *gin.Context) {
 	context.JSON(status, calendar)
 }
 
-// AddEvent adds an event on a day for the user
+// AddEvent adds an event on a day for the user; responds status
 // POST date, time, event to :3000/api/calendar
 func AddEvent(context *gin.Context) {
 	fmt.Println("Hello from AddEvent")
@@ -102,6 +102,8 @@ func AddEvent(context *gin.Context) {
 	context.JSON(http.StatusOK, datamock.AddEvent(id, event.Date, event.Time, event.Event))
 }
 
+// UpdateEvent updates a specific event; responds status
+// PUT time, event to :3000/api/calendar/:id
 func UpdateEvent(context *gin.Context) {
 	fmt.Println("Hello from UpdateEvent")
 	token := context.Request.Header.Get("x-auth-token")
@@ -120,6 +122,8 @@ func UpdateEvent(context *gin.Context) {
 	context.JSON(status)
 }
 
+// DeleteEvent deletes a specific event; responds status
+// DELETE to :3000/api/calendar/:id
 func DeleteEvent(context *gin.Context) {
 	fmt.Println("Hello from DeleteEvent")
 	token := context.Request.Header.Get("x-auth-token")
