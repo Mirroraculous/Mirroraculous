@@ -104,10 +104,33 @@ func AddEvent(context *gin.Context) {
 
 func UpdateEvent(context *gin.Context) {
 	fmt.Println("Hello from UpdateEvent")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e)
+		return
+	}
+	eventID := context.Params.ByName("id")
+	status := datamock.UpdateEvent(id, eventID, event.Time, event.Event)
+	context.JSON(status)
 }
 
 func DeleteEvent(context *gin.Context) {
 	fmt.Println("Hello from DeleteEvent")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	eventID := context.Params.ByName("id")
+	status := datamock.DeleteEvent(id, eventID)
+	context.JSON(status)
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) {
