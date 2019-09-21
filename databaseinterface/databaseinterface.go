@@ -1,5 +1,8 @@
-// Set client options
-clientOptions := options.Client().ApplyURI("mongodb://localhost:3000")
+package databaseinterface
+
+
+
+clientOptions := options.Client().ApplyURI("github.com/mirroraculous/mirroraculous/://localhost:3000")
 
 // Connect to MongoDB
 client, err := mongo.Connect(context.TODO(), clientOptions)
