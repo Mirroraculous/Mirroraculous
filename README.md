@@ -25,3 +25,36 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Backend
+
+### Installing dependancies
+
+The backend is written in Go which follows a specific pathing convention for its packages. After installing Go, run the following commands to install the required packages: 
+- `go get github.com/rs/xid` 
+- `go get github.com/gin-gonic/gin`
+- `go get -u google.golang.org/api/calendar/v3`
+- `go get -u golang.org/x/oauth2/google`
+- `go get github.com/dgrijalva/jwt-go`
+
+### Pathing for the project
+
+Once this is done, navigate to Go's github package directory (typically: `<home>/go/src/github.com/`). Once in there, make a new folder `mirroraculous` and clone the repo into that new directory. 
+
+### Running the server
+
+When all set up, you can run the server with `go run main.go` when in the root directory of the project. 
+
+
+## Mirraculous Style Guides
+
+## Prettier Code Formatter (version 1.18.2)
+
+Prettier supports Java, Angular, CSS and many more platforms. Please see the [Prettier Homepage] (https://prettier.io/) for more information. 
+
+## TSLint (version 5.19.0)
+
+TSLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality errors. Please see [TSLint Homepage] (https://palantir.github.io/tslint/) for more information.
+
+
+
