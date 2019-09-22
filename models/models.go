@@ -1,35 +1,43 @@
 package models
 
-import ("github.com/mirroraculous/mirroraculous/databaseinterface")
+type Users struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Pwd   string `json:"password"`
+}
 
-user (
-	"name": "Tim",
-	"email": "tim@email.com", 
-	"password": "djaodo133ehing1"
-)
+type Reminders struct {
+	Method  string `json:"method"`
+	Minutes int    `jsong:"minutes"`
+}
 
-calendar (	
-	"kind": "calendar#calendarListEntry",
-	"etag": etag,
-	"id": string,
-	"summary": string,
-	"description": string,
-	"location": string,
-	"timeZone": string,
-	"summaryOverride": string,
-	"colorId": string,
-	"backgroundColor": string,
-	"foregroundColor": string,
-	"hidden": boolean,
-	"selected": boolean,
-	"accessRole": string,
-	"defaultReminders": [
-	  {
-		"method": string,
-		"minutes": integer
-	  }
-	],
-	"notificationSettings": {
-	  "notifications": [
-		
-)
+type Notifications struct {
+	Type   string `json:"type"`
+	Method string `json:"method"`
+}
+
+type AllowedConferenceSolutionTypes struct {
+	Types string
+}
+
+type Calendar struct {
+	Kind                 string `json:"kind"`
+	Etag                 string `json:"etag"`
+	ID                   string `json:"id"`
+	Summary              string `json:"summary"`
+	Description          string `json:"description"`
+	Location             string `json:"Location"`
+	TimeZone             string `json:"timeZone"`
+	SummaryOverride      string `json:"summaryOverride"`
+	ColorID              string `json:"colorID"`
+	BackgroundColor      string `json:"backgroundColor"`
+	ForegroundColor      string `json:"foregroundColor"`
+	Hidden               bool   `json:"hidden"`
+	Selected             bool   `json:"selected"`
+	AccessRole           string `json:"accessRole"`
+	DefaultReminders     []Reminders
+	NotificationSettings []Notifications
+	Primary              bool `json:"primary"`
+	Deleted              bool `json:"deleted"`
+	ConferenceProperties []AllowedConferenceSolutionTypes
+}
