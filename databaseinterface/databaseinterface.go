@@ -1,6 +1,8 @@
 package databaseinterface
 
-
+import(
+    "github.com/mirroraculous/mirroraculous/models"
+)
 
 clientOptions := options.Client().ApplyURI("github.com/mirroraculous/mirroraculous/://localhost:3000")
 

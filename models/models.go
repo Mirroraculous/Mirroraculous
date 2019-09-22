@@ -1,5 +1,7 @@
 package models
 
+import ("github.com/mirroraculous/mirroraculous/databaseinterface")
+
 user (
 	"name": "Tim",
 	"email": "tim@email.com", 
