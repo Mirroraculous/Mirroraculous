@@ -39,9 +39,9 @@ func LoginUser(context *gin.Context) {
 		context.JSON(status, e)
 		return
 	}
-	id, e := datamock.LoginUser(user.Email, user.Pwd)
-	if e != nil {
-		context.JSON(400, e)
+	id, status := datamock.LoginUser(user.Email, user.Pwd)
+	if status != 200 {
+		context.JSON(status, id)
 		return
 	}
 	token, status := middleware.MakeToken(id)

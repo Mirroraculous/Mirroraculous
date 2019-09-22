@@ -57,16 +57,16 @@ func GetUser(id string) (Users, error) {
 	return ret, errors.New("User ID doesn't exist")
 }
 
-func LoginUser(email string, pwd string) (string, error) {
+func LoginUser(email string, pwd string) (string, int) {
 	for _, n := range users {
 		if n.Email == email {
 			if n.Pwd == pwd {
-				return n.ID, nil
+				return n.ID, 200
 			}
-			return "", errors.New("Invalid password")
+			return "Invalid Password", 401
 		}
 	}
-	return "", errors.New("Username not found")
+	return "Username not found", 401
 }
 
 func AddUser(name string, email string, pwd string) (string, int) {
@@ -101,9 +101,9 @@ func AddEvent(id string, date string, time string, event string) error {
 
 	found := false
 
-	for _, n := range calendar {
+	for i, n := range calendar {
 		if n.Date == date && n.UID == id {
-			n.Event = append(n.Event, tmp)
+			calendar[i].Event = append(n.Event, tmp)
 			found = true
 		}
 	}
