@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 // import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     OverlayComponent,
     HomeComponent,
     ClockComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,

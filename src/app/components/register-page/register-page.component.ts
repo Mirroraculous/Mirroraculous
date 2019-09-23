@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { AccountService } from '../account.service';
+import { RegisterService } from '../../services/register.service';
+
+interface Account{
+  email: string;
+  password: string;
+  username: string;
+  confirmPassword: string;
+}
 
 @Component({
   selector: 'app-register-page',
@@ -10,8 +17,15 @@ import { AccountService } from '../account.service';
 })
 export class RegisterPageComponent implements OnInit {
 
+  DTO: Account = {
+    username: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
+  }
+
   constructor(
-    private accountService: AccountService,
+    private registerService: RegisterService,
     private location: Location
   ) { }
 
@@ -19,14 +33,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   submit(): void {
-    this.accountService.addAccount(this.account)
-      .subscribe(() => this.goBack());
+    this.registerService.addUser(this.DTO)
+      .subscribe();
   }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  @Input() account: Account;
-
 }
