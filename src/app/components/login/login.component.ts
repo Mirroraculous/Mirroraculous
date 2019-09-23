@@ -33,7 +33,8 @@ export class LoginComponent implements OnInit {
     // console.log(this.DTO);
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
-        if (val === 200){
+        if (val.status === 200 || val.status === 204){
+          this.message = '';
           console.log(val);
         }
         else{

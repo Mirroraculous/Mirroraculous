@@ -36,10 +36,11 @@ export class RegisterPageComponent implements OnInit {
     this.registerService.addUser(this.DTO)
       .subscribe(
         val =>{
-          if(val === 200 || val === 204){
+          if(val.status === 200 || val.status === 204){
+            this.message = '';
             console.log('successfully registered user');
           }else{
-            console.log('failed to register user');
+            console.log(val.status);
             this.message = 'Failed to register. Likely account already exists.'
           }
         }
