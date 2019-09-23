@@ -5,7 +5,8 @@
  <!-- <form> -->
   <input [(ngModel)]="DTO.email" class ="inputs" placeholder = "Email">
 
-  <input [(ngModel)]="DTO.password" class ="inputs" placeholder = "Password">  
+  <input [(ngModel)]="DTO.password" type = "password" class ="inputs" placeholder = "Password">  
+  <span style = "text-align: center; color:red;font-size: .5em">{{message}}</span>
  
 
   <a class="text-link" routerLink="/register">Register</a>

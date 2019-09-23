@@ -17,7 +17,7 @@ export class RegisterService {
 
   /** GET email and pass combo. Will 404 if id not found */
   addUser(userInfo) {
-    return this.http.post<any>(this.url, userInfo).pipe(
+    return this.http.post<any>(this.url, userInfo,{observe: 'response'}).pipe(
       catchError(this.handleError<any>(`userInfo`, userInfo))
     );
   }

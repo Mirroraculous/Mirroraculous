@@ -17,7 +17,7 @@ export class LoginService {
 
   /** GET email and pass combo. Will 404 if id not found */
   checkUserPassCombo(userPassCombo) {
-    return this.http.post<any>(this.url, userPassCombo).pipe(
+    return this.http.post<any>(this.url, userPassCombo,{observe: 'response'}).pipe(
       catchError(this.handleError<any>(`userPassCombo`, userPassCombo))
     );
   }

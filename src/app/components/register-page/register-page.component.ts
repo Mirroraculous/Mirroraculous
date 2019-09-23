@@ -16,7 +16,7 @@ interface Account{
   styleUrls: ['./register-page.component.scss']
 })
 export class RegisterPageComponent implements OnInit {
-
+  message = '';
   DTO: Account = {
     username: "",
     password: "",
@@ -34,6 +34,16 @@ export class RegisterPageComponent implements OnInit {
 
   submit(): void {
     this.registerService.addUser(this.DTO)
-      .subscribe();
+      .subscribe(
+        val =>{
+          if(val.status === 200 || val.status === 204){
+            this.message = '';
+            console.log('successfully registered user');
+          }else{
+            console.log(val.status);
+            this.message = 'Failed to register. Likely account already exists.'
+          }
+        }
+      );
   }
 }
