@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
   //gets called when user hits a submit key
   aSubmittedDataFunction(){
-    console.log("anything");
+    console.log(this.DTO);
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
         if (val === 200){

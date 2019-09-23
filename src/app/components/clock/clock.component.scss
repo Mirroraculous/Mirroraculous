@@ -1,17 +1,19 @@
 .mat-icon{
-    margin-left:16*1px;
-    font-size:16px;
+    font-size:22px;
     
+}
+.clock2{
+    display:inline-block;
 }
 .options-group:hover{
     cursor:pointer;
     
 }
 .clock>h1{
-    margin:0;    
-    display: inline-block;
+    margin:0;
 }
 .options-group{    
+    margin-left:16*1px;    
     display: inline-block;
 }
 .smoller{
