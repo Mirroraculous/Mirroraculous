@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { LoginService } from '../../Services/login.service';
+import { LoginService } from '../../services/login.service';
 //import service here as well
 interface DTO{
   email: string;
