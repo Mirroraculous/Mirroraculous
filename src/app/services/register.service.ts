@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class RegisterService {
 
-  private url = "localhost:3000/api/user";  // URL to web api
+  private url = "http://localhost:3000/api/user";  // URL to web api
 
   constructor(
     private http: HttpClient) { }
