@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Mirroraculous';
+  registerLoginHome = 0;
+  setVal(val){
+    this.registerLoginHome = val;
+  }
 }
