@@ -4,9 +4,10 @@
 <div>
         <input class="inputs" [(ngModel)]="DTO.username" placeholder="Username"/>
         <input class="inputs" [(ngModel)]="DTO.email" placeholder="Email"/>
-        <input class="inputs" [(ngModel)]="DTO.password" placeholder="Password"/>
-        <input class="inputs" [(ngModel)]="DTO.confirmPassword" placeholder="Confirm Password"/>
+        <input class="inputs" [(ngModel)]="DTO.password" type = 'password' placeholder="Password"/>
+        <input class="inputs" [(ngModel)]="DTO.confirmPassword" type = 'password' placeholder="Confirm Password"/>
 </div>
+<span style = "text-align: center; color:red;font-size: .5em;display: block;">{{message}}</span>
 <a class="text-link" routerLink="/login">Login</a>
 <button class="button" (click)="submit()">Register</button>
 </div>

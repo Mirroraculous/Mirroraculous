@@ -14,6 +14,7 @@ interface DTO{
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  message = '';
   DTO: DTO={
     email: "",
     password: "",
@@ -29,13 +30,14 @@ export class LoginComponent implements OnInit {
   }
   //gets called when user hits a submit key
   aSubmittedDataFunction(){
-    console.log(this.DTO);
+    // console.log(this.DTO);
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
         if (val === 200){
           console.log(val);
         }
         else{
+          this.message = 'Failed to login. Incorrect credentials';
           console.log(val);
         }
       }
