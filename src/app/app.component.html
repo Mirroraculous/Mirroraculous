@@ -1,11 +1,6 @@
 <app-overlay></app-overlay>
-<button *ngIf = "registerLoginHome === 0" class="button" (click)="setVal(1)">Goto home</button>
-<button *ngIf = "registerLoginHome === 1" class="button" (click)="setVal(0)">Goto login</button>
-<app-login *ngIf = "registerLoginHome === 0"></app-login>
-<app-home *ngIf = "registerLoginHome === 1"></app-home>
+<a routerLink="/crisis-center" routerLinkActive="active">Goto Home</a>
+<!-- <app-login></app-login> -->
+<!-- <app-home *ngIf = "registerLoginHome === 1"></app-home> -->
 
-<<<<<<< HEAD
 <router-outlet></router-outlet>
-=======
-<router-outlet></router-outlet>
->>>>>>> c4cdbd2f6eeae3cd2661fce1dfc82d69763ee0e4
