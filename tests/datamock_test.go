@@ -42,15 +42,31 @@ func TestLoginUser(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	user, e := datamock.GetUser("")
-	if e == nil {
-		t.Errorf("Test failed, expected error, got nil")
+	user, status := datamock.GetUser("")
+	if status == 200 {
+		t.Errorf("Test failed, expected status 400, got status '%d'", status)
 	}
 	id, _ := datamock.LoginUser("tim@tim.tim", "123")
-	user, e = datamock.GetUser(id)
-	if e != nil {
-		t.Errorf("Test failed, expected no error, got UserID doesnt exist")
+	user, status = datamock.GetUser(id)
+	if status != 400 {
+		t.Errorf("Test failed, expected no error, got status '%d'", status)
 	} else if user == (datamock.Users{}) {
 		t.Errorf("Test failed, user object is empty")
 	}
+}
+
+func TestAddEvent(t *testing.T) {
+
+}
+
+func TestGetCalendar(t *testing.T) {
+
+}
+
+func TestUpdateEvent(t *testing.T) {
+
+}
+
+func TestDeleteEvent(t *testing.T) {
+
 }

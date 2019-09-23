@@ -1,7 +1,6 @@
 package datamock
 
 import (
-	"errors"
 	"sync"
 
 	"github.com/rs/xid"
@@ -44,17 +43,17 @@ type Days struct {
 	Event []Events
 }
 
-func GetUser(id string) (Users, error) {
+func GetUser(id string) (Users, int) {
 	var ret Users
 	mtx.RLock()
 	defer mtx.RUnlock()
 	for _, n := range users {
 		if n.ID == id {
 			ret = n
-			return ret, nil
+			return ret, 200
 		}
 	}
-	return ret, errors.New("User ID doesn't exist")
+	return ret, 400
 }
 
 func LoginUser(email string, pwd string) (string, int) {
