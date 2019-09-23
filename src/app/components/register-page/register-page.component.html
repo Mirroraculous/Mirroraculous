@@ -1,10 +1,12 @@
 <a routerLink="/home" routerLinkActive="active">Goto Home</a>
-<h1>Create Account</h1>
+<div class="container">
+<h3 class="title">Create Account</h3>
 <div>
-        <input [(ngModel)]="DTO.username" placeholder="username"/>
-        <input [(ngModel)]="DTO.email" placeholder="email"/>
-        <input [(ngModel)]="DTO.password" placeholder="password"/>
-        <input [(ngModel)]="DTO.confirmPassword" placeholder="confirm password"/>
+        <input class="inputs" [(ngModel)]="DTO.username" placeholder="Username"/>
+        <input class="inputs" [(ngModel)]="DTO.email" placeholder="Email"/>
+        <input class="inputs" [(ngModel)]="DTO.password" placeholder="Password"/>
+        <input class="inputs" [(ngModel)]="DTO.confirmPassword" placeholder="Confirm Password"/>
 </div>
-<a routerLink="/login">Login</a>
-<button (click)="submit()">Register</button>
+<a class="text-link" routerLink="/login">Login</a>
+<button class="button" (click)="submit()">Register</button>
+</div>

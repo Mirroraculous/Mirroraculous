@@ -1,16 +1,14 @@
 
   <a routerLink="/home" routerLinkActive="active">Goto Home</a>
-<h3>Log In</h3>
+<div class="container">
+  <h3 class="title">Log In</h3>
  <!-- <form> -->
+  <input [(ngModel)]="DTO.email" class ="inputs" placeholder = "Email">
+
+  <input [(ngModel)]="DTO.password" class ="inputs" placeholder = "Password">  
  
 
-  <input [(ngModel)]="DTO.email" class ="inputs" placeholder = "email">
-
-  <input [(ngModel)]="DTO.password" class ="inputs" placeholder = "password">  
- 
-  <p>
-    <a routerLink="/register">Register</a>
-  </p>
-  <button (click)="aSubmittedDataFunction()">Log in</button>
-
+  <a class="text-link" routerLink="/register">Register</a>
+  <button class="button" (click)="aSubmittedDataFunction()">Log in</button>
+</div>
  <!-- </form> -->
