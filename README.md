@@ -31,6 +31,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Installing dependancies
 
 The backend is written in Go which follows a specific pathing convention for its packages. After installing Go, run the following commands to install the required packages: 
+- `go get -t -v ./...`
+
+**Alternatively, you can install them all individually with the following commands:**
 - `go get github.com/rs/xid` 
 - `go get github.com/gin-gonic/gin`
 - `go get -u google.golang.org/api/calendar/v3`
