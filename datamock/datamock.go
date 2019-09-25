@@ -1,6 +1,8 @@
 package datamock
 
 import (
+	"errors"
+	"regexp"
 	"sync"
 
 	"github.com/rs/xid"
@@ -89,6 +91,14 @@ func AddUser(name string, email string, pwd string) (string, int) {
 }
 
 func AddEvent(id string, date string, time string, event string) error {
+	if !validTime(time) {
+		return errors.New("Invalid time")
+	}
+
+	if !validDate(date) {
+		return errors.New("Invalid date")
+	}
+
 	tmp := Events{
 		ID:    xid.New().String(),
 		Time:  time,
@@ -102,9 +112,25 @@ func AddEvent(id string, date string, time string, event string) error {
 
 	for i, n := range calendar {
 		if n.Date == date && n.UID == id {
+			for _, event := range n.Event {
+				if event.Time == tmp.Time {
+					return errors.New("Event exists for that time")
+				}
+			}
 			calendar[i].Event = append(n.Event, tmp)
 			found = true
 		}
+	}
+
+	userExists := false
+	for _, n := range users {
+		if n.ID == id {
+			userExists = true
+		}
+	}
+
+	if !userExists {
+		return errors.New("User doesn't exist")
 	}
 
 	if !found {
@@ -192,4 +218,14 @@ func DeleteEvent(uid string, eid string) int {
 		return 200
 	}
 	return 404
+}
+
+func validTime(time string) bool {
+	matched, _ := regexp.MatchString(`\d?\d:\d\d[AP]M`, time)
+	return matched
+}
+
+func validDate(date string) bool {
+	matched, _ := regexp.MatchString(`\d?\d[/\-]\d?\d[/\-]\d\d\d\d`, date)
+	return matched
 }

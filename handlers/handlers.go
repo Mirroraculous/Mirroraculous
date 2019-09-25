@@ -96,7 +96,7 @@ func AddEvent(context *gin.Context) {
 	}
 	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
 	if e != nil {
-		context.JSON(status, e)
+		context.JSON(status, e.Error())
 		return
 	}
 	context.JSON(http.StatusOK, datamock.AddEvent(id, event.Date, event.Time, event.Event))
