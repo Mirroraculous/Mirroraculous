@@ -18,7 +18,7 @@ func RegisterUser(context *gin.Context) {
 	fmt.Println("Hello from register")
 	user, status, e := convertHTTPBodyToUser(context.Request.Body)
 	if e != nil {
-		context.JSON(status, e)
+		context.JSON(status, e.Error())
 		return
 	}
 	id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
@@ -36,7 +36,7 @@ func LoginUser(context *gin.Context) {
 	fmt.Println("Hello from login")
 	user, status, e := convertHTTPBodyToUser(context.Request.Body)
 	if e != nil {
-		context.JSON(status, e)
+		context.JSON(status, e.Error())
 		return
 	}
 	id, status := datamock.LoginUser(user.Email, user.Pwd)
@@ -99,7 +99,7 @@ func AddEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	context.JSON(http.StatusOK, datamock.AddEvent(id, event.Date, event.Time, event.Event))
+	context.JSON(http.StatusOK, datamock.AddEvent(id, event.Date, event.Time, event.Event).Error())
 }
 
 // UpdateEvent updates a specific event; responds status
@@ -114,7 +114,7 @@ func UpdateEvent(context *gin.Context) {
 	}
 	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
 	if e != nil {
-		context.JSON(status, e)
+		context.JSON(status, e.Error())
 		return
 	}
 	eventID := context.Params.ByName("id")
@@ -153,23 +153,23 @@ func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) 
 	return tmp, http.StatusOK, nil
 }
 
-func convertHTTPBodyToEvent(httpBody io.ReadCloser) (EventBody, int, error) {
+func convertHTTPBodyToEvent(httpBody io.ReadCloser) (eventBody, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
-		return EventBody{}, http.StatusInternalServerError, e
+		return eventBody{}, http.StatusInternalServerError, e
 	}
 
-	var tmp EventBody
+	var tmp eventBody
 
 	e = json.Unmarshal(body, &tmp)
 	if e != nil {
-		return EventBody{}, http.StatusBadRequest, e
+		return eventBody{}, http.StatusBadRequest, e
 	}
 
 	return tmp, http.StatusOK, nil
 }
 
-type EventBody struct {
+type eventBody struct {
 	Date  string `json:"date"`
 	Time  string `json:"time"`
 	Event string `json:"event"`
