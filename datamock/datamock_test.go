@@ -48,7 +48,7 @@ func TestGetUser(t *testing.T) {
 	}
 	id, _ := datamock.LoginUser("tim@tim.tim", "123")
 	user, status = datamock.GetUser(id)
-	if status != 400 {
+	if status != 200 {
 		t.Errorf("Test failed, expected no error, got status '%d'", status)
 	} else if user == (datamock.Users{}) {
 		t.Errorf("Test failed, user object is empty")

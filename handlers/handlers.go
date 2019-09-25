@@ -58,9 +58,9 @@ func GetUser(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	user, e := datamock.GetUser(id)
-	if e != nil {
-		context.JSON(400, e)
+	user, status := datamock.GetUser(id)
+	if status != 200 {
+		context.JSON(status, "No user found")
 		return
 	}
 	context.JSON(http.StatusOK, user)
