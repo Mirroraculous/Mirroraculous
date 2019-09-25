@@ -49,6 +49,9 @@ Once this is done, navigate to Go's github package directory (typically: `<home>
 
 When all set up, you can run the server with `go run main.go` when in the root directory of the project. 
 
+### Running tests
+
+To run the tests in go, run `go test ./...` to test all files. Flags can be added such as `-v` for verbose and `-cover` for package coverage. The command `go test -v -cover ./...` will show the verbose coverage report and is recomended. 
 
 ## Mirraculous Style Guides
 
