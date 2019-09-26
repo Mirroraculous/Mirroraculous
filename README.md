@@ -31,6 +31,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Installing dependancies
 
 The backend is written in Go which follows a specific pathing convention for its packages. After installing Go, run the following commands to install the required packages: 
+- `go get -t -v ./...`
+
+**Alternatively, you can install them all individually with the following commands:**
 - `go get github.com/rs/xid` 
 - `go get github.com/gin-gonic/gin`
 - `go get -u google.golang.org/api/calendar/v3`
@@ -46,6 +49,9 @@ Once this is done, navigate to Go's github package directory (typically: `<home>
 
 When all set up, you can run the server with `go run main.go` when in the root directory of the project. 
 
+### Running tests
+
+To run the tests in go, run `go test ./...` to test all files. Flags can be added such as `-v` for verbose and `-cover` for package coverage. The command `go test -v -cover ./...` will show the verbose coverage report and is recomended. 
 
 ## Mirraculous Style Guides
 
