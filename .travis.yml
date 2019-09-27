@@ -7,11 +7,11 @@ go:
 
 go_import_path: github.com/mirroraculous/mirroraculous
 
-# addons:
-#   sonarcloud:
-#     organization: "mirroraculous"
-#     token:
-#       secure: ${SONAR_TOKEN}
+addons:
+  sonarcloud:
+    organization: "mirroraculous"
+    token:
+      secure: ${SONAR_TOKEN}
 
 before_install:
   - go get github.com/rs/xid
@@ -22,4 +22,4 @@ before_install:
 script:
   - go test -v -json ./... > report.json
   - go test -cover -coverprofile=coverage.out ./...
-  # - sonar-scanner
+  - sonar-scanner
