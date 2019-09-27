@@ -8,7 +8,7 @@ import (
 var (
 	name   string
 	email  string
-	pwd    string
+	word   string
 	date   string
 	time1  string
 	time2  string
@@ -21,7 +21,7 @@ var (
 func init() {
 	name = "Tim"
 	email = "tim@tim.tim"
-	pwd = "123"
+	word = "123"
 	date = "12/01/2000"
 	time1 = "9:00AM"
 	time2 = "9:00PM"
@@ -30,21 +30,21 @@ func init() {
 }
 
 func TestAddUser(t *testing.T) {
-	id, status = AddUser(name, email, pwd)
+	id, status = AddUser(name, email, word)
 	if status != 200 {
 		t.Errorf("Test failed, expected status '%d', got: '%d'", 200, status)
 	} else if len(id) < 1 {
 		t.Errorf("Test failed, id not properly created")
 	}
 
-	_, status = AddUser(name, email, pwd)
+	_, status = AddUser(name, email, word)
 	if status != 400 {
 		t.Errorf("Test failed, duplicate registration expected status '%d', got: '%d'", 400, status)
 	}
 }
 
 func TestLoginUser(t *testing.T) {
-	id, status = LoginUser("tim@tim.ti", pwd)
+	id, status = LoginUser("tim@tim.ti", word)
 	if id != "Username not found" {
 		t.Errorf("Test failed, expected Username not found, got '%s'", id)
 	} else if status != 401 {
@@ -58,7 +58,7 @@ func TestLoginUser(t *testing.T) {
 		t.Errorf("Test failed, expected status 401, got '%d'", status)
 	}
 
-	id, status = LoginUser(email, pwd)
+	id, status = LoginUser(email, word)
 	if status != 200 {
 		t.Errorf("Test failed, return error: '%s'", id)
 	}
