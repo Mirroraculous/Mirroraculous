@@ -1,0 +1,25 @@
+dist: trusty
+
+language: go
+
+go: 
+- 1.13
+
+go_import_path: github.com/mirroraculous/mirroraculous
+
+addons:
+  sonarcloud:
+    organization: "mirroraculous"
+    token:
+      secure: ${SONAR_TOKEN}
+
+before_install:
+  - go get github.com/rs/xid
+  - go get github.com/gin-gonic/gin
+  - go get github.com/dgrijalva/jwt-go
+  - go get github.com/gin-contrib/cors  
+
+script:
+  - go test -v -json ./... > report.json
+  - go test -cover -coverprofile=coverage.out ./...
+  - sonar-scanner
