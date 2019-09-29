@@ -40,6 +40,7 @@ The backend is written in Go which follows a specific pathing convention for its
 - `go get -u golang.org/x/oauth2/google`
 - `go get github.com/dgrijalva/jwt-go`
 - `go get github.com/gin-contrib/cors`
+- `go get go.mongodb.org/mongo-driver`
 
 ### Pathing for the project
 

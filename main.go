@@ -1,13 +1,21 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
 
+	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
+	
+	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/handlers"
 )
 
 func main() {
+	e := config.Connect()
+	if e != nil {
+		fmt.Println("DB unable to connect")
+		return
+	}
 	server := gin.Default()
 	server.Use(cors.New(cors.Config{
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
