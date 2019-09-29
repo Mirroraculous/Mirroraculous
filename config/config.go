@@ -4,19 +4,25 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
-	"time"
 
+	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Config struct {
+var user, calendar *mongo.Collection
+
+type config struct {
 	MongoURI string `json:"mongoURI"`
+	DBname   string `json:"dbname"`
+	UserCol  string `json:"usercollection"`
+	CalCol   string `json:"calendarcollection"`
 }
 
 func Connect() error {
-	var conf Config
+	var conf config
 	file, e := os.Open("config/default.json")
 	if e != nil {
 		fmt.Println(e)
@@ -29,20 +35,33 @@ func Connect() error {
 		return e
 	}
 
-	client, e := mongo.NewClient(options.Client().ApplyURI(conf.MongoURI))
+	clientOptions := options.Client().ApplyURI(conf.MongoURI)
+
+	client, e := mongo.Connect(context.TODO(), clientOptions)
 
 	if e != nil {
-		fmt.Println(e)
+		fmt.Println(e.Error())
 		return e
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
-	defer cancel()
-	e = client.Connect(ctx)
-	if e != nil {
-		fmt.Println(e)
+	if client.Ping(context.TODO(), nil) != nil {
+		fmt.Println(e.Error())
 		return e
 	}
+
+	user = client.Database(conf.DBname).Collection(conf.UserCol)
+	calendar = client.Database(conf.DBname).Collection(conf.CalCol)
+
 	fmt.Println("connected!")
 	return nil
+}
+
+func AddUser(newUser models.User) {
+	res, e := user.InsertOne(context.Background(), newUser)
+
+	if e != nil {
+		log.Fatal(e.Error())
+	}
+
+	fmt.Println("Inserted user: ", res.InsertedID)
 }

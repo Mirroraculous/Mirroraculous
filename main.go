@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
+	
 	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/handlers"
 )
@@ -15,6 +17,14 @@ func main() {
 		return
 	}
 	server := gin.Default()
+	server.Use(cors.New(cors.Config{
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Content-Type", "Content-Length", "x-auth-token"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowAllOrigins:  false,
+		AllowOriginFunc:  func(origin string) bool { return true },
+	}))
 
 	server.POST("/api/user", handlers.RegisterUser)
 
