@@ -9,7 +9,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/mirroraculous/mirroraculous/datamock"
+	"github.com/mirroraculous/mirroraculous/linkers"
 	"github.com/mirroraculous/mirroraculous/middleware"
+	"github.com/mirroraculous/mirroraculous/models"
 )
 
 // RegisterUser adds a new user, responds with user token
@@ -21,7 +23,8 @@ func RegisterUser(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
+	// id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
+	id, status := linkers.AddUser(user)
 	if status != 200 {
 		context.JSON(status, id)
 		return
@@ -137,17 +140,17 @@ func DeleteEvent(context *gin.Context) {
 	context.JSON(status, "")
 }
 
-func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) {
+func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
-		return datamock.Users{}, http.StatusInternalServerError, e
+		return models.User{}, http.StatusInternalServerError, e
 	}
 
-	var tmp datamock.Users
+	var tmp models.User
 
 	e = json.Unmarshal(body, &tmp)
 	if e != nil {
-		return datamock.Users{}, http.StatusBadRequest, e
+		return models.User{}, http.StatusBadRequest, e
 	}
 
 	return tmp, http.StatusOK, nil
