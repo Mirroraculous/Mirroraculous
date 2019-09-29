@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var user, calendar *mongo.Collection
+var User, Calendar *mongo.Collection
 
 type config struct {
 	MongoURI string `json:"mongoURI"`
@@ -49,15 +49,15 @@ func Connect() error {
 		return e
 	}
 
-	user = client.Database(conf.DBname).Collection(conf.UserCol)
-	calendar = client.Database(conf.DBname).Collection(conf.CalCol)
+	User = client.Database(conf.DBname).Collection(conf.UserCol)
+	Calendar = client.Database(conf.DBname).Collection(conf.CalCol)
 
 	fmt.Println("connected!")
 	return nil
 }
 
 func AddUser(newUser models.User) {
-	res, e := user.InsertOne(context.Background(), newUser)
+	res, e := User.InsertOne(context.Background(), newUser)
 
 	if e != nil {
 		log.Fatal(e.Error())
