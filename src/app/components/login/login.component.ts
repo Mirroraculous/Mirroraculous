@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
+import { SessionService } from '../../services/session.service';
+import { Router } from "@angular/router";
+
+
 //import service here as well
 interface DTO{
   email: string;
@@ -22,11 +26,16 @@ export class LoginComponent implements OnInit {
 
   // where you store form info and what you send to the backend
   //import service through the constructor
-  constructor(private loginService: LoginService) { 
+  constructor(
+    private router: Router,
+    private session: SessionService,
+    private loginService: LoginService) { 
     
   }
 
   ngOnInit() {
+    // this.checkSession();
+    this.session.checkSession();
   }
   //gets called when user hits a submit key
   aSubmittedDataFunction(){
@@ -35,7 +44,9 @@ export class LoginComponent implements OnInit {
       val => {
         if (val.status === 200 || val.status === 204){
           this.message = '';
-          console.log(val);
+          // console.log(val.body);
+          localStorage.setItem('sessionToken',val.body);
+          this.session.checkSession();
         }
         else{
           this.message = 'Failed to login. Incorrect credentials';
