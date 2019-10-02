@@ -53,8 +53,9 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should have full dto',()=>{
-    expect(component.DTO.email.toBeUndefined());
+  it('should have empty dto',()=>{
+    expect(component.DTO.email).toBe(null);
+    expect(component.DTO.password).toBe(null);
   });
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -55,4 +55,16 @@ describe('OverlayComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should properly initialize',()=>{
+    expect(component.showGreeting).toBe(true);
+    expect(component.showGreeting2).toBe(true);
+    expect(component.showGreeting3).toBe(false);
+    expect(component.remove).toBe(false);
+  });
+  it('should have undefined unused variables',()=>{
+    expect(component.remove2).toBe(undefined);
+    expect(component.timer).toBe(undefined);
+    expect(component.startTime).toBe(undefined);
+    expect(component.stopTime).toBe(undefined);
+  });
 });
