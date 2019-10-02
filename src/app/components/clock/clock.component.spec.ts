@@ -55,8 +55,24 @@ describe('ClockComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should have military set to false',()=>{
+  //nowish;
+  // hours;
+  // militaryHours;
+  // minutes;
+  // seconds;
+  // showClockOptions = false;
+  // extension;
+  // military = false;
+  // timerId= null;
+  it('check init values',()=>{
     expect(component.military).toBe(false);
+    // expect(component.nowish).toBe(undefined);
+    // expect(component.hours).toBe(undefined);
+    // expect(component.militaryHours).toBe(undefined);
+    // expect(component.minutes).toBe(undefined);
+    // expect(component.seconds).toBe(undefined);
+    // expect(component.showClockOptions).toBe(false);
+    // expect(component.extension).toBe(undefined);
   });
   it('should create', () => {
     expect(component).toBeTruthy();
