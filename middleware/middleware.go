@@ -35,10 +35,7 @@ func VerifyToken(tokenString string) (string, int) {
 		return jwtSecret, nil
 	})
 	if e != nil {
-		if e == jwt.ErrSignatureInvalid {
-			return "Invalid Token", 401
-		}
-		return "Server Error", 500
+		return "Invalid Token", 401
 	}
 	if !token.Valid {
 		return "Invalid Token", 401
