@@ -12,7 +12,7 @@ import (
 )
 
 func AddUser(newUser models.User) (string, int) {
-	if !validEmail(newUser.Email) || newUser.Name == "" || !validPassword(newUser.Password) {
+	if !validEmail(newUser.Email) || newUser.Name == "" || !validPassword(newUser.Pwd) {
 		return "Incomplete Submission", 400
 	}
 	var u models.User
@@ -25,7 +25,7 @@ func AddUser(newUser models.User) (string, int) {
 		return "Server error", 500
 	}
 
-	newUser.Password, err = salt(newUser.Password)
+	newUser.Pwd, err = salt(newUser.Pwd)
 	if err != nil {
 		return "Server error", 500
 	}
