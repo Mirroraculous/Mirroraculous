@@ -55,13 +55,3 @@ func Connect() error {
 	fmt.Println("connected!")
 	return nil
 }
-
-func AddUser(newUser models.User) {
-	res, e := User.InsertOne(context.Background(), newUser)
-
-	if e != nil {
-		log.Fatal(e.Error())
-	}
-
-	fmt.Println("Inserted user: ", res.InsertedID)
-}
