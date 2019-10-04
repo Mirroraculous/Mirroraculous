@@ -50,7 +50,8 @@ func LoginUser(email string, pwd string) (string, int) {
 		return "Invalid password", 401
 	}
 
-	return u.ID.String(), 200
+	return fmt.Sprintf("%q", u.ID.Hex()), 200
+
 }
 
 func salt(password string) (string, error) {
