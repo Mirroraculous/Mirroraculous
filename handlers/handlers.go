@@ -42,7 +42,7 @@ func LoginUser(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	id, status := datamock.LoginUser(user.Email, user.Pwd)
+	id, status := linkers.LoginUser(user.Email, user.Pwd)
 	if status != 200 {
 		context.JSON(status, id)
 		return

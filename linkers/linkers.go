@@ -39,6 +39,20 @@ func AddUser(newUser models.User) (string, int) {
 	return fmt.Sprintf("%v", res.InsertedID), 200
 }
 
+func LoginUser(email string, pwd string) (string, int) {
+	var u models.User
+	err := config.User.FindOne(context.Background(), bson.D{{"email", email}}).Decode(&u)
+	if err != nil {
+		return "Email not found", 404
+	}
+
+	if !compHash(pwd, u.Pwd) {
+		return "Invalid password", 401
+	}
+
+	return u.ID.String(), 200
+}
+
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e
