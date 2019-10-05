@@ -13,18 +13,8 @@ type User struct {
 	Pwd   string             `json:"password"`
 }
 
-type Reminders struct {
-	Method  string `json:"method"`
-	Minutes int    `jsong:"minutes"`
-}
-
-type Notifications struct {
-	Type   string `json:"type"`
-	Method string `json:"method"`
-}
-
 type Event struct {
-	UserID      primitive.ObjectID `json:"userid" bson:"userid"`
+	UserID      string             `json:"userid"`
 	ID          primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Status      string             `json:"status"`
 	Link        string             `json:"htmlLink"`

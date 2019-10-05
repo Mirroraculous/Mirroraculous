@@ -8,6 +8,7 @@ import (
 	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -53,18 +54,27 @@ func LoginUser(email string, pwd string) (string, int) {
 	return fmt.Sprintf("%v", u.ID.Hex()), 200
 }
 
-func AddEvent(event models.Event) (error, int) {
-
-}
 func GetUser(id string) (models.User, int) {
 	var u models.User
-	err := config.User.FindOne(context.Background(), bson.D{{"_id", id}}).Decode(&u)
-	if err ! = nil {
-		return "User not found", 404
+	fmt.Println("Linkers GetUser")
+	primId, _ := primitive.ObjectIDFromHex(id)
+	err := config.User.FindOne(context.Background(), bson.D{{"_id", primId}}).Decode(&u)
+	if err != nil {
+		return u, 404
 	}
-	
 	return u, 200
 }
+
+func AddEvent(id string, event models.Event) (error, int) {
+	event.UserID = id
+	res, e := config.Calendar.InsertOne(context.Background(), event)
+	fmt.Println(res)
+	if e != nil {
+		return e, 500
+	}
+	return nil, 200
+}
+
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e

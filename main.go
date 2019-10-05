@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
-	
+	"github.com/gin-gonic/gin"
+
 	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/handlers"
 )
@@ -33,8 +33,8 @@ func main() {
 
 	server.GET("/api/calendar", handlers.GetCalendar)
 	server.POST("/api/calendar", handlers.AddEvent)
-	server.PUT("/api/calendar/:id", handlers.UpdateEvent)
-	server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
+	// server.PUT("/api/calendar/:id", handlers.UpdateEvent)
+	// server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
 
 	err := server.Run(":3000")
 	if err != nil {
