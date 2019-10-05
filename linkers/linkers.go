@@ -9,6 +9,7 @@ import (
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -73,6 +74,24 @@ func AddEvent(id string, event models.Event) (error, int) {
 		return e, 500
 	}
 	return nil, 200
+}
+
+func GetCalendar(id string) ([]models.Event, int) {
+	var ret []models.Event
+	findOptions := options.Find()
+	findOptions.SetLimit(2)
+
+	res, e := config.Calendar.Find(context.Background(), bson.D{{"userid", id}}, findOptions)
+
+	for res.Next(context.Background()) {
+		var temp models.Event
+		e = res.Decode(&temp)
+		if e != nil {
+			return ret, 500
+		}
+		ret = append(ret, temp)
+	}
+	return ret, 200
 }
 
 func salt(password string) (string, error) {

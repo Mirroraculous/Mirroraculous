@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mirroraculous/mirroraculous/datamock"
 	"github.com/mirroraculous/mirroraculous/linkers"
 	"github.com/mirroraculous/mirroraculous/middleware"
 	"github.com/mirroraculous/mirroraculous/models"
@@ -79,7 +78,7 @@ func GetCalendar(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	calendar, status := datamock.GetCalendar(id)
+	calendar, status := linkers.GetCalendar(id)
 	if status != 200 {
 		context.JSON(status, "No calendar found for user")
 		return
