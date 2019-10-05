@@ -50,7 +50,10 @@ func LoginUser(email string, pwd string) (string, int) {
 		return "Invalid password", 401
 	}
 
-	return fmt.Sprintf("%q", u.ID.Hex()), 200
+	return fmt.Sprintf("%v", u.ID.Hex()), 200
+}
+
+func AddEvent(event models.Event) (error, int) {
 
 }
 
