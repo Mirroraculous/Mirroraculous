@@ -108,25 +108,25 @@ func AddEvent(context *gin.Context) {
 	context.JSON(status, "Event added")
 }
 
-// UpdateEvent updates a specific event; responds status
-// PUT time, event to :3000/api/calendar/:id
-// func UpdateEvent(context *gin.Context) {
-// 	fmt.Println("Hello from UpdateEvent")
-// 	token := context.Request.Header.Get("x-auth-token")
-// 	id, status := middleware.VerifyToken(token)
-// 	if status != 200 {
-// 		context.JSON(status, id)
-// 		return
-// 	}
-// 	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
-// 	if e != nil {
-// 		context.JSON(status, e.Error())
-// 		return
-// 	}
-// 	eventID := context.Params.ByName("id")
-// 	status = datamock.UpdateEvent(id, eventID, event.Time, event.Event)
-// 	context.JSON(status, "")
-// }
+UpdateEvent updates a specific event; responds status
+PUT time, event to :3000/api/calendar/:id
+func UpdateEvent(context *gin.Context) {
+	fmt.Println("Hello from UpdateEvent")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	event, status, e := convertHTTPBodyToEvent(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	eventID := context.Params.ByName("id")
+	status = linkers.UpdateEvent(event)
+	context.JSON(status, "")
+}
 
 // // DeleteEvent deletes a specific event; responds status
 // // DELETE to :3000/api/calendar/:id
