@@ -92,6 +92,20 @@ func GetCalendar(id string) ([]models.Event, int) {
 	return ret, 200
 }
 
+func UpdateEvent(event models.Event) (error, int) {
+ var temp models.Event
+  _, err := config.Calendar.UpdateOne(context.Background(), bson.D{{"_id", event.ID}}, event, options.UpdateOptions())
+  if err := nil {
+    return err, 500
+  }
+  return nil, 200
+
+}
+
+func DeleteEvent() () {
+   
+}
+
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e
