@@ -53,7 +53,15 @@ func LoginUser(email string, pwd string) (string, int) {
 	return fmt.Sprintf("%q", u.ID.Hex()), 200
 
 }
-
+func GetUser(id string) (models.User, int) {
+	var u models.User
+	err := config.User.FindOne(context.Background(), bson.D{{"_id", id}}).Decode(&u)
+	if err ! = nil {
+		return "User not found", 404
+	}
+	
+	return u, 200
+}
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e
