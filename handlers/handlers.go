@@ -104,12 +104,13 @@ func AddEvent(context *gin.Context) {
 	e, status = linkers.AddEvent(id, event)
 	if e != nil {
 		context.JSON(status, "Event not added")
+		return
 	}
 	context.JSON(status, "Event added")
 }
 
-UpdateEvent updates a specific event; responds status
-PUT time, event to :3000/api/calendar/:id
+// UpdateEvent updates a specific event; responds status
+// PUT time, event to :3000/api/calendar/:id
 func UpdateEvent(context *gin.Context) {
 	fmt.Println("Hello from UpdateEvent")
 	token := context.Request.Header.Get("x-auth-token")
@@ -123,9 +124,12 @@ func UpdateEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	eventID := context.Params.ByName("id")
-	status = linkers.UpdateEvent(event)
-	context.JSON(status, "")
+	e, status = linkers.UpdateEvent(event)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "Event updated!")
 }
 
 // // DeleteEvent deletes a specific event; responds status
