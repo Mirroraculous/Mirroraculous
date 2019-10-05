@@ -57,7 +57,6 @@ func LoginUser(email string, pwd string) (string, int) {
 
 func GetUser(id string) (models.User, int) {
 	var u models.User
-	fmt.Println("Linkers GetUser")
 	primId, _ := primitive.ObjectIDFromHex(id)
 	err := config.User.FindOne(context.Background(), bson.D{{"_id", primId}}).Decode(&u)
 	if err != nil {
@@ -68,8 +67,7 @@ func GetUser(id string) (models.User, int) {
 
 func AddEvent(id string, event models.Event) (error, int) {
 	event.UserID = id
-	res, e := config.Calendar.InsertOne(context.Background(), event)
-	fmt.Println(res)
+	_, e := config.Calendar.InsertOne(context.Background(), event)
 	if e != nil {
 		return e, 500
 	}
