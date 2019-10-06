@@ -34,7 +34,7 @@ func main() {
 	server.GET("/api/calendar", handlers.GetCalendar)
 	server.POST("/api/calendar", handlers.AddEvent)
 	server.PUT("/api/calendar/:id", handlers.UpdateEvent)
-	// server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
+	server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
 
 	err := server.Run(":3000")
 	if err != nil {

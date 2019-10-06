@@ -101,7 +101,8 @@ func UpdateEvent(event models.Event) (error, int) {
 }
 
 func DeleteEvent(eventID string) (error, int) {
-	_, err := config.Calendar.DeleteOne(context.Background(), bson.D{{"_id", eventID}})
+	primEID, _ := primitive.ObjectIDFromHex(eventID)
+	_, err := config.Calendar.DeleteOne(context.Background(), bson.D{{"_id", primEID}})
 	if err != nil {
 		return err, 500
 	}
