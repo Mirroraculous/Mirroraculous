@@ -100,8 +100,12 @@ func UpdateEvent(event models.Event) (error, int) {
 	return nil, 200
 }
 
-func DeleteEvent() {
-
+func DeleteEvent(eventID string) (error, int) {
+	_, err := config.Calendar.DeleteOne(context.Background(), bson.D{{"_id", eventID}})
+	if err != nil {
+		return err, 500
+	}
+	return nil, 200
 }
 
 func salt(password string) (string, error) {

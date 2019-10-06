@@ -106,7 +106,7 @@ func AddEvent(context *gin.Context) {
 		context.JSON(status, "Event not added")
 		return
 	}
-	context.JSON(status, "Event added")
+	context.JSON(status, "Event added!")
 }
 
 // UpdateEvent updates a specific event; responds status
@@ -132,20 +132,24 @@ func UpdateEvent(context *gin.Context) {
 	context.JSON(status, "Event updated!")
 }
 
-// // DeleteEvent deletes a specific event; responds status
-// // DELETE to :3000/api/calendar/:id
-// func DeleteEvent(context *gin.Context) {
-// 	fmt.Println("Hello from DeleteEvent")
-// 	token := context.Request.Header.Get("x-auth-token")
-// 	id, status := middleware.VerifyToken(token)
-// 	if status != 200 {
-// 		context.JSON(status, id)
-// 		return
-// 	}
-// 	eventID := context.Params.ByName("id")
-// 	status = datamock.DeleteEvent(id, eventID)
-// 	context.JSON(status, "")
-// }
+// DeleteEvent deletes a specific event; responds status
+// DELETE to :3000/api/calendar/:id
+func DeleteEvent(context *gin.Context) {
+	fmt.Println("Hello from DeleteEvent")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	eventID := context.Params.ByName("id")
+	e, status := linkers.DeleteEvent(eventID)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "Event deleted!")
+}
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
