@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Mirroraculous';
-  registerLoginHome = 0;
-  setVal(val){
-    this.registerLoginHome = val;
+  constructor(
+    
+  ){
+
+  }
+  ngOnInit() {
+    
   }
 }

@@ -19,13 +19,13 @@ $brown-orange-opacity: rgba(78,31,25, .1);
 
     .title{
         text-align: center;
-        color: $red;
+        color: $blue-bright;
         font-size: 1em;
     }
 
     .text-link{
         font-size: .5em;
-        color: $dirty-purple;
+        color: $blue-bright;
         text-decoration: none;
         padding: .5em;
         padding-top: .2em;
@@ -38,10 +38,10 @@ $brown-orange-opacity: rgba(78,31,25, .1);
         box-sizing: border-box;
         font-size: .5em;
         display:block;
-        background-color: $dirty-purple-opacity;
+        background-color: $blue-opacity;
         color: #fff;
         border: none;
-        border-bottom: .15em solid $dirty-purple;
+        border-bottom: .15em solid $blue;
         margin-bottom: 1em;
         padding: .5em;
         width: 100%;
@@ -50,7 +50,7 @@ $brown-orange-opacity: rgba(78,31,25, .1);
 
     .button{
         font-size: .5em;
-        background-color: $red;
+        background-color: $blue-bright;
         color: $brown-orange;
         border: none;
         padding: .5em;
