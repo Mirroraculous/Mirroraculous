@@ -25,7 +25,7 @@ export class SessionService {
         }
         else{
           console.log('geddout');  
-          // this.router.navigate(['/login']);
+          this.router.navigate(['/login']);
 
         }
       });
