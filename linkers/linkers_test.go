@@ -6,7 +6,3 @@ var (
 	User     []datamock.Users
 	Calendar []datamock.Days
 )
-
-func init() {
-
-}
