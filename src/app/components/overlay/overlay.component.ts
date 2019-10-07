@@ -56,7 +56,6 @@ import {
   ],
 })
 export class OverlayComponent implements OnInit {
-  // overlay: OverlayModule = new OverlayModule();
   showGreeting;
   showGreeting2;
   showGreeting3;
@@ -72,7 +71,7 @@ export class OverlayComponent implements OnInit {
     this.remove = false;
    }
   onAnimationEvent ( event: AnimationEvent ) {
-    console.log(event);
+    // console.log(event);
   }
   ngOnInit() {
     const timer2 = timer(4000);
