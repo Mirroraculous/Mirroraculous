@@ -17,6 +17,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EventsComponent } from './components/events/events.component';
+import { EventsPopupComponent } from './components/events-popup/events-popup.component';
 
 
 
@@ -28,7 +29,8 @@ import { EventsComponent } from './components/events/events.component';
     ClockComponent,
     LoginComponent,
     RegisterPageComponent,
-    EventsComponent
+    EventsComponent,
+    EventsPopupComponent
   ],
   imports: [
     BrowserModule,
