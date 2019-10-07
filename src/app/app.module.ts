@@ -16,6 +16,9 @@ import { ClockComponent } from './components/clock/clock.component';
 import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 
 
@@ -26,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ClockComponent,
     LoginComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

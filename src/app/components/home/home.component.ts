@@ -15,11 +15,11 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.session.checkSession();
+    // this.session.checkSession();
   }  
   logout(){
     localStorage.removeItem('sessionToken');
-    this.session.checkSession();
+    this.router.navigate(['login']);
   }
 
 }

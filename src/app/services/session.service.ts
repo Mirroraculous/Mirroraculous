@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from "@angular/router";
+// import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable({
@@ -14,27 +16,15 @@ export class SessionService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private jwtHelper: JwtHelperService,
   ) { }
   private url = 'http://localhost:3000/api/auth';
-  checkSession(){
-    if(localStorage.getItem('sessionToken')!= null &&localStorage.getItem('sessionToken')!= undefined ){      
-      this.getSession(localStorage.getItem('sessionToken')).subscribe(val =>{
-        console.log(val.status, val)
-        if (val.id!=null && val.id!=undefined){
-          // this.router.navigate(['/home']);      
-          return true;    
-        }
-        else{
-          console.log('geddout');  
-          // this.router.navigate(['/login']);
-          return false;
-
-        }
-      });
-    }else{
-      // this.router.navigate(['/login']);
-      return false;
-    }
+  
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('sessionToken');
+    // Check whether the token is expired and return
+    // true or false
+    return !this.jwtHelper.isTokenExpired(token);
   }
   getSession(token) {
     const httpOptions = {
