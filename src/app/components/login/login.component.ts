@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     // console.log(this.DTO);
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
+        console.log(val.status);
         if (val.status === 200 || val.status === 204){
           this.message = '';
           // console.log(val.body);
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
         }
         else{
           this.message = 'Failed to login. Incorrect credentials';
-          console.log(val);
+          // console.log(val);
         }
       }
     );
