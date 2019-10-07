@@ -39,7 +39,6 @@ export class SessionService {
         'x-auth-token': token
       })
     }
-    // let options = new RequestOptions({headers:headers})
     return this.http.get<any>(this.url,httpOptions).pipe(
       catchError(this.handleError<any>(`userInfo`, token))
     );

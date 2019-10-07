@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'Mirroraculous';
-  // registerLoginHome = 0;
   constructor(
     
   ){
