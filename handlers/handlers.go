@@ -124,7 +124,7 @@ func UpdateEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	e, status = linkers.UpdateEvent(event)
+	e, status = linkers.UpdateEvent(event, id)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return
@@ -143,7 +143,7 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 	eventID := context.Params.ByName("id")
-	e, status := linkers.DeleteEvent(eventID)
+	e, status := linkers.DeleteEvent(eventID, id)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return

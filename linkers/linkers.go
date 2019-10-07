@@ -77,7 +77,7 @@ func AddEvent(id string, event models.Event) (error, int) {
 func GetCalendar(id string) ([]models.Event, int) {
 	var ret []models.Event
 	findOptions := options.Find()
-	findOptions.SetLimit(2)
+	findOptions.SetLimit(30)
 
 	res, e := config.Calendar.Find(context.Background(), bson.D{{"userid", id}}, findOptions)
 
@@ -92,17 +92,17 @@ func GetCalendar(id string) ([]models.Event, int) {
 	return ret, 200
 }
 
-func UpdateEvent(event models.Event) (error, int) {
-	_, err := config.Calendar.ReplaceOne(context.Background(), bson.D{{"_id", event.ID}}, event)
+func UpdateEvent(event models.Event, id string) (error, int) {
+	_, err := config.Calendar.ReplaceOne(context.Background(), bson.D{{"_id", event.ID}, {"userid", id}}, event)
 	if err != nil {
 		return err, 500
 	}
 	return nil, 200
 }
 
-func DeleteEvent(eventID string) (error, int) {
+func DeleteEvent(eventID string, id string) (error, int) {
 	primEID, _ := primitive.ObjectIDFromHex(eventID)
-	_, err := config.Calendar.DeleteOne(context.Background(), bson.D{{"_id", primEID}})
+	_, err := config.Calendar.DeleteOne(context.Background(), bson.D{{"_id", primEID}, {"userid", id}})
 	if err != nil {
 		return err, 500
 	}
