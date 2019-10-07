@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // this.checkSession();
     // this.session.checkSession();
+    this.router.navigate(['/home']);      
+
   }
   //gets called when user hits a submit key
   aSubmittedDataFunction(){
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
           this.message = '';
           // console.log(val.body);
           localStorage.setItem('sessionToken',val.body);
-          this.session.checkSession();
+          this.router.navigate(['/home']);
         }
         else{
           this.message = 'Failed to login. Incorrect credentials';

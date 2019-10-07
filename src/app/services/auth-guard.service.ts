@@ -15,20 +15,18 @@ export class AuthGuard implements CanActivate {
       this._authService.getSession(localStorage.getItem('sessionToken')).subscribe(val =>{
         console.log(val.status, val)
         if (val.id!=null && val.id!=undefined){
-          // this._router.navigate(['/home']);
-          console.log('hi');
-          return true;
-          
+          return true;    
         }
         else{
-          console.log('geddout');
-
+          console.log('geddout');  
+          // this.router.navigate(['/login']);
           return false;
 
         }
       });
     }else{
-      console.log('getting to false');
+      console.log('thinks theres no session token');
+      // this.router.navigate(['/login']);
       return false;
     }
   }

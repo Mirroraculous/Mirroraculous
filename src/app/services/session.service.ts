@@ -21,16 +21,19 @@ export class SessionService {
       this.getSession(localStorage.getItem('sessionToken')).subscribe(val =>{
         console.log(val.status, val)
         if (val.id!=null && val.id!=undefined){
-          this.router.navigate(['/home']);          
+          // this.router.navigate(['/home']);      
+          return true;    
         }
         else{
           console.log('geddout');  
           // this.router.navigate(['/login']);
+          return false;
 
         }
       });
     }else{
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
+      return false;
     }
   }
   getSession(token) {
