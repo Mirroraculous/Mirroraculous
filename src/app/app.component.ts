@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -10,11 +11,12 @@ export class AppComponent {
   title = 'Mirroraculous';
   // registerLoginHome = 0;
   constructor(
+    private router: Router,
     
   ){
 
   }
   ngOnInit() {
-    
+    this.router.navigate(['/home']);       
   }
 }

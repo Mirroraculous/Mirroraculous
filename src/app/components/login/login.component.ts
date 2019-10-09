@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // this.checkSession();
     // this.session.checkSession();
-    this.router.navigate(['/home']);      
 
   }
   //gets called when user hits a submit key
