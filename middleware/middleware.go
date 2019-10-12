@@ -39,9 +39,6 @@ func VerifyToken(tokenString string) (string, int) {
 	if !token.Valid {
 		return "Invalid Token", 401
 	}
-	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) < 0*time.Second {
-		return "Expired Token", 401
-	}
 	return claims.ID, 200
 
 }
