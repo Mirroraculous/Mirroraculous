@@ -17,7 +17,7 @@ func MakeToken(id string) (string, int) {
 	claims := &Claims{
 		ID: id,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Second * 30).Unix(),
+			ExpiresAt: time.Now().Add(time.Minute * 30).Unix(),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -34,10 +34,7 @@ func VerifyToken(tokenString string) (string, int) {
 		return jwtSecret, nil
 	})
 	if e != nil {
-		if e == jwt.ErrSignatureInvalid {
-			return "Invalid Token", 401
-		}
-		return "Server Error", 500
+		return "Invalid Token", 401
 	}
 	if !token.Valid {
 		return "Invalid Token", 401
