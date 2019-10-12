@@ -124,3 +124,67 @@ func TestGetUser(t *testing.T) {
 		t.Errorf("Test failed, expected status 200 and user's email to be \"hello\", got %d and %s", status, user.Email)
 	}
 }
+
+func TestAddEvent(t *testing.T) {
+	testEvent := models.Event{}
+	if e, status := AddEvent("000", testEvent, func(event *models.Event) error {
+		return errors.New("bad")
+	}); e.Error() != "bad" || status != 500 {
+		t.Errorf("Test failed, expected status 500 and \"bad\", got %d and %s", status, e.Error())
+	}
+
+	if e, status := AddEvent("000", testEvent, func(event *models.Event) error {
+		return nil
+	}); e != nil || status != 200 {
+		t.Errorf("Test failed, expected status 200, got %d", status)
+	}
+}
+
+func TestGetCalendar(t *testing.T) {
+	if _, status := GetCalendar("000", 1, func(query bson.D, n int64) ([]models.Event, error) {
+		var ev []models.Event
+		return ev, errors.New("bad")
+	}); status != 500 {
+		t.Errorf("Test failed, expected status 500, got %d", status)
+	}
+
+	if event, status := GetCalendar("000", 5, func(query bson.D, n int64) ([]models.Event, error) {
+		var ev []models.Event
+		var i int64
+		for i = 0; i < n; i++ {
+			ev = append(ev, models.Event{UserID: "123"})
+		}
+		return ev, nil
+	}); len(event) != 5 || status != 200 {
+		t.Errorf("Test failed, expected status 500, got %d", status)
+	}
+}
+
+func TestUpdateEvent(t *testing.T) {
+	testEvent := models.Event{}
+	if e, status := UpdateEvent(testEvent, "abc", func(query bson.D, e *models.Event) error {
+		return errors.New("test error")
+	}); e == nil || status != 500 {
+		t.Errorf("Test failed, expected status 500 and an error, got %d and %s", status, e.Error())
+	}
+
+	if e, status := UpdateEvent(testEvent, "abc", func(query bson.D, e *models.Event) error {
+		return nil
+	}); e != nil || status != 200 {
+		t.Errorf("Test failed, expected status 200 and nil error, got %d and %s", status, e.Error())
+	}
+}
+
+func TestDeleteEvent(t *testing.T) {
+	if e, status := DeleteEvent("123", "abc", func(query bson.D) error {
+		return errors.New("test error")
+	}); e.Error() != "test error" || status != 500 {
+		t.Errorf("Test failed, expected status 200 and \"test error\", got %d and %s", status, e.Error())
+	}
+
+	if e, status := DeleteEvent("123", "abc", func(query bson.D) error {
+		return nil
+	}); e != nil || status != 200 {
+		t.Errorf("Test failed, expected status 200 and nil error, got %d and %s", status, e.Error())
+	}
+}
