@@ -16,6 +16,10 @@ import { ClockComponent } from './components/clock/clock.component';
 import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtModule } from "@auth0/angular-jwt";
+
 
 
 
@@ -26,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ClockComponent,
     LoginComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -36,8 +41,17 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatIconModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem("access_token");
+        },
+        whitelistedDomains: ["example.com"],
+        blacklistedRoutes: ["example.com/examplebadroute/"],
+      }
+    })
   ],
-  providers: [],
+  providers: [JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
