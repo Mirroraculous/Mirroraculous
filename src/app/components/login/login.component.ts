@@ -24,12 +24,11 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private session: SessionService,
-    private loginService: LoginService) {     
+    private loginService: LoginService) {
   }
 
   ngOnInit() {
   }
-
   aSubmittedDataFunction(){
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {

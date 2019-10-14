@@ -25,14 +25,15 @@ export class SessionService {
     // Check whether the token is expired and return
     // true or false
     return !this.jwtHelper.isTokenExpired(token);
+
   }
+  
   getSession(token) {
     const httpOptions = {
       headers: new HttpHeaders({
         'x-auth-token': token
       })
     }
-    // let options = new RequestOptions({headers:headers})
     return this.http.get<any>(this.url,httpOptions).pipe(
       catchError(this.handleError<any>(`userInfo`, token))
     );

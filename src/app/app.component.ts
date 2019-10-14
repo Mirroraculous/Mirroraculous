@@ -9,7 +9,6 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
   title = 'Mirroraculous';
-  // registerLoginHome = 0;
   constructor(
     private router: Router,
     
