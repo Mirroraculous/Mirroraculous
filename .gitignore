@@ -9,6 +9,9 @@
 
 # dependencies
 /node_modules
+!./node_modules/@auth0/angular-jwt/src/jwt.interceptor.d.ts
+!./node_modules/@auth0/angular-jwt/src/jwt.interceptor.js
+
 
 # profiling files
 chrome-profiler-events*.json
