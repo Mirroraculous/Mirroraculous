@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
 interface Account{
   email: string;
   password: string;
-  username: string;
+  name: string;
   confirmPassword: string;
 }
 
@@ -20,7 +20,7 @@ interface Account{
 export class RegisterPageComponent implements OnInit {
   message = '';
   DTO: Account = {
-    username: "",
+    name: "",
     password: "",
     confirmPassword: "",
     email: "",
