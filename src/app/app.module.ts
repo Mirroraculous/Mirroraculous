@@ -17,7 +17,6 @@ import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EventsComponent } from './components/events/events.component';
-import { EventsPopupComponent } from './components/events-popup/events-popup.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
@@ -34,7 +33,6 @@ import { JwtModule } from "@auth0/angular-jwt";
     LoginComponent,
     RegisterPageComponent,
     EventsComponent,
-    EventsPopupComponent,
     PageNotFoundComponent,
   ],
   imports: [

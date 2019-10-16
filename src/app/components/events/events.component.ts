@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Time } from '@angular/common';
 import { EventsService } from 'src/app/services/events.service';
+import { SessionService } from '../../services/session.service';
+
 
 interface DTO{
   title: string;
+  time: string;
   date: string;
   description: string;
 }
@@ -19,11 +22,16 @@ export class EventsComponent implements OnInit {
   message = '';
   DTO: DTO={
     title: "",
+    time: "",
     date: "",
     description: "",
   }
 
-  constructor(private eventsService: EventsService) { }
+  constructor(
+    private eventsService: EventsService,
+    private session: SessionService) {
+
+     }
 
   ngOnInit() {
   }
@@ -36,7 +44,7 @@ export class EventsComponent implements OnInit {
           console.log(val);
         }
         else{
-          this.message = 'Failed to login. Incorrect credentials';
+          this.message = 'You must fill all fields.';
           console.log(val);
         }
       }
