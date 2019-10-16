@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { AuthGuard } from './services/auth-guard.service';
-import { SessionService } from './services/session.service';
+import { AuthGuard } from './auth/auth-guard.service';
+import { SessionService } from './auth/session.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
