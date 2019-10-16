@@ -9,7 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable({
   providedIn: 'root'
 })
-export class SessionService {
+export class TestService {
 
   constructor(
     private http: HttpClient,
@@ -17,26 +17,12 @@ export class SessionService {
     private jwtHelper: JwtHelperService,
   ) { }
   private url = 'http://localhost:3000/api/auth';
-  
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem('sessionToken');
-    // Check whether the token is expired and return
-    // true or false
-    return !this.jwtHelper.isTokenExpired(token);
 
-  }
-  
-  getSession(token) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'x-auth-token': token
-      })
-    }
-    return this.http.get<any>(this.url,httpOptions).pipe(
-      catchError(this.handleError<any>(`userInfo`, token))
+  getSession() {
+    return this.http.get<any>(this.url).pipe(
+      catchError(this.handleError<any>(`userInfo`))
     );
   }
-
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
