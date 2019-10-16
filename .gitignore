@@ -8,7 +8,11 @@
 /bazel-out
 
 # dependencies
+!/node_modules/@auth0/angular-jwt/src/jwt.interceptor.d.ts
+!/node_modules/@auth0/angular-jwt/src/jwt.interceptor.js
 /node_modules
+
+
 
 # profiling files
 chrome-profiler-events*.json
@@ -40,7 +44,11 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+yarn.lock
 
 # System Files
 .DS_Store
 Thumbs.db
+
+# Sensitive Info
+/config/default.json

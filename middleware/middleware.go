@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -18,7 +17,7 @@ func MakeToken(id string) (string, int) {
 	claims := &Claims{
 		ID: id,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 6).Unix(),
+			ExpiresAt: time.Now().Add(time.Second * 60).Unix(),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -46,7 +45,6 @@ func VerifyToken(tokenString string) (string, int) {
 	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) < 0*time.Second {
 		return "Expired Token", 401
 	}
-	fmt.Println(claims.ID)
 	return claims.ID, 200
 
 }

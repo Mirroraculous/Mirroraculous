@@ -1,32 +1,31 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { ClockComponent } from './clock.component';
-// import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { SessionService } from './session.service';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from '../../app.component';
+import { AppComponent } from '../app.component';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
-import { AppRoutingModule } from '../../app-routing.module';
+import { AppRoutingModule } from '../app-routing.module';
 // import { AppComponent } from './app.component';
-import { OverlayComponent } from '../../components/overlay/overlay.component';
+import { OverlayComponent } from '../components/overlay/overlay.component';
 // import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RegisterPageComponent } from '../../components/register-page/register-page.component';
+import { RegisterPageComponent } from '../components/register-page/register-page.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from '../../components/home/home.component';
-// import { ClockComponent } from '../../components/clock/clock.component';
+import { HomeComponent } from '../components/home/home.component';
+import { ClockComponent } from '../components/clock/clock.component';
 
 import {MatIconModule} from '@angular/material/icon';
-import { LoginComponent } from '../../components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('ClockComponent', () => {
-  let component: ClockComponent;
-  let fixture: ComponentFixture<ClockComponent>;
-
+// import { LoginComponent } from '../login.component';
+describe('SessionService', () => {
+  let component: SessionService;
+  let fixture: ComponentFixture<SessionService>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -34,8 +33,7 @@ describe('ClockComponent', () => {
         OverlayComponent,
         HomeComponent,
         ClockComponent,
-        LoginComponent,
-        RegisterPageComponent
+        RegisterPageComponent,
       ],
       imports: [
         BrowserModule,
@@ -49,16 +47,13 @@ describe('ClockComponent', () => {
     })
     .compileComponents();
   }));
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClockComponent);
+    fixture = TestBed.createComponent(SessionService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should have military set to false',()=>{
-    expect(component.military).toBe(false);
-  });
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should be created', () => {
+    const service: SessionService = TestBed.get(SessionService);
+    expect(service).toBeTruthy();
   });
 });
