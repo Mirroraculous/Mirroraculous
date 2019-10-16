@@ -26,18 +26,33 @@ export class EventsComponent implements OnInit {
     date: "",
     description: "",
   }
-  events = new FormControl('');
+  // events = new FormControl('');
+  events;
 
   constructor(
     private eventsService: EventsService,
-    private session: SessionService) {
-
+    private session: SessionService,
+    private formBuilder: FormBuilder) {
+      this.events = this.formBuilder.group({
+        title: '',
+        time: '',
+        date: '',
+        description:'',
+      });
      }
 
   ngOnInit() {
   }
   //gets called when the user hits the submit key
-  aSubmittedEventFunciton(){
+  onSubmit(customerData){
+    //Process checkout data here
+    this.events.reset(); 
+    this.DTO ={
+      title: customerData.title,
+      time: customerData.time,
+      date: customerData.date,
+      description:customerData.description,
+    }
     this.eventsService.sendEventInfo(this.DTO).subscribe(
       val => {
         if (val.status === 200 || val.status === 204){
@@ -50,5 +65,8 @@ export class EventsComponent implements OnInit {
         }
       }
     )
+  }
+  aSubmittedEventFunciton(){
+    
   }
 }
