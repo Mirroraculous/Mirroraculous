@@ -2,10 +2,10 @@
 <div class="container">
 <h3 class="title">Create Account</h3>
 <form [formGroup]="register" (ngSubmit)="submit(register.value)">
-                <input class="inputs" formControlName="name" placeholder="Name"/>
-                <input class="inputs" formControlName="email" placeholder="Email"/>
-                <input class="inputs" formControlName="password" type = 'password' placeholder="Password"/>
-                <input class="inputs" formControlName="cpassword" type = 'password' placeholder="Confirm Password"/>
+                <input class="inputs" required formControlName="name" placeholder="Name"/>
+                <input class="inputs" required formControlName="email" placeholder="Email"/>
+                <input class="inputs" required formControlName="password" type = 'password' placeholder="Password"/>
+                <input class="inputs" required formControlName="cpassword" type = 'password' placeholder="Confirm Password"/>
 
 <span style = "text-align: center; color:red;font-size: .5em;display: block;">{{message}}</span>
 <a class="text-link" routerLink="/login">Login</a>

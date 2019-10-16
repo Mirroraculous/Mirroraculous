@@ -24,6 +24,7 @@ import { EventsComponent } from './components/events/events.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 
@@ -38,6 +39,7 @@ import { JwtModule } from "@auth0/angular-jwt";
     RegisterPageComponent,
     EventsComponent,
     PageNotFoundComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
