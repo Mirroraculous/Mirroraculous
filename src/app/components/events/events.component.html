@@ -1,12 +1,12 @@
   <div *ngIf = 'clicked'>
    <!-- <form> -->
-    <input [(ngModel)]="DTO.title" class ="inputs" placeholder = "Title">
+    <input [formControl]="events" [(ngModel)]="DTO.title" class ="inputs" placeholder = "Title">
   
-    <input [(ngModel)]="DTO.time" class ="inputs" placeholder = "Time">
+    <input [formControl]="events" [(ngModel)]="DTO.time" class ="inputs" placeholder = "Time">
 
-    <input [(ngModel)]="DTO.date" class ="inputs" placeholder = "Date">
+    <input [formControl]="events" [(ngModel)]="DTO.date" class ="inputs" placeholder = "Date">
 
-    <input [(ngModel)]="DTO.description" class ="inputs" placeholder = "Add a description">
+    <input [formControl]="events" [(ngModel)]="DTO.description" class ="inputs" placeholder = "Add a description">
 
     <span style = "text-align: center; color:red;font-size: .5em">{{message}}</span>
    
@@ -14,5 +14,6 @@
     <!-- <button type="button" class="button" (click)="/register">Cancel</a> -->
 
     <button type="button" class="button" (click)="aSubmittedEventFunction()">Submit</button>
-  </div>
+    
    <!-- </form> -->
+  </div>

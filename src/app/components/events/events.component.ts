@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
 import { EventsService } from 'src/app/services/events.service';
 
@@ -22,7 +22,7 @@ export class EventsComponent implements OnInit {
     date: "",
     description: "",
   }
-
+  events = new FormControl('');
   constructor(private eventsService: EventsService) { }
 
   ngOnInit() {
