@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
-import { SessionService } from '../../services/session.service';
+import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 
 interface DTO{
