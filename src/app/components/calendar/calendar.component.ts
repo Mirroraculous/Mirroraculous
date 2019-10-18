@@ -6,22 +6,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  viewSize = 7;
-  valueArray;
+  isMonth = false;
+  viewArray;
+  monthArray;
+  weekArray;
   month;
   year;
   now = new Date();
   constructor() { }
 
   ngOnInit() {
-    this.popViewSize();
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
-  }
-  popViewSize(){
-    this.valueArray = [];
-    for(let i =0;i<this.viewSize; i++){
-      this.valueArray.append(i);
+    for(let i = 0;i<this.getDaysInMonth(this.month,this.year);i++){
+      this.monthArray.append(i);
+    }
+    for(let i = 0;i<7;i++){
+      this.weekArray.append(i);
     }
   }
   getDaysInMonth(month,year) {
@@ -32,11 +33,11 @@ export class CalendarComponent implements OnInit {
   // return new Date(year, month+1, 0).getDate();
   };
   changeView (){
-    if (this.viewSize === 7){
-      this.viewSize = this.getDaysInMonth(this.month,this.year);
+    this.isMonth = !this.isMonth;
+    if(this.isMonth){
+      this.viewArray = this.monthArray;
     }else{
-      this.viewSize = 7;
+      this.viewArray = this.weekArray;
     }
-    this.popViewSize();
   }
 }
