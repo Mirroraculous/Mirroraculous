@@ -1,7 +1,12 @@
 <div>
+    <button (click) = "changeView()">
+    </button>
     <ul>        
         <li *ngFor="let item of viewArray">
             {{item}}
+            <span>
+                {{isToday}}
+            </span>
         </li>
     </ul>
 </div>

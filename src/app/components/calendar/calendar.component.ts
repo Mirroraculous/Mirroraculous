@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class CalendarComponent implements OnInit {
   isMonth = false;
   viewArray;
-  monthArray;
-  weekArray;
+  monthArray = [];
+  weekArray = [];
   month;
   year;
   now = new Date();
@@ -18,12 +18,28 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
+    console.log(this.now.getDay());
     for(let i = 0;i<this.getDaysInMonth(this.month,this.year);i++){
-      this.monthArray.append(i);
+      this.monthArray.push(i);
     }
     for(let i = 0;i<7;i++){
-      this.weekArray.append(i);
+      this.weekArray.push(i);
     }
+    this.viewArray = this.weekArray;
+    this.getFirstDayWeek(this.getFirstDayMonth());
+
+  }
+  getFirstDayMonth(){
+    let d = new Date();
+    d.setDate(d.getDate()-d.getDate()+1);
+    console.log(d);
+    return d;
+  }
+  getFirstDayWeek(today){
+    let d = today;
+    d.setDate(d.getDate()-today.getDay());
+    console.log(d);
+    return d;
   }
   getDaysInMonth(month,year) {
     // Here January is 1 based
