@@ -32,25 +32,28 @@ export class CalendarComponent implements OnInit {
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());  
     // this.startMonth = this.getFirstDayWeek(new Date(1551398400));  
     // console.log(this.getDaysInMonth(1, 2020));
+    console.log(this.now.getDate());
+    console.log(this.now);
+    const rn = new Date()
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
       let day;
       if(isFirstMonth){
         day = {
-          isToday: this.now.getDate() === i? true:false,
+          isToday: rn.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear()))+1? true:false,
           dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear())),
           isEvents:  false,
         }        
       }
       else if(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))===1){
         day = {
-          isToday: this.now.getDate() === i? true:false,
+          isToday: rn.getDate() === i? true:false,
           dayOf: i,
           isEvents:  false,
         } 
       }else{
         day= {
-          isToday: this.now.getDate() === i? true:false,
+          isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
           dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
           isEvents:  false,
         } 
@@ -66,9 +69,10 @@ export class CalendarComponent implements OnInit {
       this.monthArray.push(locale);
     }
 
-    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){
+    
+    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
       let day:Day = {
-        isToday: this.now.getDate() === i? true:false,
+        isToday: rn.getDate() === i? true:false,
         dayOf: i,
         isEvents:  false,
       }
