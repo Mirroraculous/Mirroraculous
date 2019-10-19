@@ -67,6 +67,7 @@ func GetUser(id string, find func(query bson.D) (*models.User, error)) (models.U
 
 func AddEvent(id string, event models.Event, insert func(event *models.Event) error) (error, int) {
 	event.UserID = id
+	event.Created = time.Now()
 	e := insert(&event)
 	if e != nil {
 		return e, 500
@@ -90,6 +91,7 @@ func GetCalendar(id string, start string, find func(query bson.D, n int64) ([]mo
 }
 
 func UpdateEvent(event models.Event, id string, replace func(query bson.D, e *models.Event) error) (error, int) {
+	event.Updated = time.Now()
 	err := replace(bson.D{{"_id", event.ID}, {"userid", id}}, &event)
 	if err != nil {
 		return err, 500
