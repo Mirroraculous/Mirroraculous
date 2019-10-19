@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
@@ -17,6 +17,7 @@ interface DTO{
 
 export class LoginComponent implements OnInit {
   message = '';
+  login;
   DTO: DTO={
     email: "",
     password: "",
@@ -24,12 +25,22 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private session: SessionService,
-    private loginService: LoginService) {
+    private loginService: LoginService,
+    private formBuilder: FormBuilder) {
+      this.login = this.formBuilder.group({
+        email: "",
+        password: "",
+      });
   }
 
   ngOnInit() {
   }
-  aSubmittedDataFunction(){
+  aSubmittedDataFunction(input){
+    this.DTO = {
+      email:input.email,
+      password:input.password,
+    }
+    console.log(this.DTO);
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
         console.log(val.status);

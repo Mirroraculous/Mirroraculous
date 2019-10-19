@@ -31,7 +31,7 @@ func main() {
 	server.POST("/api/auth", handlers.LoginUser)
 	server.GET("/api/auth", handlers.GetUser)
 
-	server.GET("/api/calendar", handlers.GetCalendar)
+	server.GET("/api/calendar/:day", handlers.GetCalendar)
 	server.POST("/api/calendar", handlers.AddEvent)
 	server.PUT("/api/calendar/:id", handlers.UpdateEvent)
 	server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
