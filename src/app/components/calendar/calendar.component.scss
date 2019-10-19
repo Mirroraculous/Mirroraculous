@@ -3,6 +3,9 @@ li{
     padding: 20px;
 }
 .blocky{
+    // content: "\A";
     // display: block;
-    white-space: pre-line;
+    display: table;
+    // white-space: pre-line;
+    // margin-right:90%;
 }
