@@ -34,10 +34,16 @@ func VerifyToken(tokenString string) (string, int) {
 		return jwtSecret, nil
 	})
 	if e != nil {
-		return "Invalid Token", 401
+		if e == jwt.ErrSignatureInvalid {
+			return "Invalid Token", 401
+		}
+		return "Server Error", 500
 	}
 	if !token.Valid {
 		return "Invalid Token", 401
+	}
+	if time.Unix(claims.ExpiresAt, 0).Sub(time.Now()) < 0*time.Second {
+		return "Expired Token", 401
 	}
 	return claims.ID, 200
 
