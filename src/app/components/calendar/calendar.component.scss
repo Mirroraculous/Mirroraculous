@@ -2,10 +2,10 @@ li{
     display: inline-block;
     padding: 20px;
 }
-.blocky{
-    // content: "\A";
+.blocky:before{
+    content: "\A";
     // display: block;
-    display: table;
+    // display: table;
     // white-space: pre-line;
     // margin-right:90%;
 }

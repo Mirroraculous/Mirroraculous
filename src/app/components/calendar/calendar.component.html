@@ -2,19 +2,99 @@
     <button (click) = "changeView()">
     </button>
     <ul>        
-        <li *ngFor="let item of viewArray; let i = index" [ngClass]="{'blocky': i%7===0 && i!=0}">
+        <!-- <li *ngFor="let item of viewArray; let i = index" [ngClass]="{'blocky': i%7===0 && i!=0}">
             <div *ngIf= "isToday">
                 <span *ngIf="item.isEvents" >
-
+                    {{item.dayOf}}
                 </span>
                 {{item.dayOf}}
             </div>
             <div *ngIf = "!isToday">
                 <span *ngIf="item.isEvents">
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
 
+            </div>
+        </li> -->
+        <li *ngFor="let item of viewArray[0];">
+            <div *ngIf= "isToday">
+                <span *ngIf="item.isEvents" >
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+            <div *ngIf = "!isToday">
+                <span *ngIf="item.isEvents">
+                    {{item.dayOf}}
                 </span>
                 {{item.dayOf}}
             </div>
         </li>
     </ul>
+    <ul>
+        <li *ngFor="let item of viewArray[1];">
+            <div *ngIf= "isToday">
+                <span *ngIf="item.isEvents" >
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+            <div *ngIf = "!isToday">
+                <span *ngIf="item.isEvents">
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+        </li>
+    </ul>
+    <ul>
+        <li *ngFor="let item of viewArray[2];">
+            <div *ngIf= "isToday">
+                <span *ngIf="item.isEvents" >
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+            <div *ngIf = "!isToday">
+                <span *ngIf="item.isEvents">
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+        </li>
+    </ul>
+    <ul>
+        <li *ngFor="let item of viewArray[3];">
+            <div *ngIf= "isToday">
+                <span *ngIf="item.isEvents" >
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+            <div *ngIf = "!isToday">
+                <span *ngIf="item.isEvents">
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+        </li>
+    </ul>
+    <ul>
+        <li *ngFor="let item of viewArray[4];">
+            <div *ngIf= "isToday">
+                <span *ngIf="item.isEvents" >
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+            <div *ngIf = "!isToday">
+                <span *ngIf="item.isEvents">
+                    {{item.dayOf}}
+                </span>
+                {{item.dayOf}}
+            </div>
+        </li>
+    </ul>
+
 </div>

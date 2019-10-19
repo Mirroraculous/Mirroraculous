@@ -13,7 +13,8 @@ interface Day{
 export class CalendarComponent implements OnInit {
   isMonth = true;
   viewArray;
-  monthArray :Day[] = [];
+  monthArray:Day[][] = [];
+  monthArrayUnorganized :Day[] = [];
   weekArray :Day[]= [];
   month;
   year;
@@ -54,9 +55,15 @@ export class CalendarComponent implements OnInit {
           isEvents:  false,
         } 
       }
-      this.monthArray.push(day);
+      this.monthArrayUnorganized.push(day);
     }
-
+    for(let i =0 ;i<5;i++){
+      let locale: Day[] = []
+      for(let k = 0;k<7;k++){
+        locale.push(this.monthArrayUnorganized[i*k]);
+      }
+      this.monthArray.push(locale);
+    }
 
     for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){
       let day:Day = {
