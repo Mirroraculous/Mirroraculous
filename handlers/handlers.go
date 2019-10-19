@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/linkers"
 	"github.com/mirroraculous/mirroraculous/middleware"
 	"github.com/mirroraculous/mirroraculous/models"
@@ -23,7 +24,7 @@ func RegisterUser(context *gin.Context) {
 		return
 	}
 	// id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
-	id, status := linkers.AddUser(user)
+	id, status := linkers.AddUser(user, config.FindUser, config.InsertUser)
 	if status != 200 {
 		context.JSON(status, id)
 		return
@@ -41,7 +42,7 @@ func LoginUser(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	id, status := linkers.LoginUser(user.Email, user.Pwd)
+	id, status := linkers.LoginUser(user.Email, user.Pwd, config.FindUser)
 	if status != 200 {
 		context.JSON(status, id)
 		return
@@ -60,7 +61,7 @@ func GetUser(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	user, status := linkers.GetUser(id)
+	user, status := linkers.GetUser(id, config.FindUser)
 	if status != 200 {
 		context.JSON(status, "No user found")
 		return
@@ -69,7 +70,7 @@ func GetUser(context *gin.Context) {
 }
 
 // GetCalendar gets the calendar events for a user
-// GET to :3000/api/calendar
+// GET to :3000/api/calendar/:day
 func GetCalendar(context *gin.Context) {
 	fmt.Println("Hello from GetCalendar")
 	token := context.Request.Header.Get("x-auth-token")
@@ -78,7 +79,9 @@ func GetCalendar(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	calendar, status := linkers.GetCalendar(id)
+	startDay := context.Params.ByName("day")
+
+	calendar, status := linkers.GetCalendar(id, startDay[:len(startDay)-3], config.FindEvent)
 	if status != 200 {
 		context.JSON(status, "No calendar found for user")
 		return
@@ -101,7 +104,7 @@ func AddEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	e, status = linkers.AddEvent(id, event)
+	e, status = linkers.AddEvent(id, event, config.InsertEvent)
 	if e != nil {
 		context.JSON(status, "Event not added")
 		return
@@ -124,7 +127,7 @@ func UpdateEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	e, status = linkers.UpdateEvent(event, id)
+	e, status = linkers.UpdateEvent(event, id, config.ReplaceEvent)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return
@@ -143,7 +146,7 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 	eventID := context.Params.ByName("id")
-	e, status := linkers.DeleteEvent(eventID, id)
+	e, status := linkers.DeleteEvent(eventID, id, config.DeleteEvent)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return
