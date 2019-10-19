@@ -1,0 +1,70 @@
+    
+    <button (click) = "changeView()"></button>
+    
+    <div *ngIf = "!isMonth">
+        <ul>
+            <li *ngFor="let item of viewArray;"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+                <div *ngIf= "item.isToday" class = "specialborder">
+                        {{item.dayOf}}
+
+                </div>
+                <div *ngIf = "!item.isToday"class = "oneHundo">
+                    {{item.dayOf}}
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <div *ngIf = "isMonth">
+        
+        <ul>        
+            <!-- <li *ngFor="let item of viewArray; let i = index" [ngClass]="{'blocky': i%7===0 && i!=0}">
+                <div *ngIf= "isToday">
+                    <span *ngIf="item.isEvents" >
+                        {{item.dayOf}}
+                    </span>
+                    {{item.dayOf}}
+                </div>
+                <div *ngIf = "!isToday">
+                    <span *ngIf="item.isEvents">
+                        {{item.dayOf}}
+                    </span>
+                    {{item.dayOf}}
+
+                </div>
+            </li> -->
+            <li *ngFor="let item of viewArray[0];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+                    {{item.dayOf}}
+                    {{item.isToday}}                
+            </li>
+        </ul>
+        <ul>
+            <li *ngFor="let item of viewArray[1];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+                    {{item.dayOf}}
+                    {{item.isToday}}
+            </li>
+        </ul>
+        <ul>
+            <li *ngFor="let item of viewArray[2];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
+
+                    {{item.dayOf}}
+                    {{item.isToday}}
+                
+            </li>
+        </ul>
+        <ul>
+            <li *ngFor="let item of viewArray[3];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
+                    {{item.dayOf}}
+                    {{item.isToday}}
+
+            </li>
+        </ul>
+        <ul>
+            <li *ngFor="let item of viewArray[4];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+                    {{item.dayOf}}
+                    {{item.isToday}}
+
+            </li>
+        </ul>
+
+    </div>

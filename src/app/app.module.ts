@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -19,9 +20,11 @@ import { ClockComponent } from './components/clock/clock.component';
 import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EventsComponent } from './components/events/events.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 
@@ -34,7 +37,9 @@ import { JwtModule } from "@auth0/angular-jwt";
     ClockComponent,
     LoginComponent,
     RegisterPageComponent,
-    PageNotFoundComponent
+    EventsComponent,
+    PageNotFoundComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ import { JwtModule } from "@auth0/angular-jwt";
     MatDialogModule,
     BrowserAnimationsModule,
     MatIconModule,
+    ReactiveFormsModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
