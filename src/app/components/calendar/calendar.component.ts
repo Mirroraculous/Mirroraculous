@@ -57,10 +57,11 @@ export class CalendarComponent implements OnInit {
       }
       this.monthArrayUnorganized.push(day);
     }
+    console.log(this.monthArrayUnorganized);
     for(let i =0 ;i<5;i++){
       let locale: Day[] = []
       for(let k = 0;k<7;k++){
-        locale.push(this.monthArrayUnorganized[i*k]);
+        locale.push(this.monthArrayUnorganized[i*7+k]);
       }
       this.monthArray.push(locale);
     }
@@ -73,6 +74,7 @@ export class CalendarComponent implements OnInit {
       }
       this.weekArray.push(day);
     }
+    console.log(this.monthArray);
     this.viewArray = this.monthArray;
     this.getFirstDayWeek(this.getFirstDayMonth());
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
