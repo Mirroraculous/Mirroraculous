@@ -82,8 +82,7 @@ func GetCalendar(id string, start string, find func(query bson.D, n int64) ([]mo
 		return ret, 500
 	}
 	for _, event := range res {
-		fmt.Println(event)
-		if time.Time.Unix(event.Start.Date) > sint && time.Time.Unix(event.Start.Date) < sint+86400*35 {
+		if time.Time.Unix(event.Start.Date) >= sint && time.Time.Unix(event.Start.Date) <= sint+86400*35 {
 			ret = append(ret, event)
 		}
 	}
