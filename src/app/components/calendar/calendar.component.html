@@ -2,11 +2,19 @@
     <button (click) = "changeView()">
     </button>
     <ul>        
-        <li *ngFor="let item of viewArray">
-            {{item}}
-            <span>
-                {{isToday}}
-            </span>
+        <li *ngFor="let item of viewArray; let i = index" [ngClass]="{'blocky': i%7===0 &&i!=0}">
+            <div *ngIf= "isToday">
+                <span *ngIf="item.isEvents" >
+
+                </span>
+                {{item.dayOf}}
+            </div>
+            <div *ngIf = "!isToday">
+                <span *ngIf="item.isEvents">
+
+                </span>
+                {{item.dayOf}}
+            </div>
         </li>
     </ul>
 </div>
