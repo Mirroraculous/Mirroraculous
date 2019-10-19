@@ -32,12 +32,14 @@ export class CalendarComponent implements OnInit {
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());  
     // this.startMonth = this.getFirstDayWeek(new Date(1551398400));  
     // console.log(this.getDaysInMonth(1, 2020));
+    console.log(this.now.getDate());
+    console.log(this.now);
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
       let day;
       if(isFirstMonth){
         day = {
-          isToday: this.now.getDate() === i? true:false,
+          isToday: this.now.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear()))+1? true:false,
           dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear())),
           isEvents:  false,
         }        
@@ -50,7 +52,7 @@ export class CalendarComponent implements OnInit {
         } 
       }else{
         day= {
-          isToday: this.now.getDate() === i? true:false,
+          isToday: this.now.getDate() === i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1? true:false,
           dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
           isEvents:  false,
         } 
