@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
 interface Day{
   isToday: boolean;
-  dayOf: string;
+  dayOf: number;
   isEvents: boolean;
 }
 @Component({
@@ -38,20 +38,20 @@ export class CalendarComponent implements OnInit {
       if(isFirstMonth){
         day = {
           isToday: this.now.getDate() === i? true:false,
-          dayOf: String(i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear()))),
+          dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear())),
           isEvents:  false,
         }        
       }
       else if(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))===1){
         day = {
           isToday: this.now.getDate() === i? true:false,
-          dayOf: String(i),
+          dayOf: i,
           isEvents:  false,
         } 
       }else{
         day= {
           isToday: this.now.getDate() === i? true:false,
-          dayOf: String(i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1),
+          dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
           isEvents:  false,
         } 
       }
@@ -69,7 +69,7 @@ export class CalendarComponent implements OnInit {
     for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){
       let day:Day = {
         isToday: this.now.getDate() === i? true:false,
-        dayOf: String(i),
+        dayOf: i,
         isEvents:  false,
       }
       this.weekArray.push(day);
@@ -79,7 +79,18 @@ export class CalendarComponent implements OnInit {
     this.getFirstDayWeek(this.getFirstDayMonth());
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
-        console.log(val);
+        // console.log(val);
+        let day = new Date(val.body[0].start.date);
+        console.log(day);
+        for(let i =0 ;i<5;i++){
+          let locale: Day[] = []
+          for(let k = 0;k<7;k++){
+            if(day.getDate() === this.monthArray[i][k].dayOf && day.getMonth()=== this.now.getMonth()){
+              this.monthArray[i][k].isEvents = true;
+            }
+          }
+          this.monthArray.push(locale);
+        }
       }
     );
 
