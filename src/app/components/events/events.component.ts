@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 
 
 interface DTO{
-  title: string;
+  summary: string;
   time: string;
   date: string;
   description: string;
@@ -22,7 +22,7 @@ export class EventsComponent implements OnInit {
   clicked = false;
   message = '';
   DTO: DTO={
-    title: "",
+    summary: "",
     time: "",
     date: "",
     description: "",
@@ -36,7 +36,7 @@ export class EventsComponent implements OnInit {
     private session: SessionService,
     private formBuilder: FormBuilder) {
       this.events = this.formBuilder.group({
-        title: '',
+        summary: '',
         time: '',
         date: '',
         description:'',
@@ -50,7 +50,7 @@ export class EventsComponent implements OnInit {
     //Process checkout data here
     this.events.reset(); 
     this.DTO ={
-      title: customerData.title,
+      summary: customerData.summary,
       time: customerData.time,
       date: customerData.date,
       description:customerData.description,

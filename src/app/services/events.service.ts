@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class EventsService {
-  private url = "http://localhost:3000/api/calendar/";  // URL to web api
+  private url = "http://localhost:3000/api/calendar";  // URL to web api
 
   constructor(
     private http: HttpClient) { }
