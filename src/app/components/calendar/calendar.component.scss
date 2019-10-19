@@ -4,6 +4,9 @@ li{
     width: 10px;
     height: 10px;
 }
+.highlighted{
+    background-color: blue;
+}
 .blocky:before{
     content: "\A";
     // display: block;

@@ -5,13 +5,13 @@
         <ul>
             <li *ngFor="let item of viewArray;">
                 <div *ngIf= "isToday">
-                    <span *ngIf="item.isEvents" >
+                    <span *ngIf="item.isEvents" class ="highlighted">
                         {{item.dayOf}}
                     </span>
                     {{item.dayOf}}
                 </div>
                 <div *ngIf = "!isToday">
-                    <span *ngIf="item.isEvents">
+                    <span *ngIf="item.isEvents" class ="highlighted">
                         {{item.dayOf}}
                     </span>
                     {{item.dayOf}}

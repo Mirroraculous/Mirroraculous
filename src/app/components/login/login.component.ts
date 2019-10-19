@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
       email:input.email,
       password:input.password,
     }
+    console.log(this.DTO);
     this.loginService.checkUserPassCombo(this.DTO).subscribe(
       val => {
         console.log(val.status);
