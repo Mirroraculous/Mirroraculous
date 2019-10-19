@@ -8,9 +8,16 @@ import { Router } from "@angular/router";
 
 interface DTO{
   summary: string;
-  time: string;
-  date: string;
   description: string;
+  start: {
+    date: string;
+    dateTime: string;
+  }
+  end: {
+    date: string;
+    dateTime: string;
+  }
+  endTimeUnspecified: bool;
 }
 
 @Component({
@@ -23,9 +30,16 @@ export class EventsComponent implements OnInit {
   message = '';
   DTO: DTO={
     summary: "",
-    time: "",
-    date: "",
     description: "",
+    start: {
+      date: "",
+      dateTime: "",
+    },
+    end: {
+      date: "",
+      dateTime: "",
+    },
+    endTimeUnspecified: true,
   }
   // events = new FormControl('');
   events;
@@ -37,7 +51,7 @@ export class EventsComponent implements OnInit {
     private formBuilder: FormBuilder) {
       this.events = this.formBuilder.group({
         summary: '',
-        time: '',
+        dateTime: '',
         date: '',
         description:'',
       });
@@ -48,12 +62,23 @@ export class EventsComponent implements OnInit {
   //gets called when the user hits the submit key
   onSubmit(customerData){
     //Process checkout data here
+    const d = new Date(customerData.date)
+    const t = new Date(customerData.date + " " + customerData.dateTime)
+    console.log(d.toISOString())
+    console.log(t.toISOString())
     this.events.reset(); 
     this.DTO ={
       summary: customerData.summary,
-      time: customerData.time,
-      date: customerData.date,
       description:customerData.description,
+      start: {
+        date: d,
+        dateTime: t,
+      },
+      end: {
+        date: null,
+        dateTime: null,
+      },
+      endTimeUnspecified: true,
     }
     this.eventsService.sendEventInfo(this.DTO).subscribe(
       val => {
