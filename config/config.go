@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/mirroraculous/mirroraculous/models"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -52,4 +54,51 @@ func Connect() error {
 
 	fmt.Println("connected!")
 	return nil
+}
+
+func FindUser(query bson.D) (*models.User, error) {
+	var u models.User
+	err := User.FindOne(context.Background(), query).Decode(&u)
+	return &u, err
+}
+
+func InsertUser(user *models.User) (string, error) {
+	res, e := User.InsertOne(context.Background(), *user)
+	if e != nil {
+		return "", e
+	}
+	return fmt.Sprintf("%v", res.InsertedID), nil
+}
+
+func InsertEvent(event *models.Event) error {
+	_, e := Calendar.InsertOne(context.Background(), *event)
+	return e
+}
+
+func FindEvent(query bson.D, num int64) ([]models.Event, error) {
+	var ret []models.Event
+	findOptions := options.Find().SetLimit(num)
+	res, e := Calendar.Find(context.Background(), query, findOptions)
+	if e != nil {
+		return ret, e
+	}
+	for res.Next(context.Background()) {
+		var temp models.Event
+		e = res.Decode(&temp)
+		if e != nil {
+			return ret, e
+		}
+		ret = append(ret, temp)
+	}
+	return ret, nil
+}
+
+func ReplaceEvent(query bson.D, event *models.Event) error {
+	_, e := Calendar.ReplaceOne(context.Background(), query, *event)
+	return e
+}
+
+func DeleteEvent(query bson.D) error {
+	_, e := Calendar.DeleteOne(context.Background(), query)
+	return e
 }
