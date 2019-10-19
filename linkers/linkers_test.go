@@ -167,7 +167,7 @@ func TestGetCalendar(t *testing.T) {
 		}
 		return ev, nil
 	}); len(event) != 5 || status != 200 {
-		t.Errorf("Test failed, expected status 500, got %d and %d", status, len(event))
+		t.Errorf("Test failed, expected status 500, got %d and a length of %d", status, len(event))
 	}
 }
 
