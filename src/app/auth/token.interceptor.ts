@@ -12,12 +12,21 @@ import { SessionService } from './session.service';
 export class TokenInterceptor implements HttpInterceptor {
   constructor(public auth: SessionService) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
-    request = request.clone({
-            headers: new HttpHeaders({
-            'x-auth-token': localStorage.getItem('sessionToken')
-          })      
-    });
-    return next.handle(request);
+    let session = localStorage.getItem('sessionToken');
+    if(session != undefined){      
+      request = request.clone({
+              headers: new HttpHeaders({
+              'x-auth-token': localStorage.getItem('sessionToken')
+            })      
+      });
+      return next.handle(request);
+    }else{
+      request = request.clone({
+              headers: new HttpHeaders({
+              'x-auth-token': ''
+            })      
+      });
+      return next.handle(request);
+    }
   }
 }
