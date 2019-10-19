@@ -70,7 +70,7 @@ func GetUser(context *gin.Context) {
 }
 
 // GetCalendar gets the calendar events for a user
-// GET to :3000/api/calendar
+// GET to :3000/api/calendar/:day
 func GetCalendar(context *gin.Context) {
 	fmt.Println("Hello from GetCalendar")
 	token := context.Request.Header.Get("x-auth-token")
@@ -79,7 +79,9 @@ func GetCalendar(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	calendar, status := linkers.GetCalendar(id, 5, config.FindEvent)
+	startDay := context.Params.ByName("day")
+
+	calendar, status := linkers.GetCalendar(id, startDay[:len(startDay)-3], config.FindEvent)
 	if status != 200 {
 		context.JSON(status, "No calendar found for user")
 		return

@@ -3,6 +3,8 @@ package linkers
 import (
 	"fmt"
 	"regexp"
+	"strconv"
+	"time"
 
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -72,12 +74,18 @@ func AddEvent(id string, event models.Event, insert func(event *models.Event) er
 	return nil, 200
 }
 
-func GetCalendar(id string, num int64, find func(query bson.D, n int64) ([]models.Event, error)) ([]models.Event, int) {
-	var ret []models.Event
-	ret, e := find(bson.D{{"userid", id}}, num)
-
-	if e != nil {
+func GetCalendar(id string, start string, find func(query bson.D, n int64) ([]models.Event, error)) ([]models.Event, int) {
+	var res, ret []models.Event
+	res, e := find(bson.D{{"userid", id}}, 500)
+	sint, er := strconv.ParseInt(start, 10, 0)
+	if e != nil || er != nil {
 		return ret, 500
+	}
+	for _, event := range res {
+		fmt.Println(event)
+		if time.Time.Unix(event.Start.Date) > sint && time.Time.Unix(event.Start.Date) < sint+86400*35 {
+			ret = append(ret, event)
+		}
 	}
 	return ret, 200
 }
