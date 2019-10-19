@@ -8,3 +8,41 @@ $dirty-purple: #8D546E;
 $dirty-purple-opacity: rgba(141,84,110, .1);
 $brown-orange: #4E1F19;
 $brown-orange-opacity: rgba(78,31,25, .1);
+
+
+.container{
+    font-size: 50px;
+    margin-left: 37.5%;
+    margin-right: 37.5%;
+    margin-top: 10%;
+    width: 25%;
+
+    .inputs{
+        box-sizing: border-box;
+        font-size: .5em;
+        display:block;
+        background-color: $dirty-purple-opacity;
+        color: #fff;
+        border: none;
+        border-bottom: .15em solid $dirty-purple;
+        margin-bottom: 1em;
+        padding: .5em;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .button{
+        display: inline;
+        font-size: .5em;
+        background-color: $red;
+        color: $brown-orange;
+        border: none;
+        padding: .5em;
+        padding-top: .2em;
+        padding-bottom: .2em;
+        text-decoration: none;
+        margin-left: 15%;
+        margin-right: 15%;
+    
+    }
+}

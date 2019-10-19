@@ -3,6 +3,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
 import { EventsService } from 'src/app/services/events.service';
 import { SessionService } from '../../auth/session.service';
+import { Router } from "@angular/router";
 
 
 interface DTO{
@@ -30,6 +31,7 @@ export class EventsComponent implements OnInit {
   events;
 
   constructor(
+    private router: Router,
     private eventsService: EventsService,
     private session: SessionService,
     private formBuilder: FormBuilder) {
@@ -66,7 +68,8 @@ export class EventsComponent implements OnInit {
       }
     )
   }
-  aSubmittedEventFunciton(){
-    
+
+  onCancel(){
+    this.router.navigate(['/home']);
   }
 }
