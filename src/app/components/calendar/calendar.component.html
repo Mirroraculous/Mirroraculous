@@ -34,35 +34,31 @@
                 </div>
             </li> -->
             <li *ngFor="let item of viewArray[0];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
-                    {{item.dayOf}}
-                    {{item.isToday}}                
+                    {{item.dayOf}}               
             </li>
         </ul>
         <ul>
             <li *ngFor="let item of viewArray[1];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
                     {{item.dayOf}}
-                    {{item.isToday}}
             </li>
         </ul>
         <ul>
             <li *ngFor="let item of viewArray[2];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
 
                     {{item.dayOf}}
-                    {{item.isToday}}
                 
             </li>
         </ul>
         <ul>
             <li *ngFor="let item of viewArray[3];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}
-                    {{item.isToday}}
 
             </li>
         </ul>
         <ul>
             <li *ngFor="let item of viewArray[4];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
                     {{item.dayOf}}
-                    {{item.isToday}}
+
 
             </li>
         </ul>
