@@ -5,7 +5,6 @@ import { EventsService } from 'src/app/services/events.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 
-
 interface DTO{
   summary: string;
   description: string;
@@ -17,7 +16,7 @@ interface DTO{
     date: string;
     dateTime: string;
   }
-  endTimeUnspecified: bool;
+  endTimeUnspecified: boolean;
 }
 
 @Component({
@@ -26,6 +25,7 @@ interface DTO{
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
+  isFilled = false;
   clicked = false;
   message = '';
   DTO: DTO={
@@ -59,17 +59,18 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
   }
+
   //gets called when the user hits the submit key
-  onSubmit(customerData){
+  onSubmit(userInfo){
     //Process checkout data here
-    const d = new Date(customerData.date)
-    const t = new Date(customerData.date + " " + customerData.dateTime)
+    const d = new Date(userInfo.date)
+    const t = new Date(userInfo.date + " " + userInfo.dateTime)
     console.log(d.toISOString())
     console.log(t.toISOString())
     this.events.reset(); 
     this.DTO ={
-      summary: customerData.summary,
-      description:customerData.description,
+      summary: userInfo.summary,
+      description:userInfo.description,
       start: {
         date: d,
         dateTime: t,
