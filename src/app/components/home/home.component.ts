@@ -30,7 +30,4 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('sessionToken');
     this.router.navigate(['login']);
   }
-  dayClicked(){
-    this.isClicked = true;
-  }
 }

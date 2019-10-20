@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
+import { Router } from "@angular/router";
+
 interface Day{
   isToday: boolean;
   dayOf: number;
@@ -11,6 +13,7 @@ interface Day{
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  isClicked = false;
   isMonth = true;
   viewArray;
   monthArray:Day[][] = [];
@@ -22,7 +25,8 @@ export class CalendarComponent implements OnInit {
   startMonth;
   now = new Date();
   constructor(
-    private calendar: CalendarService
+    private calendar: CalendarService,
+    private router: Router,
   ) { }
 
   ngOnInit() {

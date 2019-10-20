@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
-import { EventsService } from 'src/app/services/events.service';
+import { EventsService } from 'src/app/services/addEvents.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 
@@ -21,8 +21,8 @@ interface DTO{
 
 @Component({
   selector: 'app-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss']
+  templateUrl: './addEvents.component.html',
+  styleUrls: ['./addEvents.component.scss']
 })
 export class EventsComponent implements OnInit {
   isFilled = false;
