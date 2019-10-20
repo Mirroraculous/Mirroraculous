@@ -1,0 +1,38 @@
+<div class = "sub-nav-bar">
+    <button (click)="changeVal(1)">Add</button>
+    <button (click)="changeVal(2)"></button>
+    <button (click)="changeVal(3)"></button>
+    <button (click)="changeVal(4)"></button>
+    <button (click)="changeVal(5)"></button>
+</div>
+<div class = "background">
+    <div *ngIf = 'switchVal === 1'>
+        <div class="container">
+            <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
+             <input  formControlName= "summary" class ="inputs" placeholder = "Title">
+           
+             <input formControlName="dateTime"  class ="inputs" placeholder="Time">
+         
+             <input formControlName="date"  class ="inputs" placeholder = "Date">
+         
+             <input formControlName="description" class ="inputs" placeholder = "Add a description">
+         
+             <button type="button" (click)="onCancel()" class="button">Cancel</button>
+         
+             <button type="submit" class="button">Submit</button>
+           
+             <span style = "text-align: center;margin-left: 27%; margin-right: 27%; color:red;font-size: .5em">{{message}}</span>
+             
+            </form>
+        </div>
+    </div>
+    <div *ngIf = 'switchVal === 2'>
+    
+    </div>
+    <div *ngIf = 'switchVal === 3'>
+    
+    </div>
+    <div *ngIf = 'switchVal === 4'>
+        
+    </div>
+</div>

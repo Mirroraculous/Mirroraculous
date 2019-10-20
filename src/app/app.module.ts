@@ -27,6 +27,7 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DeleteEventComponent } from './components/delete-event/delete-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { EventComponent } from './components/event/event.component';
 
 
 
@@ -44,6 +45,7 @@ import { UpdateEventComponent } from './components/update-event/update-event.com
     CalendarComponent,
     DeleteEventComponent,
     UpdateEventComponent,
+    EventComponent,
   ],
   imports: [
     BrowserModule,
