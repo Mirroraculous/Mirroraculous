@@ -70,10 +70,10 @@ export class EventsComponent implements OnInit {
     this.events.reset(); 
     this.DTO ={
       summary: userInfo.summary,
-      description:userInfo.description,
+      description: userInfo.description,
       start: {
-        date: d,
-        dateTime: t,
+        date: d.toISOString(),
+        dateTime: t.toISOString(),
       },
       end: {
         date: null,

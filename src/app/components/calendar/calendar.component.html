@@ -3,14 +3,8 @@
     
     <div *ngIf = "!isMonth">
         <ul>
-            <li *ngFor="let item of viewArray;"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
-                <div *ngIf= "item.isToday" class = "specialborder">
+            <li *ngFor="let item of viewArray;"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                         {{item.dayOf}}
-
-                </div>
-                <div *ngIf = "!item.isToday"class = "oneHundo">
-                    {{item.dayOf}}
-                </div>
             </li>
         </ul>
     </div>
@@ -33,12 +27,12 @@
 
                 </div>
             </li> -->
-            <li *ngFor="let item of viewArray[0];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[0];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}               
             </li>
         </ul>
         <ul>
-            <li *ngFor="let item of viewArray[1];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[1];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}
             </li>
         </ul>
@@ -56,7 +50,7 @@
             </li>
         </ul>
         <ul>
-            <li *ngFor="let item of viewArray[4];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[4];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}
 
 

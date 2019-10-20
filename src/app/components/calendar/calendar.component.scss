@@ -14,9 +14,7 @@ ul{
 }
 .specialborder{
     border: 1px dashed #D14E60;
-    // background-image: url("../../../assets/special-background.svg");
-    // background-size: 50px 50px;
-
+    transition: border-width 0.6s linear;
 }
 .highlighted{
     // background-size: 50px 10%;
