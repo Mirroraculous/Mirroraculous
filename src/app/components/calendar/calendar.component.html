@@ -1,5 +1,6 @@
     
-    <button (click) = "changeView()" class = "up" [ngClass]="{'down':isMonth}"></button>
+    <img *ngIf= '!isMonth'src = "../../../assets/up_arrow.svg"class="updown"(click) = "changeView()"/>
+    <img *ngIf= 'isMonth'src = "../../../assets/down_arrow.svg"class="updown"(click) = "changeView()"/>
     
     <div *ngIf = "!isMonth">
         <ul>

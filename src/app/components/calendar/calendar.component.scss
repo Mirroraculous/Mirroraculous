@@ -6,19 +6,13 @@ li{
     border: 1px solid #8D546E;
     
 }
-.up{
-    margin-left: 40px;
-    width: 26px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-image: url('../../../assets/up_arrow.svg');
+button{
+    border: none;
+    text-decoration: none;
+
 }
-.down{
+.updown{
     margin-left: 40px;
-    width: 26px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-image: url('../../../assets/down_arrow.svg');
 }
 ul{
     margin:0;
