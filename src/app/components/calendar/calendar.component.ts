@@ -137,7 +137,7 @@ export class CalendarComponent implements OnInit {
     console.log(d);
     return d;
   }
-  clickItem(val){
+  clickEvent(val){
     this.onCalendarClick.emit(val);
   }
   getDaysInMonth(month,year) {
