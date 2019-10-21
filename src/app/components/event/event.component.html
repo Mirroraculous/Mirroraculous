@@ -1,7 +1,7 @@
 
 <div class = "background">
         <div class = "sub-nav-bar" style="text-align: center;">
-                <button (click)="changeVal(1)">Calendar</button>
+                <button (click)="changeVal(1)"[ngClass]="{'currentlyOn':switchVal===1}">Calendar</button>
                 <button (click)="changeVal(2)">Details</button>
                 <button (click)="changeVal(3)">Add</button>
                 <button (click)="changeVal(4)">Update</button>
