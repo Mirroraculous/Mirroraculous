@@ -24,7 +24,7 @@ interface DTO{
 })
 
 export class EventComponent implements OnInit {
-  switchVal = 1;
+  switchVal = 2;
   events;
   today;
   isFilled = false;

@@ -28,10 +28,10 @@
         </div>
     </div>
     <div *ngIf = 'switchVal === 2'>
-        <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
+        <app-calendar (onCalendarClick)="setInfo($event)" (click)="changeVal(3)"></app-calendar>
     </div>
     <div *ngIf = 'switchVal === 3'>
-        
+        details
     </div>
     <div *ngIf = 'switchVal === 4'>
         
