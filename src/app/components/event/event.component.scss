@@ -12,8 +12,22 @@ $brown-orange-opacity: rgba(78,31,25, .1);
 .background{
     background-color: $dirty-purple-opacity;
     padding-bottom: 4%;
-    margin: 131% 0% 0% 55%;
+    margin: 129% 0% 0% 55%;
     width: 42%;
+}
+
+.tabbutton {
+    font-size: 15px;
+    margin-left: 1%;
+    margin-right: 1%;
+    padding-left: 6%;
+    color: $red;
+    display: inline-block;
+}
+
+.tabbutton:hover {
+    color: $blue-bright;
+    cursor: pointer;
 }
 
 .container{
