@@ -1,0 +1,18 @@
+  <div class="container">
+   <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
+    <input  formControlName= "summary" class ="inputs" placeholder = "Title">
+  
+    <input formControlName="dateTime"  class ="inputs" placeholder="Time">
+
+    <input formControlName="date"  class ="inputs" placeholder = "Date">
+
+    <input formControlName="description" class ="inputs" placeholder = "Add a description">
+
+    <button type="button" (click)="onCancel()" class="button">Cancel</button>
+
+    <button type="submit" class="button">Submit</button>
+  
+    <span style = "text-align: center;margin-left: 27%; margin-right: 27%; color:red;font-size: .5em">{{message}}</span>
+    
+   </form>
+  </div>

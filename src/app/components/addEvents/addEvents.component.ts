@@ -1,41 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
-import { EventsService } from 'src/app/services/events.service';
+import { EventsService } from 'src/app/services/addEvents.service';
 import { SessionService } from '../../auth/session.service';
-
+import { Router } from "@angular/router";
 
 interface DTO{
-  title: string;
-  time: string;
-  date: string;
+  summary: string;
   description: string;
+  start: {
+    date: string;
+    dateTime: string;
+  }
+  end: {
+    date: string;
+    dateTime: string;
+  }
+  endTimeUnspecified: boolean;
 }
 
 @Component({
   selector: 'app-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss']
+  templateUrl: './addEvents.component.html',
+  styleUrls: ['./addEvents.component.scss']
 })
 export class EventsComponent implements OnInit {
+  isFilled = false;
   clicked = false;
   message = '';
   DTO: DTO={
-    title: "",
-    time: "",
-    date: "",
+    summary: "",
     description: "",
+    start: {
+      date: "",
+      dateTime: "",
+    },
+    end: {
+      date: "",
+      dateTime: "",
+    },
+    endTimeUnspecified: true,
   }
   // events = new FormControl('');
   events;
 
   constructor(
+    private router: Router,
     private eventsService: EventsService,
     private session: SessionService,
     private formBuilder: FormBuilder) {
       this.events = this.formBuilder.group({
-        title: '',
-        time: '',
+        summary: '',
+        dateTime: '',
         date: '',
         description:'',
       });
@@ -43,15 +59,27 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
   }
+
   //gets called when the user hits the submit key
-  onSubmit(customerData){
+  onSubmit(userInfo){
     //Process checkout data here
+    const d = new Date(userInfo.date)
+    const t = new Date(userInfo.date + " " + userInfo.dateTime)
+    console.log(d.toISOString())
+    console.log(t.toISOString())
     this.events.reset(); 
     this.DTO ={
-      title: customerData.title,
-      time: customerData.time,
-      date: customerData.date,
-      description:customerData.description,
+      summary: userInfo.summary,
+      description: userInfo.description,
+      start: {
+        date: d.toISOString(),
+        dateTime: t.toISOString(),
+      },
+      end: {
+        date: null,
+        dateTime: null,
+      },
+      endTimeUnspecified: true,
     }
     this.eventsService.sendEventInfo(this.DTO).subscribe(
       val => {
@@ -66,7 +94,8 @@ export class EventsComponent implements OnInit {
       }
     )
   }
-  aSubmittedEventFunciton(){
-    
+
+  onCancel(){
+    this.router.navigate(['/home']);
   }
 }

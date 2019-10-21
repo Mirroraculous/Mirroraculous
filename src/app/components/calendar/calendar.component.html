@@ -1,16 +1,11 @@
     
-    <button (click) = "changeView()"></button>
+    <img *ngIf= '!isMonth'alt = "down" src = "../../../assets/up_arrow.svg"class="updown"(click) = "changeView()"/>
+    <img *ngIf= 'isMonth'alt = "up" src = "../../../assets/down_arrow.svg"class="updown"(click) = "changeView()"/>
     
     <div *ngIf = "!isMonth">
         <ul>
-            <li *ngFor="let item of viewArray;"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
-                <div *ngIf= "item.isToday" class = "specialborder">
+            <li *ngFor="let item of viewArray;" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                         {{item.dayOf}}
-
-                </div>
-                <div *ngIf = "!item.isToday"class = "oneHundo">
-                    {{item.dayOf}}
-                </div>
             </li>
         </ul>
     </div>
@@ -33,36 +28,32 @@
 
                 </div>
             </li> -->
-            <li *ngFor="let item of viewArray[0];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
-                    {{item.dayOf}}
-                    {{item.isToday}}                
+            <li *ngFor="let item of viewArray[0];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
+                    {{item.dayOf}}               
             </li>
         </ul>
         <ul>
-            <li *ngFor="let item of viewArray[1];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[1];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}
-                    {{item.isToday}}
             </li>
         </ul>
         <ul>
-            <li *ngFor="let item of viewArray[2];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[2];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
 
                     {{item.dayOf}}
-                    {{item.isToday}}
                 
             </li>
         </ul>
         <ul>
-            <li *ngFor="let item of viewArray[3];"[ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[3];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}
-                    {{item.isToday}}
 
             </li>
         </ul>
         <ul>
-            <li *ngFor="let item of viewArray[4];"[ngClass] = "{'highlighted':item.isEvents}" [ngClass] = "{'specialborder':item.isToday}">
+            <li *ngFor="let item of viewArray[4];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}
-                    {{item.isToday}}
+
 
             </li>
         </ul>
