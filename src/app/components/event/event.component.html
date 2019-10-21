@@ -1,11 +1,12 @@
-<div class = "sub-nav-bar">
-    <button (click)="changeVal(1)">Add</button>
-    <button (click)="changeVal(2)"></button>
-    <button (click)="changeVal(3)"></button>
-    <button (click)="changeVal(4)"></button>
-    <button (click)="changeVal(5)"></button>
-</div>
+
 <div class = "background">
+        <div class = "sub-nav-bar">
+                <button (click)="changeVal(1)">Add</button>
+                <button (click)="changeVal(2)">Calendar</button>
+                <button (click)="changeVal(3)">Details</button>
+                <button (click)="changeVal(4)"></button>
+                <button (click)="changeVal(5)"></button>
+        </div>
     <div *ngIf = 'switchVal === 1'>
         <div class="container">
             <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
@@ -27,10 +28,10 @@
         </div>
     </div>
     <div *ngIf = 'switchVal === 2'>
-    
+        <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
     </div>
     <div *ngIf = 'switchVal === 3'>
-    
+        
     </div>
     <div *ngIf = 'switchVal === 4'>
         

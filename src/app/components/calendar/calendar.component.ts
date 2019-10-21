@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output,OnInit, EventEmitter } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { Router } from "@angular/router";
 
@@ -6,6 +6,7 @@ interface Day{
   isToday: boolean;
   dayOf: number;
   isEvents: boolean;
+  month: number;
 }
 @Component({
   selector: 'app-calendar',
@@ -23,6 +24,8 @@ export class CalendarComponent implements OnInit {
   year;
   startDay;
   startMonth;
+  @Output() onCalendarClick: EventEmitter<any> = new EventEmitter<any>();
+
   now = new Date();
   constructor(
     private calendar: CalendarService,
@@ -47,6 +50,7 @@ export class CalendarComponent implements OnInit {
           isToday: rn.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear()))+1? true:false,
           dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear())),
           isEvents:  false,
+          month: rn.getMonth()-1,
         }        
       }
       else if(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))===1){
@@ -54,13 +58,28 @@ export class CalendarComponent implements OnInit {
           isToday: rn.getDate() === i? true:false,
           dayOf: i,
           isEvents:  false,
+          month: rn.getMonth()-1,
+
         } 
       }else{
-        day= {
-          isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
-          dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
-          isEvents:  false,
-        } 
+        if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
+          day= {
+            isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
+            dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
+            isEvents:  false,
+            month: rn.getMonth()+1,
+  
+          }
+        }
+        else{          
+          day= {
+            isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
+            dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
+            isEvents:  false,
+            month: rn.getMonth(),
+
+          } 
+        }
       }
       this.monthArrayUnorganized.push(day);
     }
@@ -79,6 +98,7 @@ export class CalendarComponent implements OnInit {
         isToday: rn.getDate() === i? true:false,
         dayOf: i,
         isEvents:  false,
+        month: rn.getMonth(),
       }
       this.weekArray.push(day);
     }
@@ -117,7 +137,9 @@ export class CalendarComponent implements OnInit {
     console.log(d);
     return d;
   }
-
+  clickItem(val){
+    this.onCalendarClick.emit(val);
+  }
   getDaysInMonth(month,year) {
     // Here January is 1 based
     //Day 0 is the last day in the previous month

@@ -26,6 +26,7 @@ interface DTO{
 export class EventComponent implements OnInit {
   switchVal = 1;
   events;
+  today;
   isFilled = false;
   clicked = false;
   message = '';
@@ -59,6 +60,10 @@ export class EventComponent implements OnInit {
   }
   changeVal(val){
     this.switchVal = val;
+  }
+  setInfo(info){
+    this.today = info;
+    console.log(this.today);
   }
   onSubmit(userInfo){
     //Process checkout data here
