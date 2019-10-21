@@ -1,5 +1,5 @@
     
-    <button (click) = "changeView()"></button>
+    <button (click) = "changeView()" class = "up" [ngClass]="{'down':isMonth}"></button>
     
     <div *ngIf = "!isMonth">
         <ul>

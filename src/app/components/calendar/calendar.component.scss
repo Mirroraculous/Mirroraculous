@@ -6,6 +6,16 @@ li{
     border: 1px solid #8D546E;
     
 }
+.up{
+    width: 20px;
+    height: 20px;
+    background-image: url('../../../assets/up_arrow.svg');
+}
+.down{
+    width: 20px;
+    height: 20px;
+    background-image: url('../../../assets/down_arrow.svg');
+}
 ul{
     margin:0;
 }

@@ -8,7 +8,7 @@
                 <button (click)="changeVal(5)">Delete</button>
         </div>
     <div *ngIf = 'switchVal === 1'>
-        <app-calendar (onCalendarClick)="setInfo($event)" (click)="changeVal(3)"></app-calendar>
+        <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
     </div>
     <div *ngIf = 'switchVal === 2'>
             details

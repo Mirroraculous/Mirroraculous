@@ -63,6 +63,7 @@ export class EventComponent implements OnInit {
   }
   setInfo(info){
     this.today = info;
+    this.changeVal(2);
     console.log(this.today);
   }
   onSubmit(userInfo){
