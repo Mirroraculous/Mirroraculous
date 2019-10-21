@@ -39,8 +39,8 @@ export class CalendarComponent implements OnInit {
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());  
     // this.startMonth = this.getFirstDayWeek(new Date(1551398400));  
     // console.log(this.getDaysInMonth(1, 2020));
-    console.log(this.now.getDate());
-    console.log(this.now);
+    // console.log(this.now.getDate());
+    // console.log(this.now);
     const rn = new Date()
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
@@ -83,7 +83,7 @@ export class CalendarComponent implements OnInit {
       }
       this.monthArrayUnorganized.push(day);
     }
-    console.log(this.monthArrayUnorganized);
+    // console.log(this.monthArrayUnorganized);
     for(let i =0 ;i<5;i++){
       let locale: Day[] = []
       for(let k = 0;k<7;k++){
@@ -102,23 +102,27 @@ export class CalendarComponent implements OnInit {
       }
       this.weekArray.push(day);
     }
-    console.log(this.monthArray);
+    // console.log(this.monthArray);
     this.viewArray = this.monthArray;
     this.getFirstDayWeek(this.getFirstDayMonth());
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
-        // console.log(val);
-        let day = new Date(val.body[0].start.date);
-        console.log(day);
-        for(let i =0 ;i<5;i++){
-          let locale: Day[] = []
-          for(let k = 0;k<7;k++){
-            if(day.getDate() === this.monthArray[i][k].dayOf && day.getMonth()=== this.now.getMonth()){
-              this.monthArray[i][k].isEvents = true;
+        console.log(val);
+        let days: Date[];
+        for(let i =0;i<val.body.length;i++){
+          let day = new Date(val.body[i].start.date);
+          for(let i =0 ;i<5;i++){
+            let locale: Day[] = []
+            for(let k = 0;k<7;k++){
+              if(day.getDate() === this.monthArray[i][k].dayOf && day.getMonth()=== this.now.getMonth()){
+                this.monthArray[i][k].isEvents = true;
+              }
             }
+            this.monthArray.push(locale);
           }
-          this.monthArray.push(locale);
-        }
+        } 
+        // console.log(day);
+        
       }
     );
 
