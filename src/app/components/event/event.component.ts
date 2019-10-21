@@ -98,7 +98,4 @@ export class EventComponent implements OnInit {
       }
     )
   }
-  onCancel(){
-    this.router.navigate(['/home']);
-  }
 }
