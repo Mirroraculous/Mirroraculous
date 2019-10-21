@@ -114,8 +114,17 @@ export class CalendarComponent implements OnInit {
           for(let i =0 ;i<5;i++){
             let locale: Day[] = []
             for(let k = 0;k<7;k++){
-              if(day.getDate() === this.monthArray[i][k].dayOf && day.getMonth()=== this.now.getMonth()){
+              if(day.getDate() === this.monthArray[i][k].dayOf && day.getMonth()=== this.monthArray[i][k].month){
                 this.monthArray[i][k].isEvents = true;
+              }
+            }
+            this.monthArray.push(locale);
+          }
+          for(let i =0 ;i<7;i++){
+            let locale: Day[] = []
+            for(let k = 0;k<7;k++){
+              if(day.getDate() === this.weekArray[i].dayOf && day.getMonth()=== this.weekArray[i].month){
+                this.weekArray[i].isEvents = true;
               }
             }
             this.monthArray.push(locale);
