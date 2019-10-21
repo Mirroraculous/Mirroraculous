@@ -7,13 +7,17 @@ li{
     
 }
 .up{
-    width: 20px;
+    margin-left: 40px;
+    width: 26px;
     height: 20px;
+    background-repeat: no-repeat;
     background-image: url('../../../assets/up_arrow.svg');
 }
 .down{
-    width: 20px;
+    margin-left: 40px;
+    width: 26px;
     height: 20px;
+    background-repeat: no-repeat;
     background-image: url('../../../assets/down_arrow.svg');
 }
 ul{
