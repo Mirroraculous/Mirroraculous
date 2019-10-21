@@ -17,7 +17,7 @@ func MakeToken(id string) (string, int) {
 	claims := &Claims{
 		ID: id,
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Minute * 30).Unix(),
+			ExpiresAt: time.Now().Add(time.Hour * 60).Unix(),
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

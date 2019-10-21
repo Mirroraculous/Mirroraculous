@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RegisterService } from '../../services/register.service';
+import { Router } from "@angular/router";
+
 
 interface Account{
   email: string;
   password: string;
-  username: string;
+  name: string;
   confirmPassword: string;
 }
 
@@ -18,7 +20,7 @@ interface Account{
 export class RegisterPageComponent implements OnInit {
   message = '';
   DTO: Account = {
-    username: "",
+    name: "",
     password: "",
     confirmPassword: "",
     email: "",
@@ -26,7 +28,9 @@ export class RegisterPageComponent implements OnInit {
 
   constructor(
     private registerService: RegisterService,
-    private location: Location
+    private location: Location,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
@@ -39,6 +43,8 @@ export class RegisterPageComponent implements OnInit {
           if(val.status === 200 || val.status === 204){
             this.message = '';
             console.log('successfully registered user');
+            this.router.navigate(['/home']);
+
           }else{
             console.log(val.status);
             this.message = 'Failed to register. Likely account already exists.'

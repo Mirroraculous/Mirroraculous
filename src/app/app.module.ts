@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './auth/token.interceptor';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
@@ -16,6 +19,10 @@ import { ClockComponent } from './components/clock/clock.component';
 import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtModule } from "@auth0/angular-jwt";
+
 
 
 
@@ -26,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ClockComponent,
     LoginComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -36,8 +44,23 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MatIconModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem("access_token");
+        },
+        whitelistedDomains: ["example.com"],
+        blacklistedRoutes: ["example.com/examplebadroute/"],
+      }
+    })
   ],
-  providers: [],
+  providers: [JwtHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
