@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Observable, timer } from 'rxjs';
+import { TestService} from '../../services/test.service';
 import {
   trigger,
   state,
@@ -63,8 +64,10 @@ export class OverlayComponent implements OnInit {
   stopTime;
   remove;
   remove2;
+  user;
   timer: Observable<any>;
-  constructor(public dialog: MatDialogModule) {
+  constructor(public dialog: MatDialogModule,
+    private test: TestService) {
     this.showGreeting = true;
     this.showGreeting2 = true;
     this.showGreeting3 = false;
@@ -74,6 +77,12 @@ export class OverlayComponent implements OnInit {
     // console.log(event);
   }
   ngOnInit() {
+    this.test.getSession().subscribe(
+      val=>{
+        console.log(val);
+        this.user= val.name;
+      }
+    );
     const timer2 = timer(4000);
     const timer3 = timer(6500);
     const timerLength = timer(7500);
