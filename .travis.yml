@@ -30,9 +30,9 @@ matrix:
           sources:
             organization: "mirroraculous"
             token:
-            secure: ${SONAR_TOKEN}
+      secure: ${SONAR_TOKEN}
             - google-chrome
-          packages:
+      packages:
             - google-chrome-stable
       cache:
       directories:
