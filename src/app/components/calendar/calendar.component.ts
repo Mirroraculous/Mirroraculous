@@ -36,11 +36,7 @@ export class CalendarComponent implements OnInit {
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
     this.startDay = this.getFirstDayWeek(this.now);
-    this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());  
-    // this.startMonth = this.getFirstDayWeek(new Date(1551398400));  
-    // console.log(this.getDaysInMonth(1, 2020));
-    // console.log(this.now.getDate());
-    // console.log(this.now);
+    this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
     const rn = new Date()
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
@@ -83,7 +79,6 @@ export class CalendarComponent implements OnInit {
       }
       this.monthArrayUnorganized.push(day);
     }
-    // console.log(this.monthArrayUnorganized);
     for(let i =0 ;i<5;i++){
       let locale: Day[] = []
       for(let k = 0;k<7;k++){
@@ -102,7 +97,6 @@ export class CalendarComponent implements OnInit {
       }
       this.weekArray.push(day);
     }
-    // console.log(this.monthArray);
     this.viewArray = this.monthArray;
     this.getFirstDayWeek(this.getFirstDayMonth());
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
@@ -130,7 +124,6 @@ export class CalendarComponent implements OnInit {
             this.monthArray.push(locale);
           }
         } 
-        // console.log(day);
         
       }
     );
@@ -140,14 +133,12 @@ export class CalendarComponent implements OnInit {
   getFirstDayMonth(){
     let d = new Date();
     d.setDate(d.getDate()-d.getDate()+1);
-    console.log(d);
     return d;
   }
 
   getFirstDayWeek(today){
     let d = today;
     d.setDate(d.getDate()-today.getDay());
-    console.log(d);
     return d;
   }
   clickEvent(val){

@@ -8,10 +8,7 @@ import {
   style,
   animate,
   transition,
-  // ...
 } from '@angular/animations';
-
-// import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-overlay',
@@ -74,7 +71,6 @@ export class OverlayComponent implements OnInit {
     this.remove = false;
    }
   onAnimationEvent ( event: AnimationEvent ) {
-    // console.log(event);
   }
   ngOnInit() {
     this.test.getSession().subscribe(

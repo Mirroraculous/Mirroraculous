@@ -2,11 +2,6 @@
   <h3 class="title">Log In</h3>
   <form [formGroup]="login" (ngSubmit)="aSubmittedDataFunction(login.value)">    
     <input  formControlName="email" class ="inputs" placeholder = "Email" required>
-    <!-- <div *ngIf="email.invalid && (email.dirty || email.touched)">
-      <div *ngIf="email.errors.required">
-          Email is required.
-      </div>
-    </div> -->
     
     <input required formControlName="password" type = "password" class ="inputs" placeholder = "Password">  
     <span style = "text-align: center; color:red;font-size: .5em">{{message}}</span>
