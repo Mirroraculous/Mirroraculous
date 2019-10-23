@@ -6,6 +6,28 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Writing Frontend code Dos and Don'ts
+Do: use ng g c/s for *every* file that you want to add as a story. This will include values within the app.module.ts file as imports and create default testing, css, .ts, and .html files as well as a folder for these files.
+Do not: Manually add files to a directory without adding import statments to the app.module.ts file
+
+Do: Write tests as you go, not as you complete them. 
+Do not: Forget to write tests
+
+Do: use class level and tag level css
+Do not: use #id or !important tags for more than a very few css rules. In most cases running into these specificity issues can be resolved through other methods. Think of this as hitting a mouse with a jackhammer.
+
+Do: constantly check your current code by running both the backend server and frontend server(in two seperate cmd windows).
+Do not: check after long periods of time. The longer you wait, the bigger potential bugs have to compound and become indeterminable.
+
+Do: Look for solutions to problems that will not create problems down the line
+Do not: implement solutions that are simple for the moment and will cause complications down the line.
+
+Do: Test. Whether its a automated test or a UI test, please test before you attempt a PR
+Do not: assume your code works because it makes sense. At *least* test your code through the UI, its not as robust as actual unit testing but it will get the job done.
+
+Do: Pull the latest changes from master into your branch every time it is updated. If you wait, you will run into merge conflicts that will potentially become increasingly complex.
+Do not: Work on your own branch never pulling or merging from other branches until the end of the sprint, *then* pull in the branches. Doing this will create a lot more work for yourself and others and could result in duplicated/conflicting code.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module` short hand for the important angular generators is ng g c (angular generate component) and ng g s (ng generate service).
