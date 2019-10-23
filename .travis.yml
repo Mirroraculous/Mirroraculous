@@ -37,6 +37,7 @@ matrix:
         - ./node_modules
 
       install:
+        - npm install -g @angular/cli
         - npm install
 
       script:
