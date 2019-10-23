@@ -1,49 +1,49 @@
 
-matrix:
-  include:
-    - language: go
-      dist: trusty
-      go: 
-      - 1.13
-      go_import_path: github.com/mirroraculous/mirroraculous
-      before_install:
-      - go get github.com/rs/xid
-      - go get github.com/gin-gonic/gin
-      - go get github.com/dgrijalva/jwt-go
-      - go get github.com/gin-contrib/cors 
-      addons:
-        sonarcloud:
-          organization: "mirroraculous"
-          token:
-            secure: ${SONAR_TOKEN}
-      before_script:
-        - cd backend/tests
-      script:
-        - go test -v -json ./... > report.json
-        - go test -cover -coverprofile=coverage.out ./...
-        - sonar-scanner
+# matrix:
+#   include:
+#     - language: go
+#       dist: trusty
+#       go: 
+#       - 1.13
+#       go_import_path: github.com/mirroraculous/mirroraculous
+#       before_install:
+#       - go get github.com/rs/xid
+#       - go get github.com/gin-gonic/gin
+#       - go get github.com/dgrijalva/jwt-go
+#       - go get github.com/gin-contrib/cors 
+#       addons:
+#         sonarcloud:
+#           organization: "mirroraculous"
+#           token:
+#             secure: ${SONAR_TOKEN}
+#       before_script:
+#         - cd backend/tests
+#       script:
+#         - go test -v -json ./... > report.json
+#         - go test -cover -coverprofile=coverage.out ./...
+#         - sonar-scanner
 
-    - language: node_js
-      dist: trusty
-      addons:
-        apt:
-          sources:
-            organization: "mirroraculous"
-            token:
-      secure: ${SONAR_TOKEN}
-            - google-chrome
-      packages:
-            - google-chrome-stable
-      cache:
-      directories:
-        - ./node_modules
+#     - language: node_js
+#       dist: trusty
+#       addons:
+#         apt:
+#           sources:
+#             organization: "mirroraculous"
+#             token:
+#       secure: ${SONAR_TOKEN}
+#             - google-chrome
+#       packages:
+#             - google-chrome-stable
+#       cache:
+#       directories:
+#         - ./node_modules
 
-      install:
-        - npm install
+#       install:
+#         - npm install
 
-      script:
-        - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-        - sonar-scanner
+#       script:
+#         - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+#         - sonar-scanner
 
 
 # language: go
@@ -70,30 +70,30 @@ matrix:
 #   - go test -cover -coverprofile=coverage.out ./...
 #   - sonar-scanner
   
-# dist: trusty
-# sudo: false
+dist: trusty
+sudo: false
 
-# language: node_js
-# node_js:
-#   - '8'
+language: node_js
+node_js:
+  - '8'
 
-# addons:
-#   apt:
-#     sources:
-#       organization: "mirroraculous"
-#       token:
-#       secure: ${SONAR_TOKEN}
-#       - google-chrome
-#     packages:
-#       - google-chrome-stable
+addons:
+  apt:
+    sources:
+      organization: "mirroraculous"
+      token:
+      secure: ${SONAR_TOKEN}
+      - google-chrome
+    packages:
+      - google-chrome-stable
 
-# cache:
-#   directories:
-#     - ./node_modules
+cache:
+  directories:
+    - ./node_modules
 
-# install:
-#   - npm install
+install:
+  - npm install
 
-# script:
-#   - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-#   - sonar-scanner
+script:
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+  - sonar-scanner
