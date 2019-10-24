@@ -4,13 +4,13 @@ matrix:
     - language: go
       dist: trusty
       go: 
-      - 1.13
+        - 1.13
       go_import_path: github.com/mirroraculous/mirroraculous
       before_install:
-      - go get github.com/rs/xid
-      - go get github.com/gin-gonic/gin
-      - go get github.com/dgrijalva/jwt-go
-      - go get github.com/gin-contrib/cors 
+        - go get github.com/rs/xid
+        - go get github.com/gin-gonic/gin
+        - go get github.com/dgrijalva/jwt-go
+        - go get github.com/gin-contrib/cors 
       addons:
         sonarcloud:
           organization: "mirroraculous"
@@ -23,6 +23,8 @@ matrix:
 
     - language: node_js
       dist: trusty
+      node_js:
+        - 10.15
       addons:
         apt:
           sources:
@@ -35,7 +37,8 @@ matrix:
       cache:
         directories:
           - ./node_modules
-
+      before_install:
+        - npm install -g @angular/cli
       install:
         - npm install
 
