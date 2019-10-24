@@ -41,6 +41,7 @@ matrix:
         - npm install -g @angular/cli
       install:
         - npm install
+        - npm install sonar-scanner --save-dev
 
       script:
         - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
