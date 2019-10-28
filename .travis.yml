@@ -31,9 +31,9 @@ matrix:
             organization: "mirroraculous"
             token:
               secure: ${SONAR_TOKEN}
+
         chrome: stable
-      packages:
-            - google-chrome-stable
+
       cache:
         directories:
           - ./node_modules
@@ -45,5 +45,6 @@ matrix:
         - npm install rxjs-compat --save
 
       script:
+        - npm run test --no-sandbox --watch=false --no-progress
         - ng test --watch=false --code-coverage
         - sonar-scanner
