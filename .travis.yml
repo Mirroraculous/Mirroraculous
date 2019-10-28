@@ -1,25 +1,50 @@
-dist: trusty
 
-language: go
+matrix:
+  include:
+    - language: go
+      dist: trusty
+      go: 
+        - 1.13
+      go_import_path: github.com/mirroraculous/mirroraculous
+      before_install:
+        - go get github.com/rs/xid
+        - go get github.com/gin-gonic/gin
+        - go get github.com/dgrijalva/jwt-go
+        - go get github.com/gin-contrib/cors 
+      addons:
+        sonarcloud:
+          organization: "mirroraculous"
+          token:
+            secure: ${SONAR_TOKEN}
+      script:
+        - go test -v -json ./... > report.json
+        - go test -cover -coverprofile=coverage.out ./...
+        - sonar-scanner
 
-go: 
-- 1.13
-
-go_import_path: github.com/mirroraculous/mirroraculous
-
-addons:
-  sonarcloud:
-    organization: "mirroraculous"
-    token:
+    - language: node_js
+      dist: trusty
+      node_js:
+        - 10.15
+      addons:
+        apt:
+          sources:
+            organization: "mirroraculous"
+            token:
       secure: ${SONAR_TOKEN}
+            - google-chrome
+      packages:
+            - google-chrome-stable
+      cache:
+        directories:
+          - ./node_modules
+      before_install:
+        - npm install -g @angular/cli
+      install:
+        - npm install
+        - npm install sonar-scanner --save-dev
+        - npm install rxjs-compat --save
 
-before_install:
-  - go get github.com/rs/xid
-  - go get github.com/gin-gonic/gin
-  - go get github.com/dgrijalva/jwt-go
-  - go get github.com/gin-contrib/cors  
-
-script:
-  - go test -v -json ./... > report.json
-  - go test -cover -coverprofile=coverage.out ./...
-  - sonar-scanner
+      script:
+        - npm run test -- --watch=false --no-progress
+        - ng test --watch=false --code-coverage
+        - sonar-scanner

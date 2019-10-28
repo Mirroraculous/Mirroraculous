@@ -27,8 +27,13 @@ export class ClockComponent implements OnInit {
     this.minutes = this.leftPadZero(this.nowish.getMinutes());
     this.seconds = this.leftPadZero(this.nowish.getSeconds());    
     this.militaryHours = this.nowish.getHours();
-    this.hours =  this.militaryHours%12;
-    if (this.militaryHours>12){
+    // console.log(this.militaryHours);
+    if((this.militaryHours%12===0 && this.militaryHours>=12)||(this.militaryHours%12===0 && this.militaryHours===0)){
+      this.hours = this.militaryHours%12 +12;
+    }else{      
+      this.hours =  this.militaryHours%12;
+    }
+    if (this.militaryHours>=12){
       this.extension = "PM";
     }
     else{

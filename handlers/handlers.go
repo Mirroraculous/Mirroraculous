@@ -8,8 +8,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mirroraculous/mirroraculous/datamock"
+	"github.com/mirroraculous/mirroraculous/config"
+	"github.com/mirroraculous/mirroraculous/linkers"
 	"github.com/mirroraculous/mirroraculous/middleware"
+	"github.com/mirroraculous/mirroraculous/models"
 )
 
 // RegisterUser adds a new user, responds with user token
@@ -21,7 +23,8 @@ func RegisterUser(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
+	// id, status := datamock.AddUser(user.Name, user.Email, user.Pwd)
+	id, status := linkers.AddUser(user, config.FindUser, config.InsertUser)
 	if status != 200 {
 		context.JSON(status, id)
 		return
@@ -39,7 +42,7 @@ func LoginUser(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	id, status := datamock.LoginUser(user.Email, user.Pwd)
+	id, status := linkers.LoginUser(user.Email, user.Pwd, config.FindUser)
 	if status != 200 {
 		context.JSON(status, id)
 		return
@@ -58,7 +61,7 @@ func GetUser(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	user, status := datamock.GetUser(id)
+	user, status := linkers.GetUser(id, config.FindUser)
 	if status != 200 {
 		context.JSON(status, "No user found")
 		return
@@ -67,7 +70,7 @@ func GetUser(context *gin.Context) {
 }
 
 // GetCalendar gets the calendar events for a user
-// GET to :3000/api/calendar
+// GET to :3000/api/calendar/:day
 func GetCalendar(context *gin.Context) {
 	fmt.Println("Hello from GetCalendar")
 	token := context.Request.Header.Get("x-auth-token")
@@ -76,7 +79,9 @@ func GetCalendar(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	calendar, status := datamock.GetCalendar(id)
+	startDay := context.Params.ByName("day")
+
+	calendar, status := linkers.GetCalendar(id, startDay[:len(startDay)-3], config.FindEvent)
 	if status != 200 {
 		context.JSON(status, "No calendar found for user")
 		return
@@ -99,7 +104,12 @@ func AddEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	context.JSON(http.StatusOK, datamock.AddEvent(id, event.Date, event.Time, event.Event).Error())
+	e, status = linkers.AddEvent(id, event, config.InsertEvent)
+	if e != nil {
+		context.JSON(status, "Event not added")
+		return
+	}
+	context.JSON(status, "Event added!")
 }
 
 // UpdateEvent updates a specific event; responds status
@@ -117,9 +127,12 @@ func UpdateEvent(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	eventID := context.Params.ByName("id")
-	status = datamock.UpdateEvent(id, eventID, event.Time, event.Event)
-	context.JSON(status, "")
+	e, status = linkers.UpdateEvent(event, id, config.ReplaceEvent)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "Event updated!")
 }
 
 // DeleteEvent deletes a specific event; responds status
@@ -133,44 +146,42 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 	eventID := context.Params.ByName("id")
-	status = datamock.DeleteEvent(id, eventID)
-	context.JSON(status, "")
+	e, status := linkers.DeleteEvent(eventID, id, config.DeleteEvent)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "Event deleted!")
 }
 
-func convertHTTPBodyToUser(httpBody io.ReadCloser) (datamock.Users, int, error) {
+func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
-		return datamock.Users{}, http.StatusInternalServerError, e
+		return models.User{}, http.StatusInternalServerError, e
 	}
 
-	var tmp datamock.Users
+	var tmp models.User
 
 	e = json.Unmarshal(body, &tmp)
 	if e != nil {
-		return datamock.Users{}, http.StatusBadRequest, e
+		return models.User{}, http.StatusBadRequest, e
 	}
 
 	return tmp, http.StatusOK, nil
 }
 
-func convertHTTPBodyToEvent(httpBody io.ReadCloser) (eventBody, int, error) {
+func convertHTTPBodyToEvent(httpBody io.ReadCloser) (models.Event, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
-		return eventBody{}, http.StatusInternalServerError, e
+		return models.Event{}, http.StatusInternalServerError, e
 	}
 
-	var tmp eventBody
+	var tmp models.Event
 
 	e = json.Unmarshal(body, &tmp)
 	if e != nil {
-		return eventBody{}, http.StatusBadRequest, e
+		return models.Event{}, http.StatusBadRequest, e
 	}
 
 	return tmp, http.StatusOK, nil
-}
-
-type eventBody struct {
-	Date  string `json:"date"`
-	Time  string `json:"time"`
-	Event string `json:"event"`
 }
