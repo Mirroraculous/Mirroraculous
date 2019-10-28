@@ -31,7 +31,8 @@ matrix:
             organization: "mirroraculous"
             token:
               secure: ${SONAR_TOKEN}
-        - google-chrome
+        chrome:
+          "latest"
       packages:
             - google-chrome-stable
       cache:
@@ -45,6 +46,5 @@ matrix:
         - npm install rxjs-compat --save
 
       script:
-        - ./node_modules/.bin/karma start --single-run --browsers PhantomJS
         - ng test --watch=false --code-coverage
         - sonar-scanner
