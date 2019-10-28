@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async,ComponentFixture  } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
@@ -96,10 +96,33 @@ describe('AppComponent', () => {
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
   });
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.debugElement.nativeElement;
-  //   expect(compiled.querySelector('.content span').textContent).toContain('Mirroraculous app is running!');
-  // });
+  describe('Home Page',()=>{   
+    let home: HomeComponent;
+    let fixture: ComponentFixture<HomeComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(HomeComponent);
+      home = fixture.debugElement.componentInstance
+      fixture.detectChanges();
+    });
+    it(`should create home component`,()=>{      
+      expect(home).toBeTruthy();
+    });
+    it(`should have no token when logged out`,()=>{
+      home.logout()
+      expect(localStorage.getItem('sessionToken')).toBe(null)
+
+    });
+  });
+  describe('Calendar',()=>{
+    let calendar:CalendarComponent;
+    let fixture: ComponentFixture<CalendarComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(CalendarComponent);
+      calendar = fixture.debugElement.componentInstance
+      fixture.detectChanges();
+    });
+    it(`Should create Calendar`,()=>{
+      expect(calendar).toBeTruthy();
+    });
+  });
 });
