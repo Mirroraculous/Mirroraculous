@@ -31,8 +31,7 @@ matrix:
             organization: "mirroraculous"
             token:
               secure: ${SONAR_TOKEN}
-        chrome:
-          "latest"
+        chrome: stable
       packages:
             - google-chrome-stable
       cache:
