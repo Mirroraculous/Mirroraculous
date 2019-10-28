@@ -42,7 +42,9 @@ matrix:
       install:
         - npm install
         - npm install sonar-scanner --save-dev
+        - npm install rxjs-compat --save
 
       script:
-        - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+        - npm run test -- --watch=false --no-progress
+        - ng test --watch=false --code-coverage
         - sonar-scanner
