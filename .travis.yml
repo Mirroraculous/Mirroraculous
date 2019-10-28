@@ -44,5 +44,6 @@ matrix:
         - npm install sonar-scanner --save-dev
 
       script:
-        - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+        - npm run test -- --watch=false --no-progress 
+        - ng test --watch=false --code-coverage
         - sonar-scanner
