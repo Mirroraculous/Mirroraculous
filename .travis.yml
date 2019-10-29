@@ -49,4 +49,4 @@ matrix:
 
       script:
         - ng test --watch=false --code-coverage
-        - sonar-scanner
+        - sonar-scanner -Dsonar.projectKey=Mirroraculous_Mirroraculous
