@@ -48,6 +48,5 @@ matrix:
         - npm install rxjs-compat --save
 
       script:
-        - npm run test --no-sandbox --watch=false --no-progress
         - ng test --watch=false --code-coverage
         - sonar-scanner
