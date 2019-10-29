@@ -49,4 +49,4 @@ matrix:
 
       script:
         - ng test --watch=false --code-coverage
-        - sonar-scanner -Dsonar.projectKey=$SONAR_PROJECT_KEY
+        - sonar-scanner -X -Dsonar.projectKey=$SONAR_PROJECT_KEY
