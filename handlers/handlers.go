@@ -12,6 +12,7 @@ import (
 	"github.com/mirroraculous/mirroraculous/linkers"
 	"github.com/mirroraculous/mirroraculous/middleware"
 	"github.com/mirroraculous/mirroraculous/models"
+	"github.com/mirroraculous/mirroraculous/oauth"
 )
 
 // RegisterUser adds a new user, responds with user token
@@ -152,6 +153,24 @@ func DeleteEvent(context *gin.Context) {
 		return
 	}
 	context.JSON(status, "Event deleted!")
+}
+
+// GoogleLogin sends the Google login URL for oauth2
+// GET to :3000/api/googlelogin
+func GoogleLogin(context *gin.Context) {
+	status, state, e := oauth.RandToken()
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+
+	status, lurl, e := oauth.GetLoginURL(state)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+
+	context.JSON(status, lurl)
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {

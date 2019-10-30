@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 
@@ -12,14 +13,14 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
-type Credentials struct {
+type credentials struct {
 	Cid     string   `json:"client_id"`
 	Csecret string   `json:"client_secret"`
 	Redir   []string `json:"redirect_uris"`
 }
 
-func Cred() (Credentials, oauth2.Config, error) {
-	var c Credentials
+func cred() (credentials, oauth2.Config, error) {
+	var c credentials
 	var conf oauth2.Config
 	f, e := ioutil.ReadFile("oauth/client_id.json")
 	if e != nil {
@@ -39,24 +40,28 @@ func Cred() (Credentials, oauth2.Config, error) {
 	return c, conf, e
 }
 
-func getLoginURL(state string) string {
-	_, conf, _ := Cred()
-	return conf.AuthCodeURL(state)
+// GetLoginURL returns the Google login URL for oauth2
+func GetLoginURL(state string) (int, string, error) {
+	_, conf, e := cred()
+	if e != nil {
+		return 500, "", e
+	}
+	return 200, conf.AuthCodeURL(state), nil
 }
 
-func randToken() string {
+// RandToken generates a random 32 byte token (state for the google login
+func RandToken() (int, string, error) {
 	b := make([]byte, 32)
-	rand.Read(b)
-	return base64.StdEncoding.EncodeToString(b)
+	_, e := rand.Read(b)
+	if e != nil {
+		return 500, "", errors.New("Error in generating random token")
+	}
+	return 200, base64.StdEncoding.EncodeToString(b), nil
 }
 
-func GoogleLogin(context *gin.Context) {
-	state := randToken()
-	context.JSON(200, getLoginURL(state))
-}
-
+// GoogleAuth does stuff
 func GoogleAuth(c *gin.Context) {
-	_, conf, e := Cred()
+	_, conf, e := cred()
 	if e != nil {
 		c.JSON(500, "Server credentials failed")
 		return

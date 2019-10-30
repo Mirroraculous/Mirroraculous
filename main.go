@@ -8,7 +8,6 @@ import (
 
 	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/handlers"
-	"github.com/mirroraculous/mirroraculous/oauth"
 )
 
 func main() {
@@ -43,7 +42,7 @@ func main() {
 	server.PUT("/api/calendar/:id", handlers.UpdateEvent)
 	server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
 
-	server.GET("/api/googlelogin", oauth.GoogleLogin)
+	server.GET("/api/googlelogin", handlers.GoogleLogin)
 
 	err := server.Run(":3000")
 	if err != nil {
