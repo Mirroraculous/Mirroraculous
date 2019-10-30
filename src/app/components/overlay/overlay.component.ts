@@ -76,7 +76,12 @@ export class OverlayComponent implements OnInit {
     this.test.getSession().subscribe(
       val=>{
         console.log(val);
-        this.user= val.name;
+        if(val.name){          
+          this.user= val.name;
+        }
+        else{
+          this.user = '';
+        }
       }
     );
     const timer2 = timer(4000);
