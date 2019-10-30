@@ -26,11 +26,10 @@ matrix:
       node_js:
         - 10.15
       addons:
-        apt:
-          sources:
-            organization: "mirroraculous"
-            token:
-              secure: ${SONAR_TOKEN}
+        sonarcloud:
+          organization: "mirroraculous"
+          token:
+            secure: ${SONAR_TOKEN}
 
         chrome: stable
 
