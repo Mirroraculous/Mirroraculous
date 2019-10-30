@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-
+import {AuthGuard} from './auth/auth-guard.service'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/token.interceptor';
 
@@ -29,6 +29,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { DeleteEventComponent } from './components/delete-event/delete-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
+import { SessionService } from './auth/session.service';
+import { homedir } from 'os';
 
 
 
@@ -125,4 +127,68 @@ describe('AppComponent', () => {
       expect(calendar).toBeTruthy();
     });
   });
+  describe('Clock',()=>{
+    let clock:ClockComponent;
+    let fixture: ComponentFixture<ClockComponent>;
+    beforeEach(() => {
+          fixture = TestBed.createComponent(ClockComponent);
+          clock = fixture.componentInstance;
+          fixture.detectChanges();
+        });
+        it('should have military set to false',()=>{
+          expect(clock.military).toBe(false);
+        });
+        it('should create', () => {
+          expect(clock).toBeTruthy();
+        });
+  });
+  describe('Overlay',()=>{
+    let overlay:OverlayComponent;
+    let fixture: ComponentFixture<OverlayComponent>;
+    beforeEach(() => {
+        fixture = TestBed.createComponent(OverlayComponent);
+        overlay = fixture.componentInstance;
+        fixture.detectChanges();
+      });
+    
+      it('should create', () => {
+        expect(overlay).toBeTruthy();
+      });
+      it('should properly initialize',()=>{
+        expect(overlay.showGreeting).toBe(true);
+        expect(overlay.showGreeting2).toBe(true);
+        expect(overlay.showGreeting3).toBe(false);
+        expect(overlay.remove).toBe(false);
+      });
+      it('should have undefined unused variables',()=>{
+        expect(overlay.remove2).toBe(undefined);
+        expect(overlay.timer).toBe(undefined);
+        expect(overlay.startTime).toBe(undefined);
+        expect(overlay.stopTime).toBe(undefined);
+      });
+  });
+  describe('Session Service',()=>{
+    let session:SessionService;
+    let fixture: ComponentFixture<SessionService>;
+    beforeEach(() => {
+      fixture = TestBed.get(SessionService);
+      session = fixture.componentInstance;
+    });    
+    xit('Should be capable of determining if the session',()=>{
+      let auth = session.isAuthenticated();
+      console.log(auth);
+      expect(auth).not.toBe(undefined)
+    });
+  });
+  // describe('Auth Guard',()=>{
+  //   let service: AuthGuard = TestBed.get(AuthGuard);
+
+  //   it('should be created', () => {
+  //         expect(service).toBeTruthy();
+  //   });
+  //   // it('should be functionally acceptable',()=>{
+  //   //   expect(service.canActivate()).toBe(false)
+  //   // });
+
+  // });
 });
