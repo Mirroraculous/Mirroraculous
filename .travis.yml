@@ -14,10 +14,7 @@ addons:
       secure: ${SONAR_TOKEN}
 
 before_install:
-  - go get github.com/rs/xid
-  - go get github.com/gin-gonic/gin
-  - go get github.com/dgrijalva/jwt-go
-  - go get github.com/gin-contrib/cors  
+  - go get ./...
 
 script:
   - go test -v -json ./... > report.json

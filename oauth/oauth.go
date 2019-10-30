@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
@@ -29,12 +31,18 @@ func init() {
 func cred() (credentials, oauth2.Config, error) {
 	var c credentials
 	var conf oauth2.Config
-	f, e := ioutil.ReadFile(FILE)
+	f, e := os.Open(FILE)
 	if e != nil {
-		fmt.Println(e.Error())
+		log.Println(e.Error())
 		return c, conf, e
 	}
-	json.Unmarshal(f, &c)
+	decoder := json.NewDecoder(f)
+	e = decoder.Decode(&c)
+	if e != nil {
+		log.Println(e.Error())
+		return c, conf, e
+	}
+
 	conf = oauth2.Config{
 		ClientID:     c.Cid,
 		ClientSecret: c.Csecret,
