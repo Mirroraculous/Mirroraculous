@@ -19,10 +19,17 @@ type credentials struct {
 	Redir   []string `json:"redirect_uris"`
 }
 
+// FILE to get credentials from
+var FILE string
+
+func init() {
+	FILE = "oauth/client_id.json"
+}
+
 func cred() (credentials, oauth2.Config, error) {
 	var c credentials
 	var conf oauth2.Config
-	f, e := ioutil.ReadFile("oauth/client_id.json")
+	f, e := ioutil.ReadFile(FILE)
 	if e != nil {
 		fmt.Println(e.Error())
 		return c, conf, e
