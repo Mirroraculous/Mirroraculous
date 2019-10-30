@@ -28,7 +28,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { DeleteEventComponent } from './components/delete-event/delete-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
-
+import {OauthComponent} from './components/oauth/oauth.component';
 
 
 
@@ -38,6 +38,7 @@ import { EventComponent } from './components/event/event.component';
     OverlayComponent,
     HomeComponent,
     ClockComponent,
+    OauthComponent,
     LoginComponent,
     RegisterPageComponent,
     EventsComponent,

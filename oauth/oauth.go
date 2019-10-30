@@ -16,7 +16,6 @@ type Credentials struct {
 	Cid     string   `json:"client_id"`
 	Csecret string   `json:"client_secret"`
 	Redir   []string `json:"redirect_uris"`
-	Origins []string `json:"javascript_origins"`
 }
 
 func Cred() (Credentials, oauth2.Config, error) {
@@ -37,13 +36,11 @@ func Cred() (Credentials, oauth2.Config, error) {
 		},
 		Endpoint: google.Endpoint,
 	}
-	fmt.Println(conf.RedirectURL)
 	return c, conf, e
 }
 
 func getLoginURL(state string) string {
 	_, conf, _ := Cred()
-	fmt.Println(conf.RedirectURL)
 	return conf.AuthCodeURL(state)
 }
 
@@ -53,9 +50,9 @@ func randToken() string {
 	return base64.StdEncoding.EncodeToString(b)
 }
 
-func GoogleLogin(c *gin.Context) {
+func GoogleLogin(context *gin.Context) {
 	state := randToken()
-	c.JSON(200, getLoginURL(state))
+	context.JSON(200, getLoginURL(state))
 }
 
 func GoogleAuth(c *gin.Context) {
