@@ -32,8 +32,8 @@ matrix:
             secure: ${SONAR_TOKEN}
 
         chrome: stable
-      go:
-        -1.13
+      # go:
+      #   -1.13
       cache:
         directories:
           - ./node_modules
@@ -43,13 +43,13 @@ matrix:
         - sh -e /etc/init.d/xvfb start
         - npm install -g @angular/cli
       install:
-        - go version
-        - go get ./...
+        # - go version
+        # - go get ./...
         - npm install
         - npm install sonar-scanner --save-dev
         - npm install rxjs-compat --save
 
       script:
-        - go run main.go
+        # - go run main.go
         - ng test --watch=false --code-coverage
         - sonar-scanner
