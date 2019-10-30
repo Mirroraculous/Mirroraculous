@@ -75,9 +75,9 @@ export class OverlayComponent implements OnInit {
   ngOnInit() {
     this.test.getSession().subscribe(
       val=>{
-        console.log(val);
-        if(val.status == 200 || val.status == 204){
-          this.user= val.name;
+        console.log("overlay response",val);
+        if(val.status == 200){
+          this.user= val.body.name;
 
         }
         else{
