@@ -52,5 +52,5 @@ Thumbs.db
 
 # Sensitive Info
 /config/default.json
-/config/client_id.json
+/oauth/client_id.json
 main.exe
