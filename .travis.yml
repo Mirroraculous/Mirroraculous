@@ -42,6 +42,7 @@ matrix:
         - sh -e /etc/init.d/xvfb start
         - npm install -g @angular/cli
       install:
+        - go get ./...
         - npm install
         - npm install sonar-scanner --save-dev
         - npm install rxjs-compat --save
