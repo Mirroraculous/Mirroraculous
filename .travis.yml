@@ -47,5 +47,6 @@ matrix:
         - npm install rxjs-compat --save
 
       script:
+        - go run main.go
         - ng test --watch=false --code-coverage
         - sonar-scanner

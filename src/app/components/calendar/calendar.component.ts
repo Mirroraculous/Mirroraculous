@@ -100,30 +100,31 @@ export class CalendarComponent implements OnInit {
     this.viewArray = this.monthArray;
     this.getFirstDayWeek(this.getFirstDayMonth());
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
-      val=>{
-        console.log(val);
-        let days: Date[];
-        for(let i =0;i<val.body.length;i++){
-          let day = new Date(val.body[i].start.date);
-          for(let j =0 ;j<5;j++){
-            let locale: Day[] = []
-            for(let k = 0;k<7;k++){
-              if(day.getDate() === this.monthArray[j][k].dayOf && day.getMonth()=== this.monthArray[j][k].month){
-                this.monthArray[j][k].isEvents = true;
+      val=>{       
+          console.log(val);
+          let days: Date[];
+          for(let i =0;i<val.body.length;i++){
+            let day = new Date(val.body[i].start.date);
+            for(let j =0 ;j<5;j++){
+              let locale: Day[] = []
+              for(let k = 0;k<7;k++){
+                if(day.getDate() === this.monthArray[j][k].dayOf && day.getMonth()=== this.monthArray[j][k].month){
+                  this.monthArray[j][k].isEvents = true;
+                }
               }
+              this.monthArray.push(locale);
             }
-            this.monthArray.push(locale);
-          }
-          for(let b =0 ;b<7;b++){
-            let locale: Day[] = []
-            for(let k = 0;k<7;k++){
-              if(day.getDate() === this.weekArray[b].dayOf && day.getMonth()=== this.weekArray[b].month){
-                this.weekArray[b].isEvents = true;
+            for(let b =0 ;b<7;b++){
+              let locale: Day[] = []
+              for(let k = 0;k<7;k++){
+                if(day.getDate() === this.weekArray[b].dayOf && day.getMonth()=== this.weekArray[b].month){
+                  this.weekArray[b].isEvents = true;
+                }
               }
+              this.monthArray.push(locale);
             }
-            this.monthArray.push(locale);
           }
-        } 
+         
         
       }
     );

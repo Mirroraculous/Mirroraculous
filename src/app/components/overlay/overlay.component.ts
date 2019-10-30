@@ -76,6 +76,9 @@ export class OverlayComponent implements OnInit {
     this.test.getSession().subscribe(
       val=>{
         console.log("overlay response",val);
+        if(val!=undefined){
+          
+        }
         if(val.status == 200){
           this.user= val.body.name;
 
