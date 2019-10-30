@@ -148,6 +148,8 @@ describe('AppComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OverlayComponent);
         overlay = fixture.componentInstance;
+        localStorage.removeItem('sessionToken');
+        
         fixture.detectChanges();
       });
     
