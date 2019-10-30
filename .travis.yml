@@ -43,6 +43,7 @@ matrix:
         - sh -e /etc/init.d/xvfb start
         - npm install -g @angular/cli
       install:
+        - go version
         - go get ./...
         - npm install
         - npm install sonar-scanner --save-dev
