@@ -28,6 +28,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { DeleteEventComponent } from './components/delete-event/delete-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
+import { LocationComponent } from './components/location/location.component';
 
 
 
@@ -46,6 +47,7 @@ import { EventComponent } from './components/event/event.component';
     DeleteEventComponent,
     UpdateEventComponent,
     EventComponent,
+    LocationComponent,
   ],
   imports: [
     BrowserModule,
