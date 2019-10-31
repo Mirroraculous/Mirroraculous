@@ -10,7 +10,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -75,27 +74,25 @@ func RandToken() (int, string, error) {
 }
 
 // GoogleAuth does stuff
-func GoogleAuth(c *gin.Context) {
+func GoogleAuth(code string) (int, error) {
 	_, conf, e := cred()
 	if e != nil {
-		c.JSON(500, "Server credentials failed")
-		return
+		return 500, errors.New("Server credentials failed")
 	}
-	token, e := conf.Exchange(oauth2.NoContext, c.Query("code"))
+	token, e := conf.Exchange(oauth2.NoContext, code)
 	if e != nil {
-		c.JSON(401, "Unauthorized")
-		return
+		return 401, errors.New("Unauthorized")
 	}
 
 	client := conf.Client(oauth2.NoContext, token)
 	email, e := client.Get("https://www.googleapis.com/oauth2/v3/userinfo")
 	if e != nil {
-		c.JSON(401, "Email unverified")
-		return
+		log.Println(e.Error())
+		return 401, errors.New("Email unverified")
 	}
 
 	defer email.Body.Close()
 	data, _ := ioutil.ReadAll(email.Body)
 	fmt.Printf("Email: %s\n", string(data))
-	c.Status(200)
+	return 200, nil
 }

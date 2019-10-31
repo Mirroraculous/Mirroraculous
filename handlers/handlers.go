@@ -173,6 +173,15 @@ func GoogleLogin(context *gin.Context) {
 	context.JSON(status, lurl)
 }
 
+func GoogleAuth(context *gin.Context) {
+	status, e := oauth.GoogleAuth(context.Query("code"))
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.Status(status)
+}
+
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
