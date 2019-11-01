@@ -1,6 +1,7 @@
 package oauth
 
 import (
+	"context"
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
@@ -77,8 +78,9 @@ func GoogleToken(code string) (int, *oauth2.Token, error) {
 	if e != nil {
 		return 500, nil, errors.New("Server credentials failed")
 	}
-	token, e := conf.Exchange(oauth2.NoContext, code)
+	token, e := conf.Exchange(context.Background(), code)
 	if e != nil {
+		log.Println(e.Error())
 		return 401, nil, errors.New("Unauthorized")
 	}
 

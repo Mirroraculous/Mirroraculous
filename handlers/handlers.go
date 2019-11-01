@@ -190,7 +190,7 @@ func GoogleAuth(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	status, e = linkers.AddGoogleToken(token, t, config.UpdateUser)
+	status, e = linkers.AddGoogleToken(id, t, config.UpdateUser)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return

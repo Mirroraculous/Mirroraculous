@@ -16,6 +16,6 @@ export class AppComponent {
 
   }
   ngOnInit() {
-    this.router.navigate(['/home'], { queryParamsHandling: "merge" });       
+    //this.router.navigate(['/home'], { queryParamsHandling: "merge" });       
   }
 }

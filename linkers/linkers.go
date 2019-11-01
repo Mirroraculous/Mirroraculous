@@ -2,6 +2,7 @@ package linkers
 
 import (
 	"fmt"
+	"log"
 	"regexp"
 	"strconv"
 	"time"
@@ -115,10 +116,14 @@ func DeleteEvent(eventID string, id string, delete func(query bson.D) error) (er
 func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, up bson.M) error) (int, error) {
 	primID, e := primitive.ObjectIDFromHex(usertoken)
 	if e != nil {
+		log.Println(e.Error())
+		log.Println("Broken primative")
 		return 500, e
 	}
 	e = update(bson.M{"_id": bson.M{"$eq": primID}}, bson.M{"$set": bson.M{"googletoken": *token}})
 	if e != nil {
+		log.Println("Broken database")
+		log.Println(e.Error())
 		return 500, e
 	}
 	return 200, nil
