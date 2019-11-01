@@ -16,7 +16,6 @@ export class OauthComponent implements OnInit {
   ngOnInit() {
     this.link.getLink().subscribe(
       val => {
-        console.log(val.body);
         this.oauthLink = val.body;
       }
     );

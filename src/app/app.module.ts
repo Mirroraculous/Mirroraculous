@@ -29,6 +29,7 @@ import { DeleteEventComponent } from './components/delete-event/delete-event.com
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
 import {OauthComponent} from './components/oauth/oauth.component';
+import {GoogleAuthComponent} from './components/googleauth/googleauth.component'
 
 
 
@@ -47,6 +48,7 @@ import {OauthComponent} from './components/oauth/oauth.component';
     DeleteEventComponent,
     UpdateEventComponent,
     EventComponent,
+    GoogleAuthComponent,
   ],
   imports: [
     BrowserModule,

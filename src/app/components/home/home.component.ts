@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const code = new URLSearchParams(window.location.search).get("code");
+    console.log(code)
     this.test.getSession().subscribe(
       val=>{
         console.log('sucessfully added a header token w/o specificying it')

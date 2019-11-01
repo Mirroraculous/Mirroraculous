@@ -169,7 +169,6 @@ func GoogleLogin(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-
 	status, lurl, e := oauth.GetLoginURL(state)
 	if e != nil {
 		context.JSON(status, e.Error())
