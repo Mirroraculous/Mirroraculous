@@ -5,8 +5,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
@@ -74,25 +72,15 @@ func RandToken() (int, string, error) {
 }
 
 // GoogleAuth does stuff
-func GoogleAuth(code string) (int, error) {
+func GoogleToken(code string) (int, *oauth2.Token, error) {
 	_, conf, e := cred()
 	if e != nil {
-		return 500, errors.New("Server credentials failed")
+		return 500, nil, errors.New("Server credentials failed")
 	}
 	token, e := conf.Exchange(oauth2.NoContext, code)
 	if e != nil {
-		return 401, errors.New("Unauthorized")
+		return 401, nil, errors.New("Unauthorized")
 	}
 
-	client := conf.Client(oauth2.NoContext, token)
-	email, e := client.Get("https://www.googleapis.com/oauth2/v3/userinfo")
-	if e != nil {
-		log.Println(e.Error())
-		return 401, errors.New("Email unverified")
-	}
-
-	defer email.Body.Close()
-	data, _ := ioutil.ReadAll(email.Body)
-	fmt.Printf("Email: %s\n", string(data))
-	return 200, nil
+	return 200, token, nil
 }

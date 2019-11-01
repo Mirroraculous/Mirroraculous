@@ -158,6 +158,12 @@ func DeleteEvent(context *gin.Context) {
 // GoogleLogin sends the Google login URL for oauth2
 // GET to :3000/api/googlelogin
 func GoogleLogin(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
 	status, state, e := oauth.RandToken()
 	if e != nil {
 		context.JSON(status, e.Error())
@@ -174,7 +180,18 @@ func GoogleLogin(context *gin.Context) {
 }
 
 func GoogleAuth(context *gin.Context) {
-	status, e := oauth.GoogleAuth(context.Query("code"))
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	status, t, e := oauth.GoogleToken(context.Query("code"))
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	status, e = linkers.AddGoogleToken(token, t, config.UpdateUser)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return

@@ -27,15 +27,15 @@ func TestGetLoginURL(t *testing.T) {
 	}
 }
 
-func TestGoogleAuth(t *testing.T) {
+func TestGoogleToken(t *testing.T) {
 	FILE = ""
-	if s, e := GoogleAuth(""); s != 500 || e == nil {
+	if s, _, e := GoogleToken(""); s != 500 || e == nil {
 		t.Errorf("Expected 500 status and \"Server credentials failed\", go %d and %s", s, e)
 	}
 
 	dir, _ := os.Getwd()
 	FILE = path.Join(dir, "dummy.json")
-	if s, e := GoogleAuth(""); s != 401 || e == nil {
+	if s, _, e := GoogleToken(""); s != 401 || e == nil {
 		t.Errorf("Expected 401 status and \"Unauthorized\", go %d and %s", s, e)
 	}
 }

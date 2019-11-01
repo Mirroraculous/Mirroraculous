@@ -43,6 +43,7 @@ func main() {
 	server.DELETE("/api/calendar/:id", handlers.DeleteEvent)
 
 	server.GET("/api/googlelogin", handlers.GoogleLogin)
+	server.GET("/api/googleauth", handlers.GoogleAuth)
 
 	err := server.Run(":3000")
 	if err != nil {
