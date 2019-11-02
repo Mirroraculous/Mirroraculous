@@ -12,19 +12,9 @@ module.exports = function (config) {
       require('karma-spec-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-sonarqube-unit-reporter'),
     ],
-    coverageReporter: {
-      type : 'lcov',
-      dir : 'reports',
-      subdir : 'coverage'
-    },
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
-    },
-    preprocessors: {
-      'src/**/*.js':   ['coverage'],
-      'test/**/*.js':   ['coverage']
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, './coverage/Mirroraculous'),
