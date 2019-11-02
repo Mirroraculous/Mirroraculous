@@ -1,6 +1,6 @@
 import { TestBed, async,ComponentFixture  } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, DebugElement } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import {AuthGuard} from './auth/auth-guard.service'
@@ -31,6 +31,9 @@ import { UpdateEventComponent } from './components/update-event/update-event.com
 import { EventComponent } from './components/event/event.component';
 import { SessionService } from './auth/session.service';
 import { homedir } from 'os';
+import { of } from 'rxjs';
+import { TestService } from './services/test.service';
+import { CalendarService } from './services/calendar.service';
 
 
 
@@ -102,6 +105,7 @@ describe('AppComponent', () => {
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
     beforeEach(()=>{
+
       fixture = TestBed.createComponent(HomeComponent);
       home = fixture.debugElement.componentInstance
       fixture.detectChanges();
@@ -116,12 +120,24 @@ describe('AppComponent', () => {
     });
   });
   describe('Calendar',()=>{
+    let calendarService : CalendarService;
+    let de: DebugElement;
+    let spy: jasmine.Spy;
     let calendar:CalendarComponent;
     let fixture: ComponentFixture<CalendarComponent>;
     beforeEach(()=>{
       fixture = TestBed.createComponent(CalendarComponent);
-      calendar = fixture.debugElement.componentInstance
+      calendar = fixture.debugElement.componentInstance;
+      calendarService = TestBed.get(CalendarService);
+
+      spy = spyOn(calendarService,'sendEventInfo').and.returnValue(of(
+        '{body:null, ok:true,status:200,statusText:`ok`,type:4,url:`http://localhost:3000/api/calendar/1572214583815`}'
+        ));
+
       fixture.detectChanges();
+    });
+    it('should run the spy',()=>{
+      expect(spy).toHaveBeenCalled();
     });
     it(`Should create Calendar`,()=>{
       expect(calendar).toBeTruthy();
@@ -145,14 +161,32 @@ describe('AppComponent', () => {
   describe('Overlay',()=>{
     let overlay:OverlayComponent;
     let fixture: ComponentFixture<OverlayComponent>;
+    let test : TestService;
+    let de: DebugElement;
+    let service: TestService;
+    let spy: jasmine.Spy;
+    // beforeEach(async(()=>{
+    //   let serviceStub = {
+    //     getUser:() => of('Jerry'),
+    //   };
+    //   TestBed.configureTestingModule({
+    //     declarations:[OverlayComponent],
+    //     providers:[{provide:TestService,useValue:serviceStub}]
+    //   })
+    // }));
     beforeEach(() => {
         fixture = TestBed.createComponent(OverlayComponent);
         overlay = fixture.componentInstance;
         localStorage.removeItem('sessionToken');
-        
+        test = TestBed.get(TestService)
+        spy = spyOn(test,'getSession').and.returnValue(of('Jerry'));
         fixture.detectChanges();
       });
-    
+      it('should get a username',()=>{
+        expect(spy).toHaveBeenCalled();
+        overlay.getUser()
+        expect(overlay.user).not.toBe(null);
+      });
       it('should create', () => {
         expect(overlay).toBeTruthy();
       });

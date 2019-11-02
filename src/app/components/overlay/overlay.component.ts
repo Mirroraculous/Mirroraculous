@@ -73,22 +73,7 @@ export class OverlayComponent implements OnInit {
   onAnimationEvent ( event: AnimationEvent ) {
   }
   ngOnInit() {
-    this.test.getSession().subscribe(
-      val=>{
-        console.log("overlay response",val);
-        if(val!=undefined){
-          
-        }
-        if(val.status == 200){
-          this.user= val.body.name;
-
-        }
-        else{
-          console.log('overlay status',+val.status)
-          this.user = 'user';
-        }
-      }
-    );
+    this.getUser()
     const timer2 = timer(4000);
     const timer3 = timer(6500);
     const timerLength = timer(7500);
@@ -114,5 +99,23 @@ export class OverlayComponent implements OnInit {
         this.remove = true;
       }
     );
+    }
+    getUser(){
+      this.test.getSession().subscribe(
+        val=>{
+          console.log("overlay response",val);
+          if(val==undefined){
+            
+          }
+          else if(val.status == 200){
+            this.user= val.body.name;
+  
+          }
+          else{
+            console.log('overlay status',+val.status)
+            this.user = 'user';
+          }
+        }
+      );
     }
 }
