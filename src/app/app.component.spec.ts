@@ -115,6 +115,7 @@ describe('AppComponent', () => {
     it(`should have no token when logged out`,()=>{
       expect(localStorage.getItem('sessionToken')).toBe(null)
     });
+  });
   describe('Home Page',()=>{   
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
@@ -241,4 +242,3 @@ describe('AppComponent', () => {
   //   // });
 
   // });
-});
