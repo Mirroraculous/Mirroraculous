@@ -101,6 +101,21 @@ describe('AppComponent', () => {
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
   });
+  describe('Login Page', ()=>{
+    let login: LoginComponent;
+    let fixture: ComponentFixture<LoginComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(LoginComponent);
+      login = fixture.debugElement.componentInstance
+      fixture.detectChanges();
+    });
+    it(`should create login component`,()=>{
+      expect(login).toBeTruthy();
+    });
+    it(`should have no token when logged out`,()=>{
+      expect(localStorage.getItem('sessionToken')).toBe(null)
+    });
+  });
   describe('Home Page',()=>{   
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
