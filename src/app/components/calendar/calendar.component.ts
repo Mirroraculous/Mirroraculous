@@ -134,7 +134,7 @@ export class CalendarComponent implements OnInit {
 
   getFirstDayMonth(){
     let d = new Date();
-    d.setDate(d.getDate()-d.getDate()+1);
+    d.setDate(1);
     return d;
   }
 

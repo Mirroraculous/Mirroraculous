@@ -104,16 +104,15 @@ export class OverlayComponent implements OnInit {
       this.test.getSession().subscribe(
         val=>{
           console.log("overlay response",val);
-          if(val==undefined){
-            
-          }
-          else if(val.status == 200){
-            this.user= val.body.name;
-  
-          }
-          else{
-            console.log('overlay status',+val.status)
-            this.user = 'user';
+          if(val!=undefined && val!=null){            
+            if(val.status == 200){
+              this.user= val.body.name;
+    
+            }
+            else{
+              console.log('overlay status',+val.status)
+              this.user = 'user';
+            }
           }
         }
       );
