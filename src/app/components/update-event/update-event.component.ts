@@ -20,7 +20,7 @@ interface DTO{
 }
 
 @Component({
-  selector: 'app-update-events',
+  selector: 'app-update-event',
   templateUrl: './update-event.component.html',
   styleUrls: ['./update-event.component.scss']
 })

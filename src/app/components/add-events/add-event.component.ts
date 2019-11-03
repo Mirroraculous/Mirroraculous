@@ -20,9 +20,9 @@ interface DTO{
 }
 
 @Component({
-  selector: 'app-add-events',
-  templateUrl: './add-events.component.html',
-  styleUrls: ['./add-events.component.scss']
+  selector: 'app-add-event',
+  templateUrl: './add-event.component.html',
+  styleUrls: ['./add-event.component.scss']
 })
 export class AddEventsComponent implements OnInit {
   events;
