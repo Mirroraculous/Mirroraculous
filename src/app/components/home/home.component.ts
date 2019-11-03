@@ -20,12 +20,14 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }  
+  testNoHeader(){    
     this.test.getSession().subscribe(
       val=>{
         console.log('sucessfully added a header token w/o specificying it')
       }
     );
-  }  
+  }
   logout(){
     localStorage.removeItem('sessionToken');
     this.router.navigate(['login']);

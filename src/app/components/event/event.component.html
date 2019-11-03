@@ -10,47 +10,17 @@
         <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
     </div>
     <div *ngIf = 'switchVal === 2'>
-            details
+        
+        details
     </div>
     <div *ngIf = 'switchVal === 3'>
-            <div class="container">
-                    <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
-                     <input  formControlName= "summary" class ="inputs" placeholder = "Title">
-                   
-                     <input formControlName="dateTime"  class ="inputs" placeholder="Time">
-                 
-                     <input formControlName="date"  class ="inputs" placeholder = "Date">
-                 
-                     <input formControlName="description" class ="inputs" placeholder = "Add a description">
-                 
-                     <button type="submit" class="button">Submit</button>
-                   
-                     <span style = "text-align: center;margin-left: 27%; margin-right: 27%; color:red;font-size: .5em">{{message}}</span>
-                     
-                    </form>
-                </div>
+        <app-add-events></app-add-events>
     </div>
     <div *ngIf = 'switchVal === 4'>
-            <div class="container">
-                    <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
-                     <input  formControlName= "summary" class ="inputs" placeholder = "Title">
-                   
-                     <input formControlName="dateTime"  class ="inputs" placeholder="Time">
-                 
-                     <input formControlName="date"  class ="inputs" placeholder = "Date">
-                 
-                     <input formControlName="description" class ="inputs" placeholder = "Add a description">
-                 
-                     <button type="submit" class="button">Update</button>
-                   
-                     <span style = "text-align: center;margin-left: 27%; margin-right: 27%; color:red;font-size: .5em">{{message}}</span>
-                     
-                    </form>
-                </div>
-        
+        <app-update-events></app-update-events>        
     </div>
     <div *ngIf = 'switchVal === 5'>
-            List Of Events to Delete
-        
-        </div>
+        <!-- <app-delete-events></app-delete-events> -->
+        List Of Events to Delete        
+    </div>
 </div>

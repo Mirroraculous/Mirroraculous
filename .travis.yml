@@ -26,14 +26,14 @@ matrix:
       node_js:
         - 10.15
       addons:
-        apt:
-          sources:
-            organization: "mirroraculous"
-            token:
-              secure: ${SONAR_TOKEN}
+        sonarcloud:
+          organization: "mirroraculous"
+          token:
+            secure: ${SONAR_TOKEN}
 
         chrome: stable
-
+      # go:
+      #   -1.13
       cache:
         directories:
           - ./node_modules
@@ -43,10 +43,14 @@ matrix:
         - sh -e /etc/init.d/xvfb start
         - npm install -g @angular/cli
       install:
+        # - go version
+        # - go get ./...
         - npm install
         - npm install sonar-scanner --save-dev
         - npm install rxjs-compat --save
 
       script:
+        # - go run main.go
         - ng test --watch=false --code-coverage
-        - sonar-scanner -X -Dsonar.projectKey=$SONAR_PROJECT_KEY
+        - ng test
+        - sonar-scanner
