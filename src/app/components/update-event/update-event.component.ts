@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
-import { EventsService } from 'src/app/services/addEvents.service';
+import { EventsService } from 'src/app/services/add-event.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
+import { CalendarComponent } from '../calendar/calendar.component';
 
 interface DTO{
   summary: string;
@@ -20,7 +21,7 @@ interface DTO{
 }
 
 @Component({
-  selector: 'app-update-events',
+  selector: 'app-update-event',
   templateUrl: './update-event.component.html',
   styleUrls: ['./update-event.component.scss']
 })
