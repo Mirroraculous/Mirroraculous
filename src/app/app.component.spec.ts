@@ -194,7 +194,7 @@ describe('AppComponent', () => {
         overlay = fixture.componentInstance;
         localStorage.removeItem('sessionToken');
         test = TestBed.get(TestService)
-        spy = spyOn(test,'getSession').and.returnValue(of('Jerry'));
+        spy = spyOn(test,'getSession').and.returnValue(of('{"_id":"5da645a3115a423c2cfe11d4","name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi","googletoken":{"access_token":"ya29.Il-vB6mMSlWE2kAsXStt2FV-_umrA5a-1yMjY6rFAOonU5J_ZhFnRvQy3SvGSyOrplwUHB454QeI5uRzX4-agNsWf0RD7HxELYiFqYX1SK8ekUEHXSi0-BXwvMc30BlfMw","token_type":"Bearer","expiry":"2019-11-03T01:58:07.276Z"}}'));
         fixture.detectChanges();
       });
       it('should get a username',()=>{
