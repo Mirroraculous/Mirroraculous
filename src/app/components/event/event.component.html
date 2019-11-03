@@ -10,17 +10,15 @@
         <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
     </div>
     <div *ngIf = 'switchVal === 2'>
-        
-        details
+        <app-details-event></app-details-event>
     </div>
     <div *ngIf = 'switchVal === 3'>
-        <app-add-events></app-add-events>
+        <app-add-event></app-add-event>
     </div>
     <div *ngIf = 'switchVal === 4'>
-        <app-update-events></app-update-events>        
+        <app-update-event ></app-update-event>        
     </div>
     <div *ngIf = 'switchVal === 5'>
-        <!-- <app-delete-events></app-delete-events> -->
-        List Of Events to Delete        
+        <app-delete-event></app-delete-event>    
     </div>
 </div>
