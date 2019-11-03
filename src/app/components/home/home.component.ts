@@ -31,18 +31,23 @@ export class HomeComponent implements OnInit {
           console.log(val)
         }
       )
+      this.checkAuth()
     }
     
+    this.checkAuth()
+  }  
+
+  checkAuth() {
     this.test.getSession().subscribe(
       val=>{
-        console.log(val);
-        if(val.body.googletoken != null){
-          this.router.navigate(['/home']);
+        if(val.body.googletoken.access_token != ""){
           this.hasAuth = true;
+          this.router.navigate(['/home']);
         }
       }
     );
-  }  
+  }
+
   logout(){
     localStorage.removeItem('sessionToken');
     this.router.navigate(['login']);

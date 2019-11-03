@@ -19,7 +19,7 @@ export class AppComponent {
     this.testService.getSession().subscribe(
       val=>{
         console.log(val);
-        if(val.body.googletoken != null){
+        if(val.body.googletoken != ""){
           this.router.navigate(['/home']);
         }
       }
