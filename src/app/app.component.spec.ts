@@ -100,6 +100,7 @@ describe('AppComponent', () => {
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
+    
   });
   // describe('Login Page', ()=>{
   //   let login: LoginComponent;
