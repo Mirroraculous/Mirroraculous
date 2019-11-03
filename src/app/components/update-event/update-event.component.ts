@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
 import { CalendarComponent } from '../calendar/calendar.component';
 
 interface DTO{
-  summary: ;
+  summary: string;
   description: string;
   start: {
     date: string;
