@@ -187,13 +187,13 @@ func TestUpdateEvent(t *testing.T) {
 }
 
 func TestDeleteEvent(t *testing.T) {
-	if e, status := DeleteEvent("123", "abc", func(query bson.D) error {
+	if e, status := DeleteEvent("5d9dc973681c8a28abe999c1", "abc", func(query bson.D) error {
 		return errors.New("test error")
 	}); e.Error() != "test error" || status != 500 {
-		t.Errorf("Test failed, expected status 200 and \"test error\", got %d and %s", status, e.Error())
+		t.Errorf("Test failed, expected status 500 and \"test error\", got %d and %s", status, e.Error())
 	}
 
-	if e, status := DeleteEvent("123", "abc", func(query bson.D) error {
+	if e, status := DeleteEvent("5d9dc973681c8a28abe999c1", "abc", func(query bson.D) error {
 		return nil
 	}); e != nil || status != 200 {
 		t.Errorf("Test failed, expected status 200 and nil error, got %d and %s", status, e.Error())
