@@ -55,7 +55,6 @@ describe('AppComponent', () => {
         UpdateEventComponent,
         EventComponent,
         OauthComponent,
-        OauthService,
       ],
       imports: [
         BrowserModule,
