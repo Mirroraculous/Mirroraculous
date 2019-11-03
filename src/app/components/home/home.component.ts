@@ -12,6 +12,7 @@ import { GoogleAuthService } from 'src/app/services/googleauth.service';
 })
 export class HomeComponent implements OnInit {
   isClicked = false;
+  hasAuth = false;
 
   constructor(
     private session: SessionService,
@@ -34,7 +35,11 @@ export class HomeComponent implements OnInit {
     
     this.test.getSession().subscribe(
       val=>{
-        console.log('sucessfully added a header token w/o specificying it')
+        console.log(val);
+        if(val.body.googletoken != null){
+          this.router.navigate(['/home']);
+          this.hasAuth = true;
+        }
       }
     );
   }  
