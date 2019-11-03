@@ -146,8 +146,7 @@ describe('AppComponent', () => {
       calendarService = TestBed.get(CalendarService);
 
       spy = spyOn(calendarService,'sendEventInfo').and.returnValue(of(
-        '{body:null, ok:true,status:200,statusText:`ok`,type:4,url:`http://localhost:3000/api/calendar/1572214583815`}'
-        ));
+        `{"userid":"5da645a3115a423c2cfe11d4","_id":"5dbe47ecb3d131960c1b73a5","status":"","htmlLink":"","created":"2019-11-03T03:22:20.538Z","updated":"0001-01-01T00:00:00Z","summary":"hi","description":"hi","location":"","colorId":"","creator":{"email":"","displayName":"","self":false},"start":{"date":"2019-11-02T06:00:00Z","dateTime":"2019-11-02T20:30:00Z","timeZone":""},"end":{"date":"0001-01-01T00:00:00Z","dateTime":"0001-01-01T00:00:00Z","timeZone":""},"endTimeUnspecified":true},{"userid":"5da645a3115a423c2cfe11d4","_id":"5dbe4803b3d131960c1b73a6","status":"","htmlLink":"","created":"2019-11-03T03:22:43.683Z","updated":"0001-01-01T00:00:00Z","summary":"a","description":"a","location":"","colorId":"","creator":{"email":"","displayName":"","self":false},"start":{"date":"2019-11-01T06:00:00Z","dateTime":"2019-11-01T20:30:00Z","timeZone":""},"end":{"date":"0001-01-01T00:00:00Z","dateTime":"0001-01-01T00:00:00Z","timeZone":""},"endTimeUnspecified":true}`));
 
       fixture.detectChanges();
     });
