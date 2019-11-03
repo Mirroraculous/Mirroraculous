@@ -34,7 +34,8 @@ import { homedir } from 'os';
 import { of } from 'rxjs';
 import { TestService } from './services/test.service';
 import { CalendarService } from './services/calendar.service';
-
+import { OauthComponent } from './components/oauth/oauth.component';
+import { OauthService } from './services/oauth.service';
 
 
 describe('AppComponent', () => {
@@ -53,6 +54,8 @@ describe('AppComponent', () => {
         DeleteEventComponent,
         UpdateEventComponent,
         EventComponent,
+        OauthComponent,
+        OauthService,
       ],
       imports: [
         BrowserModule,
