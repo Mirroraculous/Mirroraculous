@@ -51,7 +51,7 @@ describe('AppComponent', () => {
         PageNotFoundComponent,
         CalendarComponent,
         DeleteEventComponent,
-        UpdateEventComponent,
+        UpdateEventsComponent,
         EventComponent,
       ],
       imports: [
