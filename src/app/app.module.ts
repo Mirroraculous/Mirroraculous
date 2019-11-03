@@ -20,13 +20,13 @@ import { ClockComponent } from './components/clock/clock.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EventsComponent } from './components/addEvents/addEvents.component';
+import { AddEventsComponent } from './components/add-events/addEvents.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DeleteEventComponent } from './components/delete-event/delete-event.component';
-import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { UpdateEventsComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
 
 
@@ -40,11 +40,11 @@ import { EventComponent } from './components/event/event.component';
     ClockComponent,
     LoginComponent,
     RegisterPageComponent,
-    EventsComponent,
+    AddEventsComponent,
+    UpdateEventsComponent,
     PageNotFoundComponent,
     CalendarComponent,
     DeleteEventComponent,
-    UpdateEventComponent,
     EventComponent,
   ],
   imports: [
