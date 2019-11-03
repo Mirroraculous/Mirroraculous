@@ -36,11 +36,7 @@ export class CalendarComponent implements OnInit {
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
     this.startDay = this.getFirstDayWeek(this.now);
-    this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());  
-    // this.startMonth = this.getFirstDayWeek(new Date(1551398400));  
-    // console.log(this.getDaysInMonth(1, 2020));
-    // console.log(this.now.getDate());
-    // console.log(this.now);
+    this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
     const rn = new Date()
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
@@ -83,7 +79,6 @@ export class CalendarComponent implements OnInit {
       }
       this.monthArrayUnorganized.push(day);
     }
-    // console.log(this.monthArrayUnorganized);
     for(let i =0 ;i<5;i++){
       let locale: Day[] = []
       for(let k = 0;k<7;k++){
@@ -102,35 +97,35 @@ export class CalendarComponent implements OnInit {
       }
       this.weekArray.push(day);
     }
-    // console.log(this.monthArray);
     this.viewArray = this.monthArray;
     this.getFirstDayWeek(this.getFirstDayMonth());
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
-        console.log(val);
-        let days: Date[];
-        for(let i =0;i<val.body.length;i++){
-          let day = new Date(val.body[i].start.date);
-          for(let i =0 ;i<5;i++){
-            let locale: Day[] = []
-            for(let k = 0;k<7;k++){
-              if(day.getDate() === this.monthArray[i][k].dayOf && day.getMonth()=== this.monthArray[i][k].month){
-                this.monthArray[i][k].isEvents = true;
+          if(val.body!=null){            
+            console.log(val);
+            let days: Date[];
+            for(let i =0;i<val.body.length;i++){
+              let day = new Date(val.body[i].start.date);
+              for(let j =0 ;j<5;j++){
+                let locale: Day[] = []
+                for(let k = 0;k<7;k++){
+                  if(day.getDate() === this.monthArray[j][k].dayOf && day.getMonth()=== this.monthArray[j][k].month){
+                    this.monthArray[j][k].isEvents = true;
+                  }
+                }
+                this.monthArray.push(locale);
+              }
+              for(let b =0 ;b<7;b++){
+                let locale: Day[] = []
+                for(let k = 0;k<7;k++){
+                  if(day.getDate() === this.weekArray[b].dayOf && day.getMonth()=== this.weekArray[b].month){
+                    this.weekArray[b].isEvents = true;
+                  }
+                }
+                this.monthArray.push(locale);
               }
             }
-            this.monthArray.push(locale);
-          }
-          for(let i =0 ;i<7;i++){
-            let locale: Day[] = []
-            for(let k = 0;k<7;k++){
-              if(day.getDate() === this.weekArray[i].dayOf && day.getMonth()=== this.weekArray[i].month){
-                this.weekArray[i].isEvents = true;
-              }
-            }
-            this.monthArray.push(locale);
-          }
-        } 
-        // console.log(day);
+          }        
         
       }
     );
@@ -139,15 +134,13 @@ export class CalendarComponent implements OnInit {
 
   getFirstDayMonth(){
     let d = new Date();
-    d.setDate(d.getDate()-d.getDate()+1);
-    console.log(d);
+    d.setDate(1);
     return d;
   }
 
   getFirstDayWeek(today){
     let d = today;
     d.setDate(d.getDate()-today.getDay());
-    console.log(d);
     return d;
   }
   clickEvent(val){

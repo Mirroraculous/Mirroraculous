@@ -51,7 +51,6 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
   logout(){
     localStorage.removeItem('sessionToken');
     this.router.navigate(['login']);

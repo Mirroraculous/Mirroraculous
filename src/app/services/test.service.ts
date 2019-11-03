@@ -19,7 +19,11 @@ export class TestService {
   private url = 'http://localhost:3000/api/auth';
 
   getSession() {
+<<<<<<< HEAD
     return this.http.get<any>(this.url, {observe: 'response'}).pipe(
+=======
+    return this.http.get<any>(this.url,{observe:'response'}).pipe(
+>>>>>>> master
       catchError(this.handleError<any>(`userInfo`))
     );
   }
