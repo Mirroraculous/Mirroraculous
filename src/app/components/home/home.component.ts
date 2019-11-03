@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { TestService } from 'src/app/services/test.service';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { GoogleAuthService } from 'src/app/services/googleauth.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -33,8 +34,11 @@ export class HomeComponent implements OnInit {
       )
       this.checkAuth()
     }
-    
-    this.checkAuth()
+    timer(5000).subscribe(
+      val =>{           
+        this.checkAuth();
+      }
+    );
   }  
 
   checkAuth() {
