@@ -12,7 +12,9 @@ export class OauthComponent implements OnInit {
   constructor(
     private link: OauthService,
   ) {}
-
+  linkTo(url) {
+    window.open(url, "_blank");
+  }
   ngOnInit() {
     this.link.getLink().subscribe(
       val => {
