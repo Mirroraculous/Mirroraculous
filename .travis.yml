@@ -48,6 +48,7 @@ matrix:
         - npm install
         - npm install sonar-scanner --save-dev
         - npm install rxjs-compat --save
+        - npm install karma-phantomjs-launcher
 
       script:
         # - go run main.go
