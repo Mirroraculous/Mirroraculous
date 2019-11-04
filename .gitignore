@@ -54,3 +54,4 @@ Thumbs.db
 /config/default.json
 /oauth/client_id.json
 main.exe
+oauth/client_id.json
