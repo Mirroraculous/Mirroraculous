@@ -2,6 +2,7 @@ package linkers
 
 import (
 	"fmt"
+	"log"
 	"regexp"
 	"strconv"
 	"time"
@@ -10,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/oauth2"
 )
 
 func AddUser(newUser models.User, find func(query bson.D) (*models.User, error), insert func(user *models.User) (string, error)) (string, int) {
@@ -100,12 +102,31 @@ func UpdateEvent(event models.Event, id string, replace func(query bson.D, e *mo
 }
 
 func DeleteEvent(eventID string, id string, delete func(query bson.D) error) (error, int) {
-	primEID, _ := primitive.ObjectIDFromHex(eventID)
+	primEID, e := primitive.ObjectIDFromHex(eventID)
+	if e != nil {
+		return e, 500
+	}
 	err := delete(bson.D{{"_id", primEID}, {"userid", id}})
 	if err != nil {
 		return err, 500
 	}
 	return nil, 200
+}
+
+func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, up bson.M) error) (int, error) {
+	primID, e := primitive.ObjectIDFromHex(usertoken)
+	if e != nil {
+		log.Println(e.Error())
+		log.Println("Broken primative")
+		return 500, e
+	}
+	e = update(bson.M{"_id": bson.M{"$eq": primID}}, bson.M{"$set": bson.M{"googletoken": *token}})
+	if e != nil {
+		log.Println("Broken database")
+		log.Println(e.Error())
+		return 500, e
+	}
+	return 200, nil
 }
 
 func salt(password string) (string, error) {

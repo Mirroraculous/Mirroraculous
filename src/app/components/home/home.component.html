@@ -5,4 +5,5 @@
     <app-location></app-location>
     <button (click) = 'logout()'>Logout</button>
     <app-event></app-event>
+    <app-oauth *ngIf='!hasAuth'></app-oauth>
 </div>

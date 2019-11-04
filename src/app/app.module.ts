@@ -33,6 +33,7 @@ import { FahrenheitPipe } from './components/location/fahrenheit.pipe';
 import { MomentPipe } from './components/location/moment.pipe';
 
 
+import {OauthComponent} from './components/oauth/oauth.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { MomentPipe } from './components/location/moment.pipe';
     OverlayComponent,
     HomeComponent,
     ClockComponent,
+    OauthComponent,
     LoginComponent,
     RegisterPageComponent,
     EventsComponent,
