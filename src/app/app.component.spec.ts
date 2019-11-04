@@ -35,6 +35,7 @@ import { of } from 'rxjs';
 import { TestService } from './services/test.service';
 import { CalendarService } from './services/calendar.service';
 import { LoginService } from './services/login.service';
+import { not } from 'rxjs/internal/util/not';
 
 
 
@@ -105,6 +106,7 @@ describe('AppComponent', () => {
   describe('Login Page', ()=>{
     let loginService: LoginService;
     let authSpy: jasmine.Spy;
+    let messSpy: jasmine.Spy;
     let login: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     beforeEach(()=>{
@@ -114,13 +116,12 @@ describe('AppComponent', () => {
       fixture.detectChanges();
 
       authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
-
     });
     it(`should create login component`,()=>{
       expect(login).toBeTruthy();
     });
     it(`should have no token when logged out`,()=>{
-      expect(localStorage.getItem('sessionToken')).toBe(null)
+      expect(localStorage.getItem('sessionToken')).not.toBe(jasmine.any(String));
     });
     it(`should have token when logged in`,()=>{
       let DTO={
@@ -130,6 +131,10 @@ describe('AppComponent', () => {
       login.aSubmittedDataFunction(DTO);
       expect(localStorage.getItem('sessionToken')).not.toBe(null);
     });
+    // it(`should display error message when invalid`, ()=>{
+    //   messSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"asdf","email":"asdf","password":"asdf"}));
+    //   expect(login.message).not.toEqual('');
+    // });
   });
   describe('Home Page',()=>{   
     let home: HomeComponent;
