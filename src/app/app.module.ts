@@ -20,7 +20,7 @@ import { ClockComponent } from './components/clock/clock.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AddEventsComponent } from './components/add-events/add-event.component';
+import { AddEventComponent } from './components/add-events/add-event.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
@@ -41,7 +41,7 @@ import { DetailsEventComponent } from './components/details-event/details-event.
     ClockComponent,
     LoginComponent,
     RegisterPageComponent,
-    AddEventsComponent,
+    AddEventComponent,
     UpdateEventsComponent,
     PageNotFoundComponent,
     CalendarComponent,

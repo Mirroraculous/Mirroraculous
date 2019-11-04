@@ -21,7 +21,9 @@ import { ClockComponent } from './components/clock/clock.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { AddEventsComponent } from './components/add-events/add-event.component';
+import { DetailsEventComponent } from './components/details-event/details-event.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
@@ -35,6 +37,7 @@ import { of } from 'rxjs';
 import { TestService } from './services/test.service';
 import { CalendarService } from './services/calendar.service';
 import { LoginService } from './services/login.service';
+import { UpdateEventService } from './services/update-event.service'
 import { not } from 'rxjs/internal/util/not';
 
 
@@ -55,6 +58,7 @@ describe('AppComponent', () => {
         DeleteEventComponent,
         UpdateEventsComponent,
         EventComponent,
+        DetailsEventComponent,
       ],
       imports: [
         BrowserModule,
@@ -65,6 +69,7 @@ describe('AppComponent', () => {
         MatIconModule,
         ReactiveFormsModule,
         HttpClientModule,
+        HttpClientTestingModule,
         JwtModule.forRoot({
           config: {
             tokenGetter: () => {
@@ -133,10 +138,20 @@ describe('AppComponent', () => {
       expect(localStorage.getItem('sessionToken')).not.toBe(null);
     });
     // it(`should display error message when invalid`, ()=>{
-    //   messSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"asdf","email":"asdf","password":"asdf"}));
+    //   loginService.checkUserPassCombo = jasmine.createSpy().and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"asdf","email":"asdf","password":"asdf"}));
+    //   // messSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"asdf","email":"asdf","password":"asdf"}));
     //   expect(login.message).not.toEqual('');
     // });
   });
+  // describe('Add Event', ()=>{
+  //   let addEvent: AddEventsComponent;
+  //   let fixture: ComponentFixture<AddEventsComponent>;
+  //   beforeEach(()=>{
+  //     fixture = TestBed.createComponent(AddEventsComponent);
+  //     addEvent = fixture.debugElement.componentInstance;
+  //     fixture.detectChanges();
+  //   });
+  // });
   describe('Home Page',()=>{   
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;

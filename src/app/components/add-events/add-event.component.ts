@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
-import { EventsService } from 'src/app/services/add-event.service';
+import { AddEventService } from 'src/app/services/add-event.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 
@@ -24,11 +24,9 @@ interface DTO{
   templateUrl: './add-event.component.html',
   styleUrls: ['./add-event.component.scss']
 })
-export class AddEventsComponent implements OnInit {
+export class AddEventComponent implements OnInit {
   events;
   today;
-  isFilled = false;
-  clicked = false;
   message = '';
   DTO: DTO={
     summary: "",
@@ -47,7 +45,7 @@ export class AddEventsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private eventsService: EventsService,
+    private eventsService: AddEventService,
     private session: SessionService,
     private formBuilder: FormBuilder) {
       this.events = this.formBuilder.group({
