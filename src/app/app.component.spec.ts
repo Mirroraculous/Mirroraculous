@@ -34,6 +34,7 @@ import { homedir } from 'os';
 import { of } from 'rxjs';
 import { TestService } from './services/test.service';
 import { CalendarService } from './services/calendar.service';
+import { LoginService } from './services/login.service';
 
 
 
@@ -96,34 +97,48 @@ describe('AppComponent', () => {
   });
   it(`should have a register sub page`,()=>{
     const fixture = TestBed.createComponent(RegisterPageComponent);
-    const app = fixture.debugElement.componentInstance
+    const app = fixture.debugElement.componentInstance;
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
     
   });
-  // describe('Login Page', ()=>{
-  //   let login: LoginComponent;
-  //   let fixture: ComponentFixture<LoginComponent>;
-  //   beforeEach(()=>{
-  //     fixture = TestBed.createComponent(LoginComponent);
-  //     login = fixture.debugElement.componentInstance
-  //     fixture.detectChanges();
-  //   });
-  //   it(`should create login component`,()=>{
-  //     expect(login).toBeTruthy();
-  //   });
-  //   it(`should have no token when logged out`,()=>{
-  //     expect(localStorage.getItem('sessionToken')).toBe(null)
-  //   });
-  // });
+  describe('Login Page', ()=>{
+    let loginService: LoginService;
+    let authSpy: jasmine.Spy;
+    let login: LoginComponent;
+    let fixture: ComponentFixture<LoginComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(LoginComponent);
+      login = fixture.debugElement.componentInstance;
+      loginService = TestBed.get(LoginService);
+      fixture.detectChanges();
+
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+
+    });
+    it(`should create login component`,()=>{
+      expect(login).toBeTruthy();
+    });
+    it(`should have no token when logged out`,()=>{
+      expect(localStorage.getItem('sessionToken')).toBe(null)
+    });
+    it(`should have token when logged in`,()=>{
+      let DTO={
+        email: "",
+        password: "",
+      }
+      login.aSubmittedDataFunction(DTO);
+      expect(localStorage.getItem('sessionToken')).not.toBe(null);
+    });
+  });
   describe('Home Page',()=>{   
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
     beforeEach(()=>{
 
       fixture = TestBed.createComponent(HomeComponent);
-      home = fixture.debugElement.componentInstance
+      home = fixture.debugElement.componentInstance;
       fixture.detectChanges();
     });
     it(`should create home component`,()=>{      
@@ -147,8 +162,7 @@ describe('AppComponent', () => {
       calendarService = TestBed.get(CalendarService);
 
       spy = spyOn(calendarService,'sendEventInfo').and.returnValue(of(
-        '{body:null, ok:true,status:200,statusText:`ok`,type:4,url:`http://localhost:3000/api/calendar/1572214583815`}'
-        ));
+        `{"userid":"5da645a3115a423c2cfe11d4","_id":"5dbe47ecb3d131960c1b73a5","status":"","htmlLink":"","created":"2019-11-03T03:22:20.538Z","updated":"0001-01-01T00:00:00Z","summary":"hi","description":"hi","location":"","colorId":"","creator":{"email":"","displayName":"","self":false},"start":{"date":"2019-11-02T06:00:00Z","dateTime":"2019-11-02T20:30:00Z","timeZone":""},"end":{"date":"0001-01-01T00:00:00Z","dateTime":"0001-01-01T00:00:00Z","timeZone":""},"endTimeUnspecified":true},{"userid":"5da645a3115a423c2cfe11d4","_id":"5dbe4803b3d131960c1b73a6","status":"","htmlLink":"","created":"2019-11-03T03:22:43.683Z","updated":"0001-01-01T00:00:00Z","summary":"a","description":"a","location":"","colorId":"","creator":{"email":"","displayName":"","self":false},"start":{"date":"2019-11-01T06:00:00Z","dateTime":"2019-11-01T20:30:00Z","timeZone":""},"end":{"date":"0001-01-01T00:00:00Z","dateTime":"0001-01-01T00:00:00Z","timeZone":""},"endTimeUnspecified":true}`));
 
       fixture.detectChanges();
     });
@@ -195,7 +209,7 @@ describe('AppComponent', () => {
         overlay = fixture.componentInstance;
         localStorage.removeItem('sessionToken');
         test = TestBed.get(TestService)
-        spy = spyOn(test,'getSession').and.returnValue(of('Jerry'));
+        spy = spyOn(test,'getSession').and.returnValue(of('{"_id":"5da645a3115a423c2cfe11d4","name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi","googletoken":{"access_token":"ya29.Il-vB6mMSlWE2kAsXStt2FV-_umrA5a-1yMjY6rFAOonU5J_ZhFnRvQy3SvGSyOrplwUHB454QeI5uRzX4-agNsWf0RD7HxELYiFqYX1SK8ekUEHXSi0-BXwvMc30BlfMw","token_type":"Bearer","expiry":"2019-11-03T01:58:07.276Z"}}'));
         fixture.detectChanges();
       });
       it('should get a username',()=>{
@@ -229,7 +243,7 @@ describe('AppComponent', () => {
     xit('Should be capable of determining if the session',()=>{
       let auth = session.isAuthenticated();
       console.log(auth);
-      expect(auth).not.toBe(undefined)
+      expect(auth).not.toBe(undefined);
     });
   });
   // describe('Auth Guard',()=>{
