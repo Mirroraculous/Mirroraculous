@@ -5,6 +5,18 @@ module.exports = function (config) {
   var configuration = {
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    files: listFiles(),
+ 
+    singleRun: true,
+    
+    colors:    false,
+ 
+    autoWatch: false,
+ 
+    ngHtml2JsPreprocessor: {
+      stripPrefix: conf.paths.src + '/',
+      moduleName: 'TODO_PUT_HERE_YOUR_MODULE_NAME'
+    },
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
@@ -12,7 +24,22 @@ module.exports = function (config) {
       require('karma-spec-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-coverage'),
+      require('karma-ng-html2js-preprocessor'),
+      require('karma-sonarqube-unit-reporter'),
+      require('karma-angular-filesort')
     ],
+    logLevel: 'WARN',
+    frameworks: ['jasmine', 'angular-filesort'],
+ 
+    angularFilesort: {
+      whitelist: [path.join(conf.paths.src, '/**/!(*.html|*.spec|*.mock).js'), path.join(conf.paths.src_test, '/**/!(*.html|*.spec|*.mock).js')]
+    },
+    sonarQubeUnitReporter: {
+      sonarQubeVersion: 'LATEST',
+      outputFile: 'reports/ut_report.xml',
+      useBrowserName: false
+    },
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
@@ -20,6 +47,11 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage/Mirroraculous'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
+    },
+    coverageReporter: {
+      type : 'lcov',
+      dir : 'reports',
+      subdir : 'coverage'
     },
     reporters: ["spec"],
     specReporter: {
@@ -42,7 +74,11 @@ module.exports = function (config) {
       }
     },
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,    
+    preprocessors: {
+      'src/**/*.js':   ['coverage'],
+      'test/**/*.js':   ['coverage']
+    }
   };
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];
