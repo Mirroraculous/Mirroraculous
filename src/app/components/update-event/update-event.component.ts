@@ -25,7 +25,7 @@ interface DTO{
   templateUrl: './update-event.component.html',
   styleUrls: ['./update-event.component.scss']
 })
-export class UpdateEventsComponent implements OnInit {
+export class UpdateEventComponent implements OnInit {
   events;
   today;
   message = '';

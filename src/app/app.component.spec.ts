@@ -22,14 +22,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { AddEventsComponent } from './components/add-events/add-event.component';
+import { AddEventComponent } from './components/add-events/add-event.component';
 import { DetailsEventComponent } from './components/details-event/details-event.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DeleteEventComponent } from './components/delete-event/delete-event.component';
-import { UpdateEventsComponent } from './components/update-event/update-event.component'; 
+import { UpdateEventComponent } from './components/update-event/update-event.component'; 
 import { EventComponent } from './components/event/event.component';
 import { SessionService } from './auth/session.service';
 import { homedir } from 'os';
@@ -52,11 +52,11 @@ describe('AppComponent', () => {
         ClockComponent,
         LoginComponent,
         RegisterPageComponent,
-        AddEventsComponent,
+        AddEventComponent,
         PageNotFoundComponent,
         CalendarComponent,
         DeleteEventComponent,
-        UpdateEventsComponent,
+        UpdateEventComponent,
         EventComponent,
         DetailsEventComponent,
       ],
@@ -143,15 +143,54 @@ describe('AppComponent', () => {
     //   expect(login.message).not.toEqual('');
     // });
   });
-  // describe('Add Event', ()=>{
-  //   let addEvent: AddEventsComponent;
-  //   let fixture: ComponentFixture<AddEventsComponent>;
-  //   beforeEach(()=>{
-  //     fixture = TestBed.createComponent(AddEventsComponent);
-  //     addEvent = fixture.debugElement.componentInstance;
-  //     fixture.detectChanges();
-  //   });
-  // });
+  describe('Add Event', ()=>{
+    let addEvent: AddEventComponent;
+    let fixture: ComponentFixture<AddEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(AddEventComponent);
+      addEvent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+    it(`should create add component`,()=>{
+      expect(addEvent).toBeTruthy();
+    });
+  });
+  describe('Update Event', ()=>{
+    let updateEvent: UpdateEventComponent;
+    let fixture: ComponentFixture<UpdateEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(UpdateEventComponent);
+      updateEvent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+    it(`should create update component`,()=>{
+      expect(updateEvent).toBeTruthy();
+    });
+  });
+  describe('Delete Event', ()=>{
+    let deleteEvent: DeleteEventComponent;
+    let fixture: ComponentFixture<DeleteEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(DeleteEventComponent);
+      deleteEvent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+    it(`should create delete component`,()=>{
+      expect(deleteEvent).toBeTruthy();
+    });
+  });
+  describe('Detail Events', ()=>{
+    let detailEvent: DetailsEventComponent;
+    let fixture: ComponentFixture<DetailsEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(DetailsEventComponent);
+      detailEvent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+    it(`should create details component`,()=>{
+      expect(detailEvent).toBeTruthy();
+    });
+  });
   describe('Home Page',()=>{   
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
