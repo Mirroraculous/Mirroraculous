@@ -112,7 +112,6 @@ describe('AppComponent', () => {
   describe('Login Page', ()=>{
     let loginService: LoginService;
     let authSpy: jasmine.Spy;
-    let messSpy: jasmine.Spy;
     let login: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     beforeEach(()=>{
@@ -121,7 +120,6 @@ describe('AppComponent', () => {
       loginService = TestBed.get(LoginService);
       fixture.detectChanges();
 
-      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
     });
     it(`should create login component`,()=>{
       expect(login).toBeTruthy();
@@ -130,6 +128,8 @@ describe('AppComponent', () => {
       expect(localStorage.getItem('sessionToken')).not.toBe(jasmine.any(String));
     });
     it(`should have token when logged in`,()=>{
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+
       let DTO={
         email: "",
         password: "",
@@ -137,11 +137,26 @@ describe('AppComponent', () => {
       login.aSubmittedDataFunction(DTO);
       expect(localStorage.getItem('sessionToken')).not.toBe(null);
     });
-    // it(`should display error message when invalid`, ()=>{
-    //   loginService.checkUserPassCombo = jasmine.createSpy().and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"asdf","email":"asdf","password":"asdf"}));
-    //   // messSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"asdf","email":"asdf","password":"asdf"}));
-    //   expect(login.message).not.toEqual('');
-    // });
+    it(`should not display error message when valid`, ()=>{
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      let DTO={
+        email: "",
+        password: "",
+      }
+      login.aSubmittedDataFunction(DTO);
+      console.log(login.message)
+      expect(login.message).toEqual('');
+    });
+    it(`should display error message when invalid`, ()=>{
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      let DTO={
+        email: "",
+        password: "",
+      }
+      login.aSubmittedDataFunction(DTO);
+      console.log(login.message)
+      expect(login.message).toEqual('Failed to login. Incorrect credentials');
+    });
   });
   describe('Add Event', ()=>{
     let addEvent: AddEventComponent;
