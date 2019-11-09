@@ -4,8 +4,8 @@
         <img src="{{weatherIcon}}">
         <div style="position: absolute; top: 0px; right: 10px;">
             <h1 style="text-align: right;">{{forecast.city}}, {{forecast.state}}</h1>
-            <div *ngIf="temperatureOption == 'celsius'"style="font-size: 32px; display: inline;">{{forecast.temperature}}C°</div>
-            <div *ngIf="temperatureOption == 'fahrenheit'"style="font-size: 32px; display: inline;">{{forecast.temperature * (9/5) + 32}}F°</div>
+            <div *ngIf="temperatureOption == 'celsius'"style="font-size: 32px; display: inline;">{{(forecast.temperature * 1).toFixed(1)}}C°</div>
+            <div *ngIf="temperatureOption == 'fahrenheit'"style="font-size: 32px; display: inline;">{{(forecast.temperature * (9/5) + 32).toFixed(1)}}F°</div>
             <div class = "options-group">
                 <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="updateShow('temperature')">settings_applications</mat-icon>
                 <div *ngIf="showTemperatureOptions">
