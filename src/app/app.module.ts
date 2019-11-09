@@ -29,8 +29,6 @@ import { DeleteEventComponent } from './components/delete-event/delete-event.com
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
 import { LocationComponent } from './components/location/location.component';
-import { FahrenheitPipe } from './components/location/fahrenheit.pipe';
-import { MomentPipe } from './components/location/moment.pipe';
 
 
 import {OauthComponent} from './components/oauth/oauth.component';
@@ -52,8 +50,6 @@ import {OauthComponent} from './components/oauth/oauth.component';
     UpdateEventComponent,
     EventComponent,
     LocationComponent,
-    FahrenheitPipe,
-    MomentPipe,
   ],
   imports: [
     BrowserModule,

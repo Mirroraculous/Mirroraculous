@@ -1,17 +1,20 @@
-<div style="background-color: rgba(141,84,110, .1); width: 75%; padding: 20px; border: 1px solid #8D546E; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
+<div style="position: absolute; top: 0px; right: 0px; height: 720px; width: 720px;">
     <p *ngIf="weather.length == 0">Searching...</p>
-    <div *ngIf="weather.length > 0">
-        <table style="width: 100%; text-align: center">
-            <thead></thead>
-            <tbody>
-                <tr>
-                    <td *ngFor="let forecast of weather">
-                        <img [src]="forecast.iconLink" />
-                        <p>{{ forecast.highTemperature }}C / {{ forecast.highTemperature | fahrenheit }}F</p>
-                        <p>{{ forecast.utcTime | moment }}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div *ngFor="let forecast of weather">
+        <img src="{{weatherIcon}}">
+        <div style="position: absolute; top: 0px; right: 10px;">
+            <h1 style="text-align: right;">{{forecast.city}}, {{forecast.state}}</h1>
+            <div *ngIf="temperatureOption == 'celsius'"style="font-size: 32px; display: inline;">{{forecast.temperature}}C°</div>
+            <div *ngIf="temperatureOption == 'fahrenheit'"style="font-size: 32px; display: inline;">{{forecast.temperature * (9/5) + 32}}F°</div>
+            <div class = "options-group">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="updateShow('temperature')">settings_applications</mat-icon>
+                <div *ngIf="showTemperatureOptions">
+                    <span style="display:block" (click) = "temperatureChoice('celsius')">Celsius</span>
+                    <span style="display:block" (click) = "temperatureChoice('fahrenheit')">Fahrenheit</span>
+                </div>
+            </div>
+            <p style="position: absolute; top: 80px; right: 0px;">{{forecast.description}}</p>
+        </div>
     </div>
 </div>
+<app-clock></app-clock>

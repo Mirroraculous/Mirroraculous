@@ -11,9 +11,10 @@ import { LocationComponent } from './components/location/location.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterPageComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'weather', pathMatch: 'full' },
   { path: 'home', component: HomeComponent , canActivate:[AuthGuard]},
   { path: 'login', component: LoginComponent },
+  { path: 'weather', component: LocationComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
