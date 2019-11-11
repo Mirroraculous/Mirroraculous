@@ -1,11 +1,14 @@
 <div class="container">
   <h3 class="title">Log In</h3>
-  <input [(ngModel)]="DTO.email" class ="inputs" placeholder = "Email">
+  <form [formGroup]="login" (ngSubmit)="aSubmittedDataFunction(login.value)">    
+    <input  formControlName="email" class ="inputs" placeholder = "Email" required>
+    
+    <input required formControlName="password" type = "password" class ="inputs" placeholder = "Password">  
+    <span style = "text-align: center; color:red;font-size: .5em">{{message}}</span>
+  
 
-  <input [(ngModel)]="DTO.password" type = "password" class ="inputs" placeholder = "Password">  
-  <span style = "text-align: center; color:red;font-size: .5em">{{message}}</span>
- 
+    <a class="text-link" routerLink="/register">Register</a>
+    <button type = "submit" class="button"routerLink="/home" >Log in</button>
+  </form>
 
-  <a class="text-link" routerLink="/register">Register</a>
-  <button class="button"routerLink="/home" (click)="aSubmittedDataFunction()">Log in</button>
 </div>

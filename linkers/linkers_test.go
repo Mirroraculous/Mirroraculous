@@ -3,6 +3,7 @@ package linkers
 import (
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -141,22 +142,32 @@ func TestAddEvent(t *testing.T) {
 }
 
 func TestGetCalendar(t *testing.T) {
-	if _, status := GetCalendar("000", 1, func(query bson.D, n int64) ([]models.Event, error) {
+	if _, status := GetCalendar("000", "0", func(query bson.D, n int64) ([]models.Event, error) {
 		var ev []models.Event
 		return ev, errors.New("bad")
 	}); status != 500 {
 		t.Errorf("Test failed, expected status 500, got %d", status)
 	}
 
-	if event, status := GetCalendar("000", 5, func(query bson.D, n int64) ([]models.Event, error) {
+	if event, status := GetCalendar("000", "0", func(query bson.D, n int64) ([]models.Event, error) {
 		var ev []models.Event
 		var i int64
-		for i = 0; i < n; i++ {
-			ev = append(ev, models.Event{UserID: "123"})
+		for i = 0; i < 5; i++ {
+			ev = append(ev, models.Event{
+				UserID: "123",
+				Start: struct {
+					Date     time.Time `json:"date"`
+					DateTime time.Time `json:"dateTime"`
+					TimeZone string    `json:"timeZone"`
+				}{
+					Date:     time.Unix(0, 0),
+					DateTime: time.Unix(0, 0),
+				},
+			})
 		}
 		return ev, nil
 	}); len(event) != 5 || status != 200 {
-		t.Errorf("Test failed, expected status 500, got %d", status)
+		t.Errorf("Test failed, expected status 500, got %d and a length of %d", status, len(event))
 	}
 }
 
@@ -176,13 +187,13 @@ func TestUpdateEvent(t *testing.T) {
 }
 
 func TestDeleteEvent(t *testing.T) {
-	if e, status := DeleteEvent("123", "abc", func(query bson.D) error {
+	if e, status := DeleteEvent("5d9dc973681c8a28abe999c1", "abc", func(query bson.D) error {
 		return errors.New("test error")
 	}); e.Error() != "test error" || status != 500 {
-		t.Errorf("Test failed, expected status 200 and \"test error\", got %d and %s", status, e.Error())
+		t.Errorf("Test failed, expected status 500 and \"test error\", got %d and %s", status, e.Error())
 	}
 
-	if e, status := DeleteEvent("123", "abc", func(query bson.D) error {
+	if e, status := DeleteEvent("5d9dc973681c8a28abe999c1", "abc", func(query bson.D) error {
 		return nil
 	}); e != nil || status != 200 {
 		t.Errorf("Test failed, expected status 200 and nil error, got %d and %s", status, e.Error())

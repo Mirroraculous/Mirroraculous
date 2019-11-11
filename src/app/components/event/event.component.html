@@ -1,0 +1,56 @@
+<div class = "background">
+        <div class = "sub-nav-bar">
+                <p class="tabbutton" (click)="changeVal(1)">Calendar</p>
+                <p class="tabbutton" (click)="changeVal(2)">Details</p>
+                <p class="tabbutton" (click)="changeVal(3)">Add</p>
+                <p class="tabbutton" (click)="changeVal(4)">Update</p>
+                <p class="tabbutton" (click)="changeVal(5)">Delete</p>
+        </div>
+    <div *ngIf = 'switchVal === 1'>
+        <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
+    </div>
+    <div *ngIf = 'switchVal === 2'>
+            details
+    </div>
+    <div *ngIf = 'switchVal === 3'>
+            <div class="container">
+                    <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
+                     <input  formControlName= "summary" class ="inputs" placeholder = "Title">
+                   
+                     <input formControlName="dateTime"  class ="inputs" placeholder="Time">
+                 
+                     <input formControlName="date"  class ="inputs" placeholder = "Date">
+                 
+                     <input formControlName="description" class ="inputs" placeholder = "Add a description">
+                 
+                     <button type="submit" class="button">Submit</button>
+                   
+                     <span style = "text-align: center;margin-left: 27%; margin-right: 27%; color:red;font-size: .5em">{{message}}</span>
+                     
+                    </form>
+                </div>
+    </div>
+    <div *ngIf = 'switchVal === 4'>
+            <div class="container">
+                    <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
+                     <input  formControlName= "summary" class ="inputs" placeholder = "Title">
+                   
+                     <input formControlName="dateTime"  class ="inputs" placeholder="Time">
+                 
+                     <input formControlName="date"  class ="inputs" placeholder = "Date">
+                 
+                     <input formControlName="description" class ="inputs" placeholder = "Add a description">
+                 
+                     <button type="submit" class="button">Update</button>
+                   
+                     <span style = "text-align: center;margin-left: 27%; margin-right: 27%; color:red;font-size: .5em">{{message}}</span>
+                     
+                    </form>
+                </div>
+        
+    </div>
+    <div *ngIf = 'switchVal === 5'>
+            List Of Events to Delete
+        
+        </div>
+</div>

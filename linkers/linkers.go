@@ -2,12 +2,16 @@ package linkers
 
 import (
 	"fmt"
+	"log"
 	"regexp"
+	"strconv"
+	"time"
 
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/oauth2"
 )
 
 func AddUser(newUser models.User, find func(query bson.D) (*models.User, error), insert func(user *models.User) (string, error)) (string, int) {
@@ -65,6 +69,7 @@ func GetUser(id string, find func(query bson.D) (*models.User, error)) (models.U
 
 func AddEvent(id string, event models.Event, insert func(event *models.Event) error) (error, int) {
 	event.UserID = id
+	event.Created = time.Now()
 	e := insert(&event)
 	if e != nil {
 		return e, 500
@@ -72,17 +77,23 @@ func AddEvent(id string, event models.Event, insert func(event *models.Event) er
 	return nil, 200
 }
 
-func GetCalendar(id string, num int64, find func(query bson.D, n int64) ([]models.Event, error)) ([]models.Event, int) {
-	var ret []models.Event
-	ret, e := find(bson.D{{"userid", id}}, num)
-
-	if e != nil {
+func GetCalendar(id string, start string, find func(query bson.D, n int64) ([]models.Event, error)) ([]models.Event, int) {
+	var res, ret []models.Event
+	res, e := find(bson.D{{"userid", id}}, 500)
+	sint, er := strconv.ParseInt(start, 10, 0)
+	if e != nil || er != nil {
 		return ret, 500
+	}
+	for _, event := range res {
+		if time.Time.Unix(event.Start.Date) >= sint && time.Time.Unix(event.Start.Date) <= sint+86400*35 {
+			ret = append(ret, event)
+		}
 	}
 	return ret, 200
 }
 
 func UpdateEvent(event models.Event, id string, replace func(query bson.D, e *models.Event) error) (error, int) {
+	event.Updated = time.Now()
 	err := replace(bson.D{{"_id", event.ID}, {"userid", id}}, &event)
 	if err != nil {
 		return err, 500
@@ -91,12 +102,31 @@ func UpdateEvent(event models.Event, id string, replace func(query bson.D, e *mo
 }
 
 func DeleteEvent(eventID string, id string, delete func(query bson.D) error) (error, int) {
-	primEID, _ := primitive.ObjectIDFromHex(eventID)
+	primEID, e := primitive.ObjectIDFromHex(eventID)
+	if e != nil {
+		return e, 500
+	}
 	err := delete(bson.D{{"_id", primEID}, {"userid", id}})
 	if err != nil {
 		return err, 500
 	}
 	return nil, 200
+}
+
+func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, up bson.M) error) (int, error) {
+	primID, e := primitive.ObjectIDFromHex(usertoken)
+	if e != nil {
+		log.Println(e.Error())
+		log.Println("Broken primative")
+		return 500, e
+	}
+	e = update(bson.M{"_id": bson.M{"$eq": primID}}, bson.M{"$set": bson.M{"googletoken": *token}})
+	if e != nil {
+		log.Println("Broken database")
+		log.Println(e.Error())
+		return 500, e
+	}
+	return 200, nil
 }
 
 func salt(password string) (string, error) {
