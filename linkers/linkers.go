@@ -1,6 +1,7 @@
 package linkers
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"regexp"
@@ -12,6 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/oauth2"
+	"google.golang.org/api/calendar/v3"
 )
 
 func AddUser(newUser models.User, find func(query bson.D) (*models.User, error), insert func(user *models.User) (string, error)) (string, int) {
@@ -127,6 +129,33 @@ func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, u
 		return 500, e
 	}
 	return 200, nil
+}
+
+func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.User, error)) {
+	user, status := GetUser(usertoken, getUser)
+	if status != 200 {
+		log.Println(status)
+		return
+	}
+	log.Println(user.GoogleToken)
+	x := &user.GoogleToken
+	if valid := x.Valid(); !valid {
+		log.Println("Invalid token")
+		return
+	}
+	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(x))
+	service, e := calendar.New(client)
+	if e != nil {
+		log.Println(e.Error())
+		return
+	}
+	events, e := service.Events.List("primary").TimeMin(time.Now().Format(time.RFC3339)).Do()
+	if len(events.Items) > 0 {
+		for _, item := range events.Items {
+			log.Println(item.Summary)
+		}
+	}
+	log.Println("Done!")
 }
 
 func salt(password string) (string, error) {
