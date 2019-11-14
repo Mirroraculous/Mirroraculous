@@ -1,7 +1,6 @@
 package linkers
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"regexp"
@@ -131,23 +130,7 @@ func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, u
 	return 200, nil
 }
 
-func getService(userToken *Token) (*calendar.Service, error) {
-	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(usertoken))
-	service, e := calendar.NewService(client)
-
-	if e != nil {
-		log.Println(e.Error())
-		return nil, e
-	}
-	return service, nil
-}
-
-func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.User, error), getService func(userToken) (*calendar.Service, error)) {
-	user, status := GetUser(usertoken, getUser)
-	if status != 200 {
-		log.Println(status)
-		return
-	}
+func SyncGoogleCalendar(user models.User, getService func(userToken *oauth2.Token) (*calendar.Service, error), getEvents func(service *calendar.Service) (*calendar.Events, error)) {
 	if valid := (&user.GoogleToken).Valid(); !valid {
 		log.Println("Invalid token")
 		return
@@ -164,6 +147,7 @@ func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.Us
 		log.Println(e.Error())
 		return
 	}
+
 	if len(events.Items) > 0 {
 		for _, item := range events.Items {
 			log.Println(item)
@@ -171,11 +155,6 @@ func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.Us
 	}
 
 	log.Println("Done!")
-}
-
-func getEvents(service *calendar.Service) (*calendar.Events, error) {
-	events, e := service.Events.List("primary").TimeMin(time.Now().Format(time.RFC3339)).Do()
-	return events, e
 }
 
 func salt(password string) (string, error) {

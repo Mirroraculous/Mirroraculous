@@ -205,7 +205,11 @@ func GoogleEvents(context *gin.Context) {
 		context.JSON(status, id)
 		return
 	}
-	linkers.SyncGoogleCalendar(id, config.FindUser)
+	user, status := linkers.GetUser(id, config.FindUser)
+	if status != 200 {
+		context.JSON(status, "Could not get user")
+	}
+	linkers.SyncGoogleCalendar(user, oauth.GetService, oauth.GetEvents)
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
