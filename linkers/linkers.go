@@ -157,6 +157,20 @@ func SyncGoogleCalendar(user models.User, getService func(userToken *oauth2.Toke
 	log.Println("Done!")
 }
 
+func AddListOfEvents(events []*calendar.Events) error {
+	if len(events) > 0 {
+		for _, item := range events {
+			foundEvent, e = FindEvent(bson.D{{"googleid", item.ID}}, 1)
+			if e != nil && e.Error() != "mongo: no documents in result" {
+				return e
+			}
+			else if len(foundEvent) == 0 {
+				
+			}
+		}
+	}
+}
+
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e
