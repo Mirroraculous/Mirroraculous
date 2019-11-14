@@ -1,6 +1,8 @@
 package linkers
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"regexp"
@@ -130,31 +132,36 @@ func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, u
 	return 200, nil
 }
 
-func SyncGoogleCalendar(user models.User, getService func(userToken *oauth2.Token) (*calendar.Service, error), getEvents func(service *calendar.Service) (*calendar.Events, error)) {
+func SyncGoogleCalendar(user models.User, getService func(userToken *oauth2.Token) (*calendar.Service, error), getEvents func(service *calendar.Service) (*calendar.Events, error)) ([]*calendar.Event, int, error) {
 	if valid := (&user.GoogleToken).Valid(); !valid {
-		log.Println("Invalid token")
-		return
+		return nil, 400, errors.New("Invalid token")
 	}
-
 	service, e := getService(&user.GoogleToken)
 	if e != nil {
-		log.Println(e.Error())
-		return
+		return nil, 400, e
 	}
-
 	events, e := getEvents(service)
 	if e != nil {
-		log.Println(e.Error())
-		return
+		return nil, 400, e
 	}
+	return events.Items, 200, nil
+}
 
-	if len(events.Items) > 0 {
-		for _, item := range events.Items {
-			log.Println(item)
-		}
+func convGoogleToMirror(id string, gevent *calendar.Event, mevent *models.Event) error {
+	tmpID := gevent.Id
+	gevent.Id = ""
+
+	g, e := json.Marshal(gevent)
+	if e != nil {
+		return e
 	}
-
-	log.Println("Done!")
+	e = json.Unmarshal(g, mevent)
+	if e != nil {
+		return e
+	}
+	mevent.GoogleID = tmpID
+	mevent.UserID = id
+	return nil
 }
 
 func salt(password string) (string, error) {
@@ -163,7 +170,6 @@ func salt(password string) (string, error) {
 	} else {
 		return string(hash), nil
 	}
-
 }
 
 func validEmail(email string) bool {
