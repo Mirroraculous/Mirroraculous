@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -164,15 +165,14 @@ func convGoogleToMirror(id string, gevent *calendar.Event, mevent *models.Event)
 	return nil
 }
 
-func AddListOfEvents(events []*calendar.Events, UserID string) error {
+func AddListOfEvents(events []*calendar.Event, UserID string) error {
 	if len(events) > 0 {
 		for _, item := range events {
-			foundEvent, e = FindEvent(bson.D{{"googleid", item.ID}}, 1)
+			foundEvent, e := config.FindEvent(bson.D{{"googleid", item.Id}}, 1)
 			if e != nil && e.Error() != "mongo: no documents in result" {
 				return e
-			}
-			else if len(foundEvent) == 0 {
-				mevent := &models.Event
+			} else if len(foundEvent) == 0 {
+				mevent := &models.Event{}
 				e = convGoogleToMirror(UserID, item, mevent)
 				if e == nil {
 					config.InsertEvent(mevent)
@@ -180,6 +180,7 @@ func AddListOfEvents(events []*calendar.Events, UserID string) error {
 			}
 		}
 	}
+	return nil
 }
 
 func salt(password string) (string, error) {
