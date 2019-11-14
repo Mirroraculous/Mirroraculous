@@ -164,7 +164,7 @@ func convGoogleToMirror(id string, gevent *calendar.Event, mevent *models.Event)
 	return nil
 }
 
-func AddListOfEvents(events []*calendar.Events) error {
+func AddListOfEvents(events []*calendar.Events, UserID string) error {
 	if len(events) > 0 {
 		for _, item := range events {
 			foundEvent, e = FindEvent(bson.D{{"googleid", item.ID}}, 1)
@@ -172,7 +172,11 @@ func AddListOfEvents(events []*calendar.Events) error {
 				return e
 			}
 			else if len(foundEvent) == 0 {
-				
+				mevent := &models.Event
+				e = convGoogleToMirror(UserID, item, mevent)
+				if e == nil {
+					config.InsertEvent(mevent)
+				}
 			}
 		}
 	}
