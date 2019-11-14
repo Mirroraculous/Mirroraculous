@@ -39,6 +39,7 @@ import { CalendarService } from './services/calendar.service';
 import { LoginService } from './services/login.service';
 import { UpdateEventService } from './services/update-event.service'
 import { not } from 'rxjs/internal/util/not';
+import { AddEventService } from './services/add-event.service';
 
 
 
@@ -159,7 +160,9 @@ describe('AppComponent', () => {
     });
   });
   describe('Add Event', ()=>{
+    let addEventService: AddEventService
     let addEvent: AddEventComponent;
+    let authSpy: jasmine.Spy;
     let fixture: ComponentFixture<AddEventComponent>;
     beforeEach(()=>{
       fixture = TestBed.createComponent(AddEventComponent);
@@ -168,6 +171,44 @@ describe('AppComponent', () => {
     });
     it(`should create add component`,()=>{
       expect(addEvent).toBeTruthy();
+    });
+    it(`should not display error message when valid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      let DTO={
+        summary: "",
+        description: "",
+        start: {
+          date: "",
+          dateTime: "",
+        },
+        end: {
+          date: "",
+          dateTime: "",
+        },
+        endTimeUnspecified: true,
+      }
+      addEvent.onSubmit(DTO);
+      console.log(addEvent.message)
+      expect(addEvent.message).toEqual('');
+    });
+    it(`should not display error message when valid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      let DTO={
+        summary: "",
+        description: "",
+        start: {
+          date: "",
+          dateTime: "",
+        },
+        end: {
+          date: "",
+          dateTime: "",
+        },
+        endTimeUnspecified: true,
+      }
+      addEvent.onSubmit(DTO);
+      console.log(addEvent.message)
+      expect(addEvent.message).toEqual('You must fill all fields.');
     });
   });
   describe('Update Event', ()=>{
