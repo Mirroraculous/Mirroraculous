@@ -137,23 +137,26 @@ func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.Us
 		log.Println(status)
 		return
 	}
-
 	if valid := (&user.GoogleToken).Valid(); !valid {
 		log.Println("Invalid token")
 		return
 	}
+
 	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(&user.GoogleToken))
 	service, e := calendar.New(client)
+
 	if e != nil {
 		log.Println(e.Error())
 		return
 	}
+
 	events, e := service.Events.List("primary").TimeMin(time.Now().Format(time.RFC3339)).Do()
 	if len(events.Items) > 0 {
 		for _, item := range events.Items {
 			log.Println(item)
 		}
 	}
+
 	log.Println("Done!")
 }
 
