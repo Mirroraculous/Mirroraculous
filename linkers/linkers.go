@@ -150,7 +150,11 @@ func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.Us
 		return
 	}
 
-	events, e := service.Events.List("primary").TimeMin(time.Now().Format(time.RFC3339)).Do()
+	events, e := getEvents(service)
+	if e != nil {
+		log.Println(e.Error())
+		return
+	}
 	if len(events.Items) > 0 {
 		for _, item := range events.Items {
 			log.Println(item)
@@ -158,6 +162,11 @@ func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.Us
 	}
 
 	log.Println("Done!")
+}
+
+func getEvents(service *calendar.Service) (*calendar.Events, error) {
+	events, e := service.Events.List("primary").TimeMin(time.Now().Format(time.RFC3339)).Do()
+	return events, e
 }
 
 func salt(password string) (string, error) {
