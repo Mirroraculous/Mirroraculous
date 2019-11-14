@@ -131,7 +131,18 @@ func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, u
 	return 200, nil
 }
 
-func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.User, error)) {
+func getService(userToken *Token) (*calendar.Service, error) {
+	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(usertoken))
+	service, e := calendar.NewService(client)
+
+	if e != nil {
+		log.Println(e.Error())
+		return nil, e
+	}
+	return service, nil
+}
+
+func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.User, error), getService func(userToken) (*calendar.Service, error)) {
 	user, status := GetUser(usertoken, getUser)
 	if status != 200 {
 		log.Println(status)
@@ -142,9 +153,7 @@ func SyncGoogleCalendar(usertoken string, getUser func(query bson.D) (*models.Us
 		return
 	}
 
-	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(&user.GoogleToken))
-	service, e := calendar.New(client)
-
+	service, e := getService(&user.GoogleToken)
 	if e != nil {
 		log.Println(e.Error())
 		return
