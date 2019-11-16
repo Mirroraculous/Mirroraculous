@@ -3,5 +3,6 @@
     <app-overlay></app-overlay>
     <app-clock class = "clock"></app-clock>            
     <button class = "logout" (click) = 'logout()'>Logout</button>
-    <!-- <app-event class= "event"></app-event> -->
+    <app-event></app-event>
+    <app-oauth *ngIf='!hasAuth'></app-oauth>
 </div>

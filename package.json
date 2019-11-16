@@ -21,10 +21,12 @@
     "@angular/platform-browser": "~8.2.3",
     "@angular/platform-browser-dynamic": "~8.2.3",
     "@angular/router": "~8.2.3",
-    "@auth0/angular-jwt": "^1.0.0-beta.11",
+    "@auth0/angular-jwt": "^1.2.0",
+    "auth0": "^2.20.0",
     "karma-sonarqube-unit-reporter": "0.0.21",
     "karma-spec-reporter": "0.0.32",
     "rxjs": "~6.4.0",
+    "rxjs-compat": "^6.5.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

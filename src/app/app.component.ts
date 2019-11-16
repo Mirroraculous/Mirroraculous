@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-
+import { TestService} from './services/test.service'
 
 @Component({
   selector: 'app-root',
@@ -11,11 +11,18 @@ export class AppComponent {
   title = 'Mirroraculous';
   constructor(
     private router: Router,
-    
+    private testService: TestService,
   ){
 
   }
   ngOnInit() {
-    this.router.navigate(['/home']);       
+    this.testService.getSession().subscribe(
+      val=>{
+        console.log(val);
+        if(val.body.googletoken != ""){
+          this.router.navigate(['/home']);
+        }
+      }
+    );  
   }
 }

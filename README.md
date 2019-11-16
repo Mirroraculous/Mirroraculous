@@ -72,6 +72,19 @@ The backend is written in Go which follows a specific pathing convention for its
 
 Once this is done, navigate to Go's github package directory (typically: `<home>/go/src/github.com/`). Once in there, make a new folder `mirroraculous` and clone the repo into that new directory. 
 
+### Configuration Files
+
+In the `config` folder, create a `default.json` file that contains the MongoDB credentials in the form: 
+```
+{
+    "mongoURI": "mongodb+srv://...",
+    "dbname": "Database...",
+    "collection": "collection name"
+}
+```
+To allow Google OAuth2, download the credentials file as `client_id.json` from the Google API Console and place this file in the `oauth` folder.
+
+
 ### Running the server
 
 When all set up, you can run the server with `go run main.go` when in the root directory of the project. 

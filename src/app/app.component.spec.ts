@@ -41,6 +41,8 @@ import { UpdateEventService } from './services/update-event.service'
 import { not } from 'rxjs/internal/util/not';
 import { AddEventService } from './services/add-event.service';
 
+import { OauthComponent } from './components/oauth/oauth.component';
+import { OauthService } from './services/oauth.service';
 
 
 describe('AppComponent', () => {
@@ -60,6 +62,7 @@ describe('AppComponent', () => {
         UpdateEventComponent,
         EventComponent,
         DetailsEventComponent,
+        OauthComponent,
       ],
       imports: [
         BrowserModule,
