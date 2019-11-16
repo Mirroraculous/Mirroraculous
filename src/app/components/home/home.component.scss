@@ -2,8 +2,12 @@
     max-height: 1920px;
     max-width: 1080;
     display: grid;
-    grid-template-columns: 20% 60% 20%;
-    grid-template-rows: 15% 5% 60% 20%;
+    grid-template-columns: 20% 38% 42%;
+    grid-template-rows: 15% 5% 310% 100%;
+}
+.auth{
+    grid-column: 1;
+    grid-row:4;
 }
 .clock{
     grid-column: 1;
