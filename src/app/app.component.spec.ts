@@ -129,7 +129,8 @@ describe('AppComponent', () => {
       expect(localStorage.getItem('sessionToken')).not.toBe(jasmine.any(String));
     });
     it(`should have token when logged in`,()=>{
-      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,
+                "name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
 
       let DTO={
         email: "",
@@ -139,76 +140,77 @@ describe('AppComponent', () => {
       expect(localStorage.getItem('sessionToken')).not.toBe(null);
     });
     it(`should not display error message when valid`, ()=>{
-      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,
+                "name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
       let DTO={
         email: "",
         password: "",
       }
       login.aSubmittedDataFunction(DTO);
-      console.log(login.message)
+      console.log(login.message);
       expect(login.message).toEqual('');
     });
     it(`should display error message when invalid`, ()=>{
-      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,
+                "name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
       let DTO={
         email: "",
         password: "",
       }
       login.aSubmittedDataFunction(DTO);
-      console.log(login.message)
+      console.log(login.message);
       expect(login.message).toEqual('Failed to login. Incorrect credentials');
     });
   });
   describe('Add Event', ()=>{
-    let addEventService: AddEventService
-    let addEvent: AddEventComponent;
+    let addEventService: AddEventService;
     let authSpy: jasmine.Spy;
+    let addEvent: AddEventComponent;
     let fixture: ComponentFixture<AddEventComponent>;
     beforeEach(()=>{
       fixture = TestBed.createComponent(AddEventComponent);
       addEvent = fixture.debugElement.componentInstance;
+      addEventService = TestBed.get(AddEventService);
       fixture.detectChanges();
     });
     it(`should create add component`,()=>{
       expect(addEvent).toBeTruthy();
     });
     it(`should not display error message when valid`, ()=>{
-      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":200}));
       let DTO={
-        summary: "",
-        description: "",
-        start: {
-          date: "",
-          dateTime: "",
-        },
-        end: {
-          date: "",
-          dateTime: "",
-        },
-        endTimeUnspecified: true,
+        summary: "asdf",
+        dateTime: "5:00 AM",
+        date: "11/16/2019",
+        description: "bed time"
       }
       addEvent.onSubmit(DTO);
-      console.log(addEvent.message)
+      console.log(addEvent.message);
       expect(addEvent.message).toEqual('');
     });
-    it(`should not display error message when valid`, ()=>{
-      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,"name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+    it(`should display error message when invalid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":400}));
       let DTO={
-        summary: "",
-        description: "",
-        start: {
-          date: "",
-          dateTime: "",
-        },
-        end: {
-          date: "",
-          dateTime: "",
-        },
-        endTimeUnspecified: true,
+        summary: "asdf",
+        dateTime: "5:00 AM",
+        date: "11/16/2019",
+        description: "bed time"
       }
       addEvent.onSubmit(DTO);
-      console.log(addEvent.message)
-      expect(addEvent.message).toEqual('You must fill all fields.');
+      console.log(addEvent.message);
+      expect(addEvent.message).toEqual('You must fill summary and date/time fields.');
+    });
+    it(`should display error message when invalid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":500}));
+      let DTO={
+        summary: "asdf",
+        dateTime: "5:00 AM",
+        date: "11/16/2019",
+        description: "bed time"
+      }
+      addEvent.onSubmit(DTO);
+      console.log(addEvent.message);
+      expect(addEvent.message).toEqual('Oops! Something went wrong, please try again.');
     });
   });
   describe('Update Event', ()=>{

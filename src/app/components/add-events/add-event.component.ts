@@ -61,6 +61,7 @@ export class AddEventComponent implements OnInit {
 
   //gets called when the user hits the submit key
   onSubmit(userInfo){
+    console.log(userInfo)
     //Process checkout data here
     const d = new Date(userInfo.date)
     const t = new Date(userInfo.date + " " + userInfo.dateTime)
@@ -84,11 +85,12 @@ export class AddEventComponent implements OnInit {
       val => {
         if (val.status === 200 || val.status === 204){
           this.message = '';
-          console.log(val);
+        }
+        else if(val.status === 400){
+          this.message = 'You must fill summary and date/time fields.';
         }
         else{
-          this.message = 'You must fill all fields.';
-          console.log(val);
+          this.message = 'Oops! Something went wrong, please try again.'
         }
       }
     )
