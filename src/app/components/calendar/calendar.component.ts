@@ -101,7 +101,7 @@ export class CalendarComponent implements OnInit {
         }
         else{          
           day= {
-            isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
+            isToday: rn.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear()))? true:false,
             dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear())),
             isEvents:  false,
             month: rn.getMonth(),
