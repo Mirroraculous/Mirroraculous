@@ -8,9 +8,12 @@ import (
 	"errors"
 	"log"
 	"os"
+	"time"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"google.golang.org/api/calendar/v3"
+	"google.golang.org/api/option"
 )
 
 type credentials struct {
@@ -85,4 +88,20 @@ func GoogleToken(code string) (int, *oauth2.Token, error) {
 	}
 
 	return 200, token, nil
+}
+
+func GetService(userToken *oauth2.Token) (*calendar.Service, error) {
+	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(userToken))
+	service, e := calendar.NewService(context.Background(), option.WithHTTPClient(client))
+
+	if e != nil {
+		log.Println(e.Error())
+		return nil, e
+	}
+	return service, nil
+}
+
+func GetEvents(service *calendar.Service) (*calendar.Events, error) {
+	events, e := service.Events.List("primary").TimeMin(time.Now().Format(time.RFC3339)).Do()
+	return events, e
 }

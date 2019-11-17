@@ -198,6 +198,31 @@ func GoogleAuth(context *gin.Context) {
 	context.Status(status)
 }
 
+func GoogleEvents(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	user, status := linkers.GetUser(id, config.FindUser)
+	if status != 200 {
+		context.JSON(status, "Could not get user")
+		return
+	}
+	events, status, e := linkers.SyncGoogleCalendar(user, oauth.GetService, oauth.GetEvents)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	e = linkers.AddListOfEvents(events, id)
+	if e != nil {
+		context.JSON(500, e.Error())
+		return
+	}
+	context.Status(200)
+}
+
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
