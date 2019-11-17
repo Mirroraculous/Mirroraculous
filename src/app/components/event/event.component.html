@@ -3,8 +3,6 @@
                 <p class="tabbutton" (click)="changeVal(1)">Calendar</p>
                 <p class="tabbutton" (click)="changeVal(2)">Details</p>
                 <p class="tabbutton" (click)="changeVal(3)">Add</p>
-                <p class="tabbutton" (click)="changeVal(4)">Update</p>
-                <p class="tabbutton" (click)="changeVal(5)">Delete</p>
         </div>
     <div *ngIf = 'switchVal === 1'>
         <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
@@ -14,12 +12,5 @@
     </div>
     <div *ngIf = 'switchVal === 3'>
         <app-add-event></app-add-event>
-    </div>
-    <div *ngIf = 'switchVal === 4'>
-        <app-update-event ></app-update-event>        
-    </div>
-    <div *ngIf = 'switchVal === 5'>
-        Delete values
-        <!-- <app-delete-event></app-delete-event>     -->
     </div>
 </div>
