@@ -215,6 +215,12 @@ func GoogleEvents(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
+	e = linkers.AddListOfEvents(events, id)
+	if e != nil {
+		context.JSON(500, e.Error())
+		return
+	}
+	context.Status(200)
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
