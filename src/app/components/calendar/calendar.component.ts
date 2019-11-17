@@ -33,6 +33,33 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.displayNumbers();
+    const rn = new Date()
+    
+    for(let i =0 ;i<5;i++){
+      let locale: Day[] = []
+      for(let k = 0;k<7;k++){
+        locale.push(this.monthArrayUnorganized[i*7+k]);
+      }
+      this.monthArray.push(locale);
+    }
+    
+    this.viewArray = this.monthArray;
+    console.log('startDay',this.startDay.getDate())
+    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
+      let day:Day = {
+        isToday: rn.getDate() === i? true:false,
+        dayOf: i,
+        isEvents:  false,
+        month: rn.getMonth(),
+      }
+      this.weekArray.push(day);
+    }
+    this.getFirstDayWeek(this.getFirstDayMonth());
+   this.populateEvents();
+
+  }
+  displayNumbers(){
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
     this.startDay = this.getFirstDayWeek(this.now);
@@ -79,26 +106,9 @@ export class CalendarComponent implements OnInit {
       }
       this.monthArrayUnorganized.push(day);
     }
-    for(let i =0 ;i<5;i++){
-      let locale: Day[] = []
-      for(let k = 0;k<7;k++){
-        locale.push(this.monthArrayUnorganized[i*7+k]);
-      }
-      this.monthArray.push(locale);
-    }
-
-    
-    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
-      let day:Day = {
-        isToday: rn.getDate() === i? true:false,
-        dayOf: i,
-        isEvents:  false,
-        month: rn.getMonth(),
-      }
-      this.weekArray.push(day);
-    }
-    this.viewArray = this.monthArray;
-    this.getFirstDayWeek(this.getFirstDayMonth());
+  }
+  populateEvents(){
+    console.log('first day',this.getFirstDayMonth())
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
           if(val.body!=null){            
@@ -128,9 +138,7 @@ export class CalendarComponent implements OnInit {
           }        
         }
       );
-
   }
-
   getFirstDayMonth(){
     let d = new Date();
     d.setDate(1);
