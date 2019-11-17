@@ -13,6 +13,7 @@
     <div *ngIf = "isMonth">
         
         <ul>
+            <p>{{displayMonth}}</p>
             <li *ngFor="let item of viewArray[0];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}               
             </li>

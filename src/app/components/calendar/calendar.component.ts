@@ -24,6 +24,7 @@ export class CalendarComponent implements OnInit {
   year;
   startDay;
   startMonth;
+  displayMonth;
   @Output() onCalendarClick: EventEmitter<any> = new EventEmitter<any>();
 
   now = new Date();
@@ -64,7 +65,9 @@ export class CalendarComponent implements OnInit {
     this.year= this.now.getFullYear();
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
+    this.displayMonth = new Date(this.year,this.month, 0).toLocaleString('default',{month:'long'})
     const rn = new Date()
+    console.log(this.startMonth.getDate())
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
       let day;
@@ -77,33 +80,36 @@ export class CalendarComponent implements OnInit {
         }        
       }
       else if(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))===1){
+        console.log('does this ever happen')
         day = {
           isToday: rn.getDate() === i? true:false,
           dayOf: i,
           isEvents:  false,
           month: rn.getMonth()-1,
-
         } 
       }else{
+        console.log(i)
         if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
+          console.log('second else',this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))
+
           day= {
             isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
             dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
             isEvents:  false,
-            month: rn.getMonth()+1,
-  
+            month: rn.getMonth()+1,  
           }
         }
         else{          
           day= {
             isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
-            dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
+            dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear())),
             isEvents:  false,
             month: rn.getMonth(),
 
           } 
         }
       }
+      console.log(day)
       this.monthArrayUnorganized.push(day);
     }
   }
