@@ -33,7 +33,10 @@ export class CalendarComponent implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {        
+    this.month= this.now.getMonth();
+    this.year= this.now.getFullYear();
+    this.displayMonth = new Date(this.year,this.month, 0).toLocaleString('default',{month:'long'})
     this.displayNumbers();
     const rn = new Date()
     
@@ -61,11 +64,8 @@ export class CalendarComponent implements OnInit {
 
   }
   displayNumbers(){
-    this.month= this.now.getMonth();
-    this.year= this.now.getFullYear();
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
-    this.displayMonth = new Date(this.year,this.month, 0).toLocaleString('default',{month:'long'})
     const rn = new Date()
     console.log(this.startMonth.getDate())
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
