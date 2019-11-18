@@ -28,7 +28,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
 import { DetailsEventComponent } from './components/details-event/details-event.component';
-import {OauthComponent} from './components/oauth/oauth.component'
+import {OauthComponent} from './components/oauth/oauth.component';
+import { AlarmComponent } from './components/alarm/alarm/alarm.component'
 
 
 
@@ -48,6 +49,7 @@ import {OauthComponent} from './components/oauth/oauth.component'
     CalendarComponent,
     EventComponent,
     DetailsEventComponent,
+    AlarmComponent,
   ],
   imports: [
     BrowserModule,
