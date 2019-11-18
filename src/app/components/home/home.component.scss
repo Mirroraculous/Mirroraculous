@@ -3,7 +3,11 @@
     max-width: 1080;
     display: grid;
     grid-template-columns: 20% 38% 42%;
-    grid-template-rows: 15% 5% 320% 30%;
+    grid-template-rows: 35% 5% 300% 30%;
+}
+.alarm{
+    grid-row:1;
+    grid-column: 1;
 }
 .auth{
     grid-column: 1;
