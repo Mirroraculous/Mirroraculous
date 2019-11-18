@@ -7,23 +7,23 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Writing Frontend code Dos and Don'ts
-Do: use ng g c/s for *every* file that you want to add as a story. This will include values within the app.module.ts file as imports and create default testing, css, .ts, and .html files as well as a folder for these files.
+Do: Use ng g c/s for *every* file that you want to add as a story. This will include values within the app.module.ts file as imports and create default testing, css, .ts, and .html files as well as a folder for these files.
 Do not: Manually add files to a directory without adding import statments to the app.module.ts file
 
 Do: Write tests as you go, not as you complete them. 
 Do not: Forget to write tests
 
-Do: use class level and tag level css
-Do not: use #id or !important tags for more than a very few css rules. In most cases running into these specificity issues can be resolved through other methods. Think of this as hitting a mouse with a jackhammer.
+Do: Use class level and tag level css
+Do not: Use #id or !important tags for more than a very few css rules. In most cases running into these specificity issues can be resolved through other methods. Think of this as hitting a mouse with a jackhammer.
 
-Do: constantly check your current code by running both the backend server and frontend server(in two seperate cmd windows).
-Do not: check after long periods of time. The longer you wait, the bigger potential bugs have to compound and become indeterminable.
+Do: Constantly check your current code by running both the backend server and frontend server(in two seperate cmd windows).
+Do not: Check after long periods of time. The longer you wait, the bigger potential bugs have to compound and become indeterminable.
 
 Do: Look for solutions to problems that will not create problems down the line
-Do not: implement solutions that are simple for the moment and will cause complications down the line.
+Do not: Implement solutions that are simple for the moment and will cause complications down the line.
 
 Do: Test. Whether its a automated test or a UI test, please test before you attempt a PR
-Do not: assume your code works because it makes sense. At *least* test your code through the UI, its not as robust as actual unit testing but it will get the job done.
+Do not: Assume your code works because it makes sense. At *least* test your code through the UI, its not as robust as actual unit testing but it will get the job done.
 
 Do: Pull the latest changes from master into your branch every time it is updated. If you wait, you will run into merge conflicts that will potentially become increasingly complex.
 Do not: Work on your own branch never pulling or merging from other branches until the end of the sprint, *then* pull in the branches. Doing this will create a lot more work for yourself and others and could result in duplicated/conflicting code.
@@ -39,7 +39,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 To learn about unit testing check out the documentation at [Jasmine Getting Started](https://jasmine.github.io/tutorials/your_first_suite)
 
-important to note: Each spec.ts file is its own little thing therefore it needs every dependency for the component you are testing. Anything that the component you are trying to import uses must be included in the spec.ts test bed.
+Important to Note: Each spec.ts file is its own little thing therefore it needs every dependency for the component you are testing. Anything that the component you are trying to import uses must be included in the spec.ts test bed.
 
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
@@ -54,7 +54,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Backend
 
-### Installing dependancies
+### Installing dependencies
 
 The backend is written in Go which follows a specific pathing convention for its packages. After installing Go, run the following commands to install the required packages: 
 - `go get -t -v ./...`
@@ -87,21 +87,12 @@ To allow Google OAuth2, download the credentials file as `client_id.json` from t
 
 ### Running the server
 
-When all set up, you can run the server with `go run main.go` when in the root directory of the project. 
+Once set up, you can run the server with `go run main.go` when in the root directory of the project. 
 
 ### Running tests
 
 To run the tests in go, run `go test ./...` to test all files. Flags can be added such as `-v` for verbose and `-cover` for package coverage. The command `go test -v -cover ./...` will show the verbose coverage report and is recomended. 
 
-## Mirraculous Style Guides
-
-## Prettier Code Formatter (version 1.18.2)
-
-Prettier supports Java, Angular, CSS and many more platforms. Please see the [Prettier Homepage] (https://prettier.io/) for more information. 
-
-## TSLint (version 5.19.0)
-
-TSLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality errors. Please see [TSLint Homepage] (https://palantir.github.io/tslint/) for more information.
 
 
 

@@ -6,16 +6,16 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class UpdateEventService {
+export class DeleteEventService {
   private url = "http://localhost:3000/api/calendar/";  // URL to web api
 
   constructor(
     private http: HttpClient) { }
 
   // Send event info to the backend to get called later for popup
-  updateEvent(eventInfo){
-    return this.http.put<any>(this.url + eventInfo._id, eventInfo,{observe: 'response'}).pipe(
-      catchError(this.handleError<any>(`eventInfo`, eventInfo))
+  deleteEvent(id){
+    return this.http.delete<any>(this.url + id,{observe: 'response'}).pipe(
+      catchError(this.handleError<any>(`deleteEvent`, id))
     );
   }
 
