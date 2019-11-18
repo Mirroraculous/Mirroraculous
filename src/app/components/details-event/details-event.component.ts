@@ -11,13 +11,12 @@ export class DetailsEventComponent implements OnInit {
   message;
   day;
   events;
-  @Output() sentToUpdate: EventEmitter<any> = new EventEmitter<any>();
-
+  @Output() sentToUpdate: EventEmitter<any> = new EventEmitter<any>();  
+  @Input() emitVal;
   constructor(
     private deleteService: DeleteEventService,
     private updateService: UpdateEventService,
   ) { }
-  @Input() emitVal;
   ngOnInit() {
     const date = new Date();
     const year = date.getFullYear();

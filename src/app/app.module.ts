@@ -47,6 +47,7 @@ import { OauthComponent } from './components/oauth/oauth.component'
     PageNotFoundComponent,
     CalendarComponent,
     EventComponent,
+    UpdateEventComponent,
     LocationComponent,
     DetailsEventComponent,
     UpdateEventComponent,
