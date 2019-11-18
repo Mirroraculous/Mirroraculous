@@ -66,37 +66,4 @@ export class EventComponent implements OnInit {
     this.changeVal(2);
     console.log(this.today);
   }
-  // onSubmit(userInfo){
-  //   //Process checkout data here
-  //   const d = new Date(userInfo.date)
-  //   const t = new Date(userInfo.date + " " + userInfo.dateTime)
-  //   console.log(d.toISOString())
-  //   console.log(t.toISOString())
-  //   this.events.reset(); 
-  //   this.DTO ={
-  //     summary: userInfo.summary,
-  //     description: userInfo.description,
-  //     start: {
-  //       date: d.toISOString(),
-  //       dateTime: t.toISOString(),
-  //     },
-  //     end: {
-  //       date: null,
-  //       dateTime: null,
-  //     },
-  //     endTimeUnspecified: true,
-  //   }
-  //   this.eventsService.sendEventInfo(this.DTO).subscribe(
-  //     val => {
-  //       if (val.status === 200 || val.status === 204){
-  //         this.message = '';
-  //         console.log(val);
-  //       }
-  //       else{
-  //         this.message = 'You must fill all fields.';
-  //         console.log(val);
-  //       }
-  //     }
-  //   )
-  // }
 }

@@ -1,5 +1,5 @@
     
-    <p style = "text-align: center;">{{displayMonth}}</p>     
+    <p style = "text-align: center;" class = "Month">{{displayMonth}}</p>     
     <img *ngIf= '!isMonth'alt = "down" src = "../../../assets/up_arrow.svg"class="updown"(click) = "changeView()"/>
     <img *ngIf= 'isMonth'alt = "up" src = "../../../assets/down_arrow.svg"class="updown"(click) = "changeView()"/>
     <div *ngIf = "!isMonth">

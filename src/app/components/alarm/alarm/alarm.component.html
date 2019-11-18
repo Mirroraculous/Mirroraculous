@@ -1,0 +1,20 @@
+<div style = 'margin:0;'>
+    <p style ='margin:0;display:inline;'>Alarms  </p>
+    <img *ngIf= 'isMinified'alt = "down" src = "../../../../assets/up_arrow.svg"(click) = "changeView()"/>
+    <img *ngIf= '!isMinified'alt = "up" src = "../../../../assets/down_arrow.svg"(click) = "changeView()"/>
+    <div *ngIf = 'isMinified'style = 'margin:0;'>
+        <ul>
+            <li *ngFor= "let item of alarms">
+                <label class="switch">
+                    <input (click) = 'activate(item)' type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </li>
+        </ul>        
+        <p style = 'display: inline; margin:0;'>Add an alarm </p><p style = 'display:inline-block;font-size: 24px;color:#06A1C4;margin:0;' (click)="changeAdding()"> +</p>
+        <form *ngIf='currentAdding' [formGroup]="alarms" (ngSubmit)="onSubmit(alarms.value)">            
+            <input  type = 'text' placeholder="Enter time in HH:MM AM/PM">
+            <button type="submit" class="button">Add Alarm</button>
+        </form>
+    </div>
+</div>
