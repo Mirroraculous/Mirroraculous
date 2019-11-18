@@ -37,7 +37,7 @@ export class CalendarComponent implements OnInit {
     console.log('testing date',this.getDaysInMonth(1,2020))
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
-    this.displayMonth = new Date(this.year,this.month, 0).toLocaleString('default',{month:'long'})
+    this.displayMonth = new Date(this.year,this.month+1, 0).toLocaleString('default',{month:'long'})
     this.displayNumbers();
     const rn = new Date()
     
