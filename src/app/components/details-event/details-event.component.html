@@ -2,6 +2,7 @@
     <ul>
         <li *ngFor="let event of events;">
             {{event.summary}}
+            <span (click) = "updateEvent(event)">E</span>
             <span (click) = "deleteEvent(event._id, event.summary)">X</span>
         </li>
     </ul>

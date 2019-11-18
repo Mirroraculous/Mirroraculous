@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { DeleteEventService } from '../../services/delete-event.service'
+import { UpdateEventService } from '../../services/update-event.service'
 
 @Component({
   selector: 'app-details-event',
@@ -10,9 +11,11 @@ export class DetailsEventComponent implements OnInit {
   message;
   day;
   events;
+  @Output() sentToUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private deleteService: DeleteEventService
+    private deleteService: DeleteEventService,
+    private updateService: UpdateEventService,
   ) { }
   @Input() emitVal;
   ngOnInit() {
@@ -23,6 +26,7 @@ export class DetailsEventComponent implements OnInit {
       return event.start.date.substring(0,10) == `${year}-${this.day.month+1}-${this.day.dayOf}`;
     });
   }
+
   deleteEvent(id, summary){
     this.deleteService.deleteEvent(id).subscribe(
       val => {
@@ -38,5 +42,9 @@ export class DetailsEventComponent implements OnInit {
         }
     })
     console.log(id)
+  }
+
+  updateEvent(event) {
+   this.sentToUpdate.emit(event)
   }
 }

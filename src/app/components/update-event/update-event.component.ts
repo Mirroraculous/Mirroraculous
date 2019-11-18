@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
 import { UpdateEventService } from 'src/app/services/update-event.service';
@@ -29,19 +29,8 @@ export class UpdateEventComponent implements OnInit {
   events;
   today;
   message = '';
-  DTO: DTO={
-    summary: "",
-    description: "",
-    start: {
-      date: "",
-      dateTime: "",
-    },
-    end: {
-      date: "",
-      dateTime: "",
-    },
-    endTimeUnspecified: true,    
-  }
+  @Input() eventToUpdate;
+  DTO: DTO = this.eventToUpdate;
   // events = new FormControl('');
 
   constructor(
@@ -50,10 +39,7 @@ export class UpdateEventComponent implements OnInit {
     private session: SessionService,
     private formBuilder: FormBuilder) {
       this.events = this.formBuilder.group({
-        summary: '',
-        dateTime: '',
-        date: '',
-        description:'',
+        
       });
      }
 
@@ -67,29 +53,20 @@ export class UpdateEventComponent implements OnInit {
     const t = new Date(userInfo.date + " " + userInfo.dateTime)
     console.log(d.toISOString())
     console.log(t.toISOString())
-    this.events.reset(); 
-    this.DTO ={
-      summary: userInfo.summary,
-      description: userInfo.description,
-      start: {
-        date: d.toISOString(),
-        dateTime: t.toISOString(),
-      },
-      end: {
-        date: null,
-        dateTime: null,
-      },
-      endTimeUnspecified: true,
-    }
-    this.eventsService.sendEventInfo(this.DTO).subscribe(
+    this.eventToUpdate.summary = userInfo.summary;
+    this.eventToUpdate.description = userInfo.description;
+    this.eventToUpdate.start.date = d.toISOString();
+    this.eventToUpdate.start.dateTime = t.toISOString();
+    this.eventsService.updateEvent(this.eventToUpdate).subscribe(
       val => {
         if (val.status === 200 || val.status === 204){
           this.message = '';
-          console.log(val);
+        }
+        else if(val.status === 400){
+          this.message = 'You must fill summary and date/time fields.';
         }
         else{
-          this.message = 'You must fill all fields.';
-          console.log(val);
+          this.message = 'Oops! Something went wrong, please try again.'
         }
       }
     )

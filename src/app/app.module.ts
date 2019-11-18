@@ -25,10 +25,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
 import { DetailsEventComponent } from './components/details-event/details-event.component';
-import {OauthComponent} from './components/oauth/oauth.component'
+import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { OauthComponent } from './components/oauth/oauth.component'
 
 
 
@@ -43,7 +43,6 @@ import {OauthComponent} from './components/oauth/oauth.component'
     LoginComponent,
     RegisterPageComponent,
     AddEventComponent,
-    UpdateEventComponent,
     PageNotFoundComponent,
     CalendarComponent,
     EventComponent,

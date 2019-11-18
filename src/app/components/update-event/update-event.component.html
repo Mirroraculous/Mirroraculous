@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="events" (ngSubmit)="onSubmit(events.value)">
+    <form [formGroup]="events" (ngSubmit)="onUpdate(events.value)">
     <input  formControlName= "summary" class ="inputs" placeholder = "Title">
 
     <input formControlName="dateTime"  class ="inputs" placeholder="Time">

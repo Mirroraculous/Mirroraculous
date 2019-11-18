@@ -7,14 +7,14 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UpdateEventService {
-  private url = "http://localhost:3000/api/calendar";  // URL to web api
+  private url = "http://localhost:3000/api/calendar/";  // URL to web api
 
   constructor(
     private http: HttpClient) { }
 
   // Send event info to the backend to get called later for popup
-  sendEventInfo(eventInfo){
-    return this.http.put<any>(this.url, eventInfo,{observe: 'response'}).pipe(
+  updateEvent(eventInfo){
+    return this.http.put<any>(this.url + eventInfo._id, eventInfo,{observe: 'response'}).pipe(
       catchError(this.handleError<any>(`eventInfo`, eventInfo))
     );
   }
