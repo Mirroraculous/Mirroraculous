@@ -16,10 +16,12 @@ export class DetailsEventComponent implements OnInit {
   ) { }
   @Input() emitVal;
   ngOnInit() {
+    const date = new Date();
+    const year = date.getFullYear();
     this.day = this.emitVal.day;
-    this.events = this.emitVal.events;
-    console.log("day",this.emitVal);
-    console.log("event",this.events);
+    this.events = this.emitVal.events.filter(event => {
+      return event.start.date.substring(0,10) == `${year}-${this.day.month+1}-${this.day.dayOf}`;
+    });
   }
   deleteEvent(id, summary){
     this.deleteService.deleteEvent(id).subscribe(
