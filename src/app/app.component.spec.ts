@@ -42,6 +42,7 @@ import { AddEventService } from './services/add-event.service';
 
 import { OauthComponent } from './components/oauth/oauth.component';
 import { OauthService } from './services/oauth.service';
+import { LocationComponent } from './components/location/location.component';
 
 
 describe('AppComponent', () => {
@@ -61,6 +62,7 @@ describe('AppComponent', () => {
         EventComponent,
         DetailsEventComponent,
         OauthComponent,
+        LocationComponent,
       ],
       imports: [
         BrowserModule,
@@ -363,4 +365,26 @@ describe('AppComponent', () => {
   //   // });
 
   // });
+
+  describe('LocationComponent', () => {
+    let component: LocationComponent;
+    let fixture: ComponentFixture<LocationComponent>;
+  
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ LocationComponent ]
+      })
+      .compileComponents();
+    }));
+  
+    beforeEach(() => {
+      fixture = TestBed.createComponent(LocationComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+  });
 });
