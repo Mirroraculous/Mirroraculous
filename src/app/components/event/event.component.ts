@@ -6,7 +6,7 @@ import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 import { timer } from 'rxjs';
 
-interface DTO{
+interface DTO {
   summary: string;
   description: string;
   start: {
@@ -33,7 +33,7 @@ export class EventComponent implements OnInit {
   isFilled = false;
   clicked = false;
   message = '';
-  DTO: DTO={
+  DTO: DTO = {
     summary: "",
     description: "",
     start: {
@@ -51,37 +51,40 @@ export class EventComponent implements OnInit {
     private eventsService: AddEventService,
     private session: SessionService,
     private formBuilder: FormBuilder) {
-      this.events = this.formBuilder.group({
-        summary: '',
-        dateTime: '',
-        date: '',
-        description:'',
-      });
-     }
+    this.events = this.formBuilder.group({
+      summary: '',
+      dateTime: '',
+      date: '',
+      description: '',
+    });
+  }
 
   ngOnInit() {
   }
-  changeVal(val){
+  changeVal(val) {
     this.switchVal = val;
   }
-  setInfo(info){
+  setInfo(info) {
     this.today = info;
     this.changeVal(3);
-    console.log('the today val',this.today);
+    console.log('the today val', this.today);
   }
   setEvent(event) {
     this.event = event;
     console.log(this.event)
-    this.changeVal(4);    
+    this.changeVal(4);
   }
-  refresh(event){
+  goBack() {
+    this.changeVal(1);
+  }
+  refresh(event) {
     console.log("refresh happens")
-    
+
     timer(1000).subscribe(
-      val =>{
-        this.changeVal(10);        
+      val => {
+        this.changeVal(10);
         timer(1000).subscribe(
-          val =>{
+          val => {
             this.changeVal(3);
           }
         );
