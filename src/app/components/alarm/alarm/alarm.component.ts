@@ -16,6 +16,9 @@ export class AlarmComponent implements OnInit {
 
   ngOnInit() {
   }
+  onSubmit(){
+    //add backend call
+  }
   changeAdding(){
     this.currentAdding = !this.currentAdding;
   }
