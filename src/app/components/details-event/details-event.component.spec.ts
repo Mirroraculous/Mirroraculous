@@ -1,20 +1,20 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { DeleteEventComponent } from './delete-event.component';
+// import { DetailsEventComponent } from './details-event.component';
 
-// describe('DeleteEventComponent', () => {
-//   let component: DeleteEventComponent;
-//   let fixture: ComponentFixture<DeleteEventComponent>;
+// describe('DetailsEventComponent', () => {
+//   let component: DetailsEventComponent;
+//   let fixture: ComponentFixture<DetailsEventComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ DeleteEventComponent ]
+//       declarations: [ DetailsEventComponent ]
 //     })
 //     .compileComponents();
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(DeleteEventComponent);
+//     fixture = TestBed.createComponent(DetailsEventComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

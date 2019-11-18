@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class EventsService {
+export class AddEventService {
   private url = "http://localhost:3000/api/calendar";  // URL to web api
 
   constructor(

@@ -3,7 +3,9 @@ import { OauthService } from '../../services/oauth.service';
 
 @Component({
   selector: 'app-oauth',
-  templateUrl: './oauth.component.html'
+  templateUrl: './oauth.component.html',
+  styleUrls: ['./oauth.component.scss']
+
 })
 
 export class OauthComponent implements OnInit {
@@ -18,6 +20,7 @@ export class OauthComponent implements OnInit {
   ngOnInit() {
     this.link.getLink().subscribe(
       val => {
+        console.log(val)
         this.oauthLink = val.body;
       }
     );

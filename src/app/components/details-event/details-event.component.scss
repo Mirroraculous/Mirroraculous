@@ -1,0 +1,61 @@
+$blue-bright: #06A1C4; 
+$blue-bright-opacity: rgba(6,161,196, .1); 
+$blue: #176F98; 
+$blue-opacity: rgba(23,111,152, .1);
+$red: #D14E60;
+$red-opacity: rgba(209,78,96, .1);
+$dirty-purple: #8D546E;
+$dirty-purple-opacity: rgba(141,84,110, .1);
+$brown-orange: #4E1F19;
+$brown-orange-opacity: rgba(78,31,25, .1);
+
+
+.event-list{
+    height: 288px;
+    width: 400px;
+    color: $red;
+
+    // .summary {
+    //     padding-top: 0em;    
+    // }
+
+    .events {
+        padding-top: 5%;
+        list-style-type: none;
+
+        .update {
+            max-width: 20px;
+            max-height: 20px;
+            padding-left: 50px;
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(198deg) brightness(101%) contrast(102%);
+        }
+
+        .update:hover {
+            cursor: pointer;
+        }
+
+        .delete {
+            max-width: 20px;
+            max-height: 20px;
+            padding-left: 20px;
+            filter: invert(64%) sepia(67%) saturate(5406%) hue-rotate(320deg) brightness(85%) contrast(90%);
+        }
+
+        .delete:hover {
+            cursor: pointer;
+        }
+
+        .summary {
+            color: $blue-bright;
+        }
+
+        .description {
+            padding-left: 10px;
+            color: $blue;
+        }
+
+        .time {
+            color: white;
+        }
+    }
+}

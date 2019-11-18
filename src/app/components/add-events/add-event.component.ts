@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Time } from '@angular/common';
-import { EventsService } from 'src/app/services/addEvents.service';
+import { AddEventService } from 'src/app/services/add-event.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 
@@ -20,13 +20,13 @@ interface DTO{
 }
 
 @Component({
-  selector: 'app-events',
-  templateUrl: './addEvents.component.html',
-  styleUrls: ['./addEvents.component.scss']
+  selector: 'app-add-event',
+  templateUrl: './add-event.component.html',
+  styleUrls: ['./add-event.component.scss']
 })
-export class EventsComponent implements OnInit {
-  isFilled = false;
-  clicked = false;
+export class AddEventComponent implements OnInit {
+  events;
+  today;
   message = '';
   DTO: DTO={
     summary: "",
@@ -39,14 +39,13 @@ export class EventsComponent implements OnInit {
       date: "",
       dateTime: "",
     },
-    endTimeUnspecified: true,
+    endTimeUnspecified: true,    
   }
   // events = new FormControl('');
-  events;
 
   constructor(
     private router: Router,
-    private eventsService: EventsService,
+    private eventsService: AddEventService,
     private session: SessionService,
     private formBuilder: FormBuilder) {
       this.events = this.formBuilder.group({
@@ -62,6 +61,7 @@ export class EventsComponent implements OnInit {
 
   //gets called when the user hits the submit key
   onSubmit(userInfo){
+    console.log(userInfo)
     //Process checkout data here
     const d = new Date(userInfo.date)
     const t = new Date(userInfo.date + " " + userInfo.dateTime)
@@ -85,17 +85,14 @@ export class EventsComponent implements OnInit {
       val => {
         if (val.status === 200 || val.status === 204){
           this.message = '';
-          console.log(val);
+        }
+        else if(val.status === 400){
+          this.message = 'You must fill summary and date/time fields.';
         }
         else{
-          this.message = 'You must fill all fields.';
-          console.log(val);
+          this.message = 'Oops! Something went wrong, please try again.'
         }
       }
     )
-  }
-
-  onCancel(){
-    this.router.navigate(['/home']);
   }
 }

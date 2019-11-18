@@ -21,19 +21,25 @@ import { ClockComponent } from './components/clock/clock.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EventsComponent } from './components/addEvents/addEvents.component';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import { AddEventComponent } from './components/add-events/add-event.component';
+import { DetailsEventComponent } from './components/details-event/details-event.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { DeleteEventComponent } from './components/delete-event/delete-event.component';
-import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { UpdateEventComponent } from './components/update-event/update-event.component'; 
 import { EventComponent } from './components/event/event.component';
 import { SessionService } from './auth/session.service';
 import { homedir } from 'os';
 import { of } from 'rxjs';
 import { TestService } from './services/test.service';
 import { CalendarService } from './services/calendar.service';
+import { LoginService } from './services/login.service';
+import { UpdateEventService } from './services/update-event.service'
+import { not } from 'rxjs/internal/util/not';
+import { AddEventService } from './services/add-event.service';
+
 import { OauthComponent } from './components/oauth/oauth.component';
 import { OauthService } from './services/oauth.service';
 
@@ -48,12 +54,12 @@ describe('AppComponent', () => {
         ClockComponent,
         LoginComponent,
         RegisterPageComponent,
-        EventsComponent,
+        AddEventComponent,
         PageNotFoundComponent,
         CalendarComponent,
-        DeleteEventComponent,
         UpdateEventComponent,
         EventComponent,
+        DetailsEventComponent,
         OauthComponent,
       ],
       imports: [
@@ -65,6 +71,7 @@ describe('AppComponent', () => {
         MatIconModule,
         ReactiveFormsModule,
         HttpClientModule,
+        HttpClientTestingModule,
         JwtModule.forRoot({
           config: {
             tokenGetter: () => {
@@ -98,33 +105,146 @@ describe('AppComponent', () => {
   });
   it(`should have a register sub page`,()=>{
     const fixture = TestBed.createComponent(RegisterPageComponent);
-    const app = fixture.debugElement.componentInstance
+    const app = fixture.debugElement.componentInstance;
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
     expect(app.DTO.name).toBe("");
+    
   });
-  // describe('Login Page', ()=>{
-  //   let login: LoginComponent;
-  //   let fixture: ComponentFixture<LoginComponent>;
-  //   beforeEach(()=>{
-  //     fixture = TestBed.createComponent(LoginComponent);
-  //     login = fixture.debugElement.componentInstance
-  //     fixture.detectChanges();
-  //   });
-  //   it(`should create login component`,()=>{
-  //     expect(login).toBeTruthy();
-  //   });
-  //   it(`should have no token when logged out`,()=>{
-  //     expect(localStorage.getItem('sessionToken')).toBe(null)
-  //   });
-  // });
+  describe('Login Page', ()=>{
+    let loginService: LoginService;
+    let authSpy: jasmine.Spy;
+    let login: LoginComponent;
+    let fixture: ComponentFixture<LoginComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(LoginComponent);
+      login = fixture.debugElement.componentInstance;
+      loginService = TestBed.get(LoginService);
+      fixture.detectChanges();
+
+    });
+    it(`should create login component`,()=>{
+      expect(login).toBeTruthy();
+    });
+    it(`should have no token when logged out`,()=>{
+      expect(localStorage.getItem('sessionToken')).not.toBe(jasmine.any(String));
+    });
+    it(`should have token when logged in`,()=>{
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,
+                "name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+
+      let DTO={
+        email: "",
+        password: "",
+      }
+      login.aSubmittedDataFunction(DTO);
+      expect(localStorage.getItem('sessionToken')).not.toBe(null);
+    });
+    it(`should not display error message when valid`, ()=>{
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":200,
+                "name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      let DTO={
+        email: "",
+        password: "",
+      }
+      login.aSubmittedDataFunction(DTO);
+      console.log(login.message);
+      expect(login.message).toEqual('');
+    });
+    it(`should display error message when invalid`, ()=>{
+      authSpy = spyOn(loginService, 'checkUserPassCombo').and.returnValue(of({"_id":"5da645a3115a423c2cfe11d4","status":404,
+                "name":"abc","email":"abc@abc.com","password":"$2a$10$dX7yXld.8DtU99fPUKRwHewHKV707LfKp0NQ0cUIa829e3.tagYBi"}));
+      let DTO={
+        email: "",
+        password: "",
+      }
+      login.aSubmittedDataFunction(DTO);
+      console.log(login.message);
+      expect(login.message).toEqual('Failed to login. Incorrect credentials');
+    });
+  });
+  describe('Add Event', ()=>{
+    let addEventService: AddEventService;
+    let authSpy: jasmine.Spy;
+    let addEvent: AddEventComponent;
+    let fixture: ComponentFixture<AddEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(AddEventComponent);
+      addEvent = fixture.debugElement.componentInstance;
+      addEventService = TestBed.get(AddEventService);
+      fixture.detectChanges();
+    });
+    it(`should create add component`,()=>{
+      expect(addEvent).toBeTruthy();
+    });
+    it(`should not display error message when valid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":200}));
+      let DTO={
+        summary: "asdf",
+        dateTime: "5:00 AM",
+        date: "11/16/2019",
+        description: "bed time"
+      }
+      addEvent.onSubmit(DTO);
+      console.log(addEvent.message);
+      expect(addEvent.message).toEqual('');
+    });
+    it(`should display error message when invalid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":400}));
+      let DTO={
+        summary: "asdf",
+        dateTime: "5:00 AM",
+        date: "11/16/2019",
+        description: "bed time"
+      }
+      addEvent.onSubmit(DTO);
+      console.log(addEvent.message);
+      expect(addEvent.message).toEqual('You must fill summary and date/time fields.');
+    });
+    it(`should display error message when invalid`, ()=>{
+      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":500}));
+      let DTO={
+        summary: "asdf",
+        dateTime: "5:00 AM",
+        date: "11/16/2019",
+        description: "bed time"
+      }
+      addEvent.onSubmit(DTO);
+      console.log(addEvent.message);
+      expect(addEvent.message).toEqual('Oops! Something went wrong, please try again.');
+    });
+  });
+  describe('Update Event', ()=>{
+    let updateEvent: UpdateEventComponent;
+    let fixture: ComponentFixture<UpdateEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(UpdateEventComponent);
+      updateEvent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+    it(`should create update component`,()=>{
+      expect(updateEvent).toBeTruthy();
+    });
+  });
+  describe('Detail Events', ()=>{
+    let detailEvent: DetailsEventComponent;
+    let fixture: ComponentFixture<DetailsEventComponent>;
+    beforeEach(()=>{
+      fixture = TestBed.createComponent(DetailsEventComponent);
+      detailEvent = fixture.debugElement.componentInstance;
+      fixture.detectChanges();
+    });
+    it(`should create details component`,()=>{
+      expect(detailEvent).toBeTruthy();
+    });
+  });
   describe('Home Page',()=>{   
     let home: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
     beforeEach(()=>{
 
       fixture = TestBed.createComponent(HomeComponent);
-      home = fixture.debugElement.componentInstance
+      home = fixture.debugElement.componentInstance;
       fixture.detectChanges();
     });
     it(`should create home component`,()=>{      
@@ -148,8 +268,7 @@ describe('AppComponent', () => {
       calendarService = TestBed.get(CalendarService);
 
       spy = spyOn(calendarService,'sendEventInfo').and.returnValue(of(
-        '{body:null, ok:true,status:200,statusText:`ok`,type:4,url:`http://localhost:3000/api/calendar/1572214583815`}'
-        ));
+        `{"userid":"5da645a3115a423c2cfe11d4","_id":"5dbe47ecb3d131960c1b73a5","status":"","htmlLink":"","created":"2019-11-03T03:22:20.538Z","updated":"0001-01-01T00:00:00Z","summary":"hi","description":"hi","location":"","colorId":"","creator":{"email":"","displayName":"","self":false},"start":{"date":"2019-11-02T06:00:00Z","dateTime":"2019-11-02T20:30:00Z","timeZone":""},"end":{"date":"0001-01-01T00:00:00Z","dateTime":"0001-01-01T00:00:00Z","timeZone":""},"endTimeUnspecified":true},{"userid":"5da645a3115a423c2cfe11d4","_id":"5dbe4803b3d131960c1b73a6","status":"","htmlLink":"","created":"2019-11-03T03:22:43.683Z","updated":"0001-01-01T00:00:00Z","summary":"a","description":"a","location":"","colorId":"","creator":{"email":"","displayName":"","self":false},"start":{"date":"2019-11-01T06:00:00Z","dateTime":"2019-11-01T20:30:00Z","timeZone":""},"end":{"date":"0001-01-01T00:00:00Z","dateTime":"0001-01-01T00:00:00Z","timeZone":""},"endTimeUnspecified":true}`));
 
       fixture.detectChanges();
     });
@@ -230,7 +349,7 @@ describe('AppComponent', () => {
     xit('Should be capable of determining if the session',()=>{
       let auth = session.isAuthenticated();
       console.log(auth);
-      expect(auth).not.toBe(undefined)
+      expect(auth).not.toBe(undefined);
     });
   });
   // describe('Auth Guard',()=>{

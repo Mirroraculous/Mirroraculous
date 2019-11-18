@@ -20,15 +20,17 @@ import { ClockComponent } from './components/clock/clock.component';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { EventsComponent } from './components/addEvents/addEvents.component';
+import { AddEventComponent } from './components/add-events/add-event.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { DeleteEventComponent } from './components/delete-event/delete-event.component';
-import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { EventComponent } from './components/event/event.component';
-import {OauthComponent} from './components/oauth/oauth.component';
+import { DetailsEventComponent } from './components/details-event/details-event.component';
+import { UpdateEventComponent } from './components/update-event/update-event.component';
+import { OauthComponent } from './components/oauth/oauth.component'
+
+
 
 
 @NgModule({
@@ -40,12 +42,12 @@ import {OauthComponent} from './components/oauth/oauth.component';
     OauthComponent,
     LoginComponent,
     RegisterPageComponent,
-    EventsComponent,
+    AddEventComponent,
     PageNotFoundComponent,
     CalendarComponent,
-    DeleteEventComponent,
-    UpdateEventComponent,
     EventComponent,
+    DetailsEventComponent,
+    UpdateEventComponent,
   ],
   imports: [
     BrowserModule,
