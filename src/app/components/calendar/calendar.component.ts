@@ -14,6 +14,7 @@ interface Day{
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  listOfEvents;
   isClicked = false;
   isMonth = true;
   viewArray;
@@ -118,7 +119,8 @@ export class CalendarComponent implements OnInit {
     console.log('first day',this.getFirstDayMonth())
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
-          if(val.body!=null){            
+          if(val.body!=null){  
+            this.listOfEvents = val.body          
             console.log(val);
             let days: Date[];
             for(let i =0;i<val.body.length;i++){
@@ -158,7 +160,7 @@ export class CalendarComponent implements OnInit {
     return d;
   }
   clickEvent(val){
-    this.onCalendarClick.emit(val);
+    this.onCalendarClick.emit({day: val, events: this.listOfEvents});
   }
   getDaysInMonth(month,year) {
     // Here January is 1 based
