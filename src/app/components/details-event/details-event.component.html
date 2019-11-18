@@ -1,9 +1,12 @@
 <div class = "event-list"> 
     <ul>
         <li *ngFor="let event of events;">
-            {{event.summary}}
-            <span (click) = "updateEvent(event)">E</span>
-            <span (click) = "deleteEvent(event._id, event.summary)">X</span>
+            <span class="summary">{{event.summary}}</span>
+            <span class="time"> {{formattedTime(event.start.dateTime)}}</span>
+            <span class="update" (click) = "updateEvent(event)"> Update</span>
+            <span class="delete" (click) = "deleteEvent(event._id, event.summary)"> X</span>
+            <br>
+            <span class="description">{{event.description}}</span>
         </li>
     </ul>
 </div>

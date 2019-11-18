@@ -44,6 +44,13 @@ export class DetailsEventComponent implements OnInit {
     console.log(id)
   }
 
+  formattedTime(time) {
+    const localTime = new Date(time)
+    const hours = localTime.getHours() 
+    const min = localTime.getMinutes()
+    return (hours > 10? hours:"0"+hours) + ":" + (min > 10? min:"0"+min)
+  }
+
   updateEvent(event) {
    this.sentToUpdate.emit(event)
   }
