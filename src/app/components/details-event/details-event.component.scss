@@ -25,14 +25,14 @@ $brown-orange-opacity: rgba(78,31,25, .1);
             max-width: 20px;
             max-height: 20px;
             padding-left: 50px;
-            color: white;
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(198deg) brightness(101%) contrast(102%);
         }
 
         .delete {
             max-width: 20px;
             max-height: 20px;
             padding-left: 20px;
-            color: red;
+            filter: invert(64%) sepia(67%) saturate(5406%) hue-rotate(320deg) brightness(85%) contrast(90%);
         }
     }
 }
