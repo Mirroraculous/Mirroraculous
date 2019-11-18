@@ -28,7 +28,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtModule } from "@auth0/angular-jwt";
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { DeleteEventComponent } from './components/delete-event/delete-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component'; 
 import { EventComponent } from './components/event/event.component';
 import { SessionService } from './auth/session.service';
@@ -58,7 +57,6 @@ describe('AppComponent', () => {
         AddEventComponent,
         PageNotFoundComponent,
         CalendarComponent,
-        DeleteEventComponent,
         UpdateEventComponent,
         EventComponent,
         DetailsEventComponent,
@@ -226,18 +224,6 @@ describe('AppComponent', () => {
     });
     it(`should create update component`,()=>{
       expect(updateEvent).toBeTruthy();
-    });
-  });
-  describe('Delete Event', ()=>{
-    let deleteEvent: DeleteEventComponent;
-    let fixture: ComponentFixture<DeleteEventComponent>;
-    beforeEach(()=>{
-      fixture = TestBed.createComponent(DeleteEventComponent);
-      deleteEvent = fixture.debugElement.componentInstance;
-      fixture.detectChanges();
-    });
-    it(`should create delete component`,()=>{
-      expect(deleteEvent).toBeTruthy();
     });
   });
   describe('Detail Events', ()=>{
