@@ -4,6 +4,7 @@ import { Time } from '@angular/common';
 import { AddEventService } from 'src/app/services/add-event.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
+
 interface DTO{
   summary: string;
   description: string;
@@ -24,6 +25,7 @@ interface DTO{
 })
 
 export class EventComponent implements OnInit {
+  event;
   switchVal = 1;
   events;
   today;
@@ -65,5 +67,9 @@ export class EventComponent implements OnInit {
     this.today = info;
     this.changeVal(3);
     console.log('the today val',this.today);
+  }
+  setEvent(event) {
+    this.event = event;
+    this.changeVal(4);    
   }
 }
