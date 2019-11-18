@@ -102,3 +102,8 @@ func DeleteEvent(query bson.D) error {
 	_, e := Calendar.DeleteOne(context.Background(), query)
 	return e
 }
+
+func UpdateUser(filter, update bson.M) error {
+	_, e := User.UpdateOne(context.Background(), filter, update)
+	return e
+}

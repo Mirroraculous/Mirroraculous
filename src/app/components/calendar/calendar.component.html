@@ -1,7 +1,7 @@
     
+    <p style = "text-align: center;" class = "Month">{{displayMonth}}</p>     
     <img *ngIf= '!isMonth'alt = "down" src = "../../../assets/up_arrow.svg"class="updown"(click) = "changeView()"/>
     <img *ngIf= 'isMonth'alt = "up" src = "../../../assets/down_arrow.svg"class="updown"(click) = "changeView()"/>
-    
     <div *ngIf = "!isMonth">
         <ul>
             <li *ngFor="let item of viewArray;" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
@@ -12,22 +12,7 @@
     
     <div *ngIf = "isMonth">
         
-        <ul>        
-            <!-- <li *ngFor="let item of viewArray; let i = index" [ngClass]="{'blocky': i%7===0 && i!=0}">
-                <div *ngIf= "isToday">
-                    <span *ngIf="item.isEvents" >
-                        {{item.dayOf}}
-                    </span>
-                    {{item.dayOf}}
-                </div>
-                <div *ngIf = "!isToday">
-                    <span *ngIf="item.isEvents">
-                        {{item.dayOf}}
-                    </span>
-                    {{item.dayOf}}
-
-                </div>
-            </li> -->
+        <ul>
             <li *ngFor="let item of viewArray[0];" (click) = "clickEvent(item)" [ngClass] = "{'highlighted':item.isEvents,'specialborder':item.isToday}">
                     {{item.dayOf}}               
             </li>

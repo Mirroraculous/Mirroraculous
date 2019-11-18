@@ -1,15 +1,21 @@
 package linkers
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
+	"log"
 	"regexp"
 	"strconv"
 	"time"
 
+	"github.com/mirroraculous/mirroraculous/config"
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/oauth2"
+	"google.golang.org/api/calendar/v3"
 )
 
 func AddUser(newUser models.User, find func(query bson.D) (*models.User, error), insert func(user *models.User) (string, error)) (string, int) {
@@ -100,12 +106,81 @@ func UpdateEvent(event models.Event, id string, replace func(query bson.D, e *mo
 }
 
 func DeleteEvent(eventID string, id string, delete func(query bson.D) error) (error, int) {
-	primEID, _ := primitive.ObjectIDFromHex(eventID)
+	primEID, e := primitive.ObjectIDFromHex(eventID)
+	if e != nil {
+		return e, 500
+	}
 	err := delete(bson.D{{"_id", primEID}, {"userid", id}})
 	if err != nil {
 		return err, 500
 	}
 	return nil, 200
+}
+
+func AddGoogleToken(usertoken string, token *oauth2.Token, update func(filter, up bson.M) error) (int, error) {
+	primID, e := primitive.ObjectIDFromHex(usertoken)
+	if e != nil {
+		log.Println(e.Error())
+		log.Println("Broken primative")
+		return 500, e
+	}
+	e = update(bson.M{"_id": bson.M{"$eq": primID}}, bson.M{"$set": bson.M{"googletoken": *token}})
+	if e != nil {
+		log.Println("Broken database")
+		log.Println(e.Error())
+		return 500, e
+	}
+	return 200, nil
+}
+
+func SyncGoogleCalendar(user models.User, getService func(userToken *oauth2.Token) (*calendar.Service, error), getEvents func(service *calendar.Service) (*calendar.Events, error)) ([]*calendar.Event, int, error) {
+	if valid := (&user.GoogleToken).Valid(); !valid {
+		return nil, 400, errors.New("Invalid token")
+	}
+	service, e := getService(&user.GoogleToken)
+	if e != nil {
+		return nil, 400, e
+	}
+	events, e := getEvents(service)
+	if e != nil {
+		return nil, 400, e
+	}
+	return events.Items, 200, nil
+}
+
+func convGoogleToMirror(id string, gevent *calendar.Event, mevent *models.Event) error {
+	tmpID := gevent.Id
+	gevent.Id = ""
+
+	g, e := json.Marshal(gevent)
+	if e != nil {
+		return e
+	}
+	e = json.Unmarshal(g, mevent)
+	if e != nil {
+		return e
+	}
+	mevent.GoogleID = tmpID
+	mevent.UserID = id
+	return nil
+}
+
+func AddListOfEvents(events []*calendar.Event, UserID string) error {
+	if len(events) > 0 {
+		for _, item := range events {
+			foundEvent, e := config.FindEvent(bson.D{{"googleid", item.Id}}, 1)
+			if e != nil && e.Error() != "mongo: no documents in result" {
+				return e
+			} else if len(foundEvent) == 0 {
+				mevent := &models.Event{}
+				e = convGoogleToMirror(UserID, item, mevent)
+				if e == nil {
+					config.InsertEvent(mevent)
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func salt(password string) (string, error) {
@@ -114,7 +189,6 @@ func salt(password string) (string, error) {
 	} else {
 		return string(hash), nil
 	}
-
 }
 
 func validEmail(email string) bool {

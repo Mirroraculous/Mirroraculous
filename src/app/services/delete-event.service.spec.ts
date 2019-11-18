@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EventsService } from './addEvents.service';
+import { DeleteEventService } from './delete-event.service';
 
-describe('EventsService', () => {
+describe('DeleteEventService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: EventsService = TestBed.get(EventsService);
+    const service: DeleteEventService = TestBed.get(DeleteEventService);
     expect(service).toBeTruthy();
   });
 });

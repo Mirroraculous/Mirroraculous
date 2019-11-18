@@ -1,7 +1,8 @@
 <div class="home">
     
-    <app-overlay></app-overlay>
-    <app-clock class = "clock"></app-clock>
-    <button (click) = 'logout()'>Logout</button>
-    <app-event></app-event>
+    <!-- <app-overlay></app-overlay> -->
+    <app-clock class = "clock"></app-clock>            
+    <span class = "logout"  (click) = 'logout()'>Logout</span>
+    <app-event class = "event"></app-event>
+    <app-oauth class = "auth" *ngIf='!hasAuth'></app-oauth>
 </div>

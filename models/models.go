@@ -4,17 +4,20 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/oauth2"
 )
 
 type User struct {
-	ID    primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Name  string             `json:"name"`
-	Email string             `json:"email"`
-	Pwd   string             `json:"password"`
+	ID          primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Name        string             `json:"name"`
+	Email       string             `json:"email"`
+	Pwd         string             `json:"password"`
+	GoogleToken oauth2.Token       `json:"googletoken"`
 }
 
 type Event struct {
 	UserID      string             `json:"userid"`
+	GoogleID    string             `json:"googleid,omitempty"`
 	ID          primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Status      string             `json:"status"`
 	Link        string             `json:"htmlLink"`

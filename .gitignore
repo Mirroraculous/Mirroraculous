@@ -26,6 +26,7 @@ speed-measure-plugin*.json
 *.launch
 .settings/
 *.sublime-workspace
+/oauth/client_id.json
 
 # IDE - VSCode
 .vscode/*
@@ -52,4 +53,6 @@ Thumbs.db
 
 # Sensitive Info
 /config/default.json
+/oauth/client_id.json
 main.exe
+oauth/client_id.json

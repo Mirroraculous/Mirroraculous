@@ -1,0 +1,8 @@
+<div class = "event-list"> 
+    <ul>
+        <li *ngFor="let event of events;">
+            {{event.summary}}
+            <span (click) = "deleteEvent(event._id, event.summary)">X</span>
+        </li>
+    </ul>
+</div>
