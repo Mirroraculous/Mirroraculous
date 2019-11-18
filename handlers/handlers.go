@@ -270,7 +270,7 @@ func UpdateAlarm(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	status, e = linkers.ToggleAlarm(id, time, config.UpdateAlarm)
+	status, e = linkers.ToggleAlarm(id, time, config.GetOneAlarm, config.UpdateAlarm)
 	if e != nil {
 		context.JSON(status, e.Error())
 		return

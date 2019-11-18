@@ -19,7 +19,7 @@ type config struct {
 	DBname   string `json:"dbname"`
 	UserCol  string `json:"usercollection"`
 	CalCol   string `json:"calendarcollection"`
-	AlarmCol string `json:"alarmcollection`
+	AlarmCol string `json:"alarmcollection"`
 }
 
 func Connect() error {
@@ -45,7 +45,7 @@ func Connect() error {
 		return e
 	}
 
-	if client.Ping(context.TODO(), nil) != nil {
+	if e := client.Ping(context.TODO(), nil); e != nil {
 		fmt.Println(e.Error())
 		return e
 	}
@@ -116,8 +116,14 @@ func UpdateAlarm(filter, update bson.M) error {
 }
 
 func AddAlarm(alarm *models.Alarm) error {
-	_, e := Alarms.InsertOne(context.Background(), alarm)
+	_, e := Alarms.InsertOne(context.Background(), *alarm)
 	return e
+}
+
+func GetOneAlarm(query bson.M) (models.Alarm, error) {
+	var tmp models.Alarm
+	e := Alarms.FindOne(context.Background(), query).Decode(&tmp)
+	return tmp, e
 }
 
 func GetAlarms(query bson.D) ([]models.Alarm, error) {

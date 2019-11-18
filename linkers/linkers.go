@@ -192,14 +192,15 @@ func GetAlarms(uid string, get func(filter bson.D) ([]models.Alarm, error)) ([]m
 	return alarms, 200, nil
 }
 
-func ToggleAlarm(uid string, time string, update func(filter, up bson.M) error) (int, error) {
+func ToggleAlarm(uid string, time string, getOne func(filter bson.M) (models.Alarm, error), update func(filter, up bson.M) error) (int, error) {
 	if valid := validTime(time); !valid {
 		return 400, errors.New("Invalid time")
 	}
-	e := update(bson.M{"userid": bson.M{"$eq": uid}, "time": bson.M{"$eq": time}}, bson.M{"$bit": bson.M{"time": bson.M{"xor": true}}})
+	alarm, e := getOne(bson.M{"userid": bson.M{"$eq": uid}})
 	if e != nil {
 		return 500, e
 	}
+	e = update(bson.M{"userid": bson.M{"$eq": uid}, "time": bson.M{"$eq": time}}, bson.M{"$set": bson.M{"isActive": !alarm.IsActive}})
 	return 200, nil
 }
 
@@ -208,8 +209,9 @@ func AddAlarm(uid string, time string, add func(alarm *models.Alarm) error) (int
 		return 400, errors.New("Invalid time")
 	}
 	tmp := &models.Alarm{
-		UserID: uid,
-		Time:   time,
+		UserID:   uid,
+		Time:     time,
+		IsActive: true,
 	}
 	e := add(tmp)
 	if e != nil {
