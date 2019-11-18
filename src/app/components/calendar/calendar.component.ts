@@ -34,7 +34,6 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('testing date',this.getDaysInMonth(1,2020))
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
     this.displayMonth = new Date(this.year,this.month, 0).toLocaleString('default',{month:'long'})
@@ -50,7 +49,6 @@ export class CalendarComponent implements OnInit {
     }
     
     this.viewArray = this.monthArray;
-    console.log('startDay',this.startDay.getDate())
     for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
       let day:Day = {
         isToday: rn.getDate() === i? true:false,
@@ -68,7 +66,6 @@ export class CalendarComponent implements OnInit {
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
     const rn = new Date()
-    console.log(this.startMonth.getDate())
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
       let day;
@@ -89,9 +86,7 @@ export class CalendarComponent implements OnInit {
           month: rn.getMonth()-1,
         } 
       }else{
-        console.log(i)
         if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
-          console.log('second else',this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))
 
           day= {
             isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
@@ -110,16 +105,13 @@ export class CalendarComponent implements OnInit {
           } 
         }
       }
-      console.log(day)
       this.monthArrayUnorganized.push(day);
     }
   }
   populateEvents(){
-    console.log('first day',this.getFirstDayMonth())
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
-          if(val.body!=null){            
-            console.log(val);
+          if(val.body!=null){
             let days: Date[];
             for(let i =0;i<val.body.length;i++){
               let day = new Date(val.body[i].start.date);
