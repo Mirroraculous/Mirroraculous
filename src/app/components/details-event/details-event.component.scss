@@ -13,6 +13,7 @@ $brown-orange-opacity: rgba(78,31,25, .1);
 .event-list{
     height: 288px;
     width: 400px;
+    color: $red;
 
     // .summary {
     //     padding-top: 0em;    
@@ -20,6 +21,7 @@ $brown-orange-opacity: rgba(78,31,25, .1);
 
     .events {
         padding-top: 5%;
+        list-style-type: none;
 
         .update {
             max-width: 20px;
@@ -28,11 +30,32 @@ $brown-orange-opacity: rgba(78,31,25, .1);
             filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(198deg) brightness(101%) contrast(102%);
         }
 
+        .update:hover {
+            cursor: pointer;
+        }
+
         .delete {
             max-width: 20px;
             max-height: 20px;
             padding-left: 20px;
             filter: invert(64%) sepia(67%) saturate(5406%) hue-rotate(320deg) brightness(85%) contrast(90%);
+        }
+
+        .delete:hover {
+            cursor: pointer;
+        }
+
+        .summary {
+            color: $blue-bright;
+        }
+
+        .description {
+            padding-left: 10px;
+            color: $blue;
+        }
+
+        .time {
+            color: white;
         }
     }
 }
