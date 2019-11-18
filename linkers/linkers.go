@@ -7,6 +7,7 @@ import (
 	"log"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/mirroraculous/mirroraculous/config"
@@ -183,6 +184,42 @@ func AddListOfEvents(events []*calendar.Event, UserID string) error {
 	return nil
 }
 
+func GetAlarms(uid string, get func(filter bson.D) ([]models.Alarm, error)) ([]models.Alarm, int, error) {
+	alarms, e := get(bson.D{{"userid", uid}})
+	if e != nil {
+		return alarms, 500, e
+	}
+	return alarms, 200, nil
+}
+
+func ToggleAlarm(uid string, time string, getOne func(filter bson.M) (models.Alarm, error), update func(filter, up bson.M) error) (int, error) {
+	if valid := validTime(time); !valid {
+		return 400, errors.New("Invalid time")
+	}
+	alarm, e := getOne(bson.M{"userid": bson.M{"$eq": uid}})
+	if e != nil {
+		return 500, e
+	}
+	e = update(bson.M{"userid": bson.M{"$eq": uid}, "time": bson.M{"$eq": time}}, bson.M{"$set": bson.M{"isActive": !alarm.IsActive}})
+	return 200, nil
+}
+
+func AddAlarm(uid string, time string, add func(alarm *models.Alarm) error) (int, error) {
+	if valid := validTime(time); !valid {
+		return 400, errors.New("Invalid time")
+	}
+	tmp := &models.Alarm{
+		UserID:   uid,
+		Time:     time,
+		IsActive: true,
+	}
+	e := add(tmp)
+	if e != nil {
+		return 500, e
+	}
+	return 200, nil
+}
+
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e
@@ -198,6 +235,12 @@ func validEmail(email string) bool {
 
 func validPassword(email string) bool {
 	return len(email) > 5
+}
+
+func validTime(time string) bool {
+	time = strings.Replace(time, " ", "", -1)
+	matched, _ := regexp.MatchString(`\d?\d:\d\d[AP]M`, time)
+	return matched
 }
 
 func compHash(password string, storedPW string) bool {

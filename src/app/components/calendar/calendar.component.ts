@@ -1,8 +1,8 @@
-import { Component, Output,OnInit, EventEmitter } from '@angular/core';
+import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { Router } from "@angular/router";
 
-interface Day{
+interface Day {
   isToday: boolean;
   dayOf: number;
   isEvents: boolean;
@@ -18,9 +18,9 @@ export class CalendarComponent implements OnInit {
   isClicked = false;
   isMonth = true;
   viewArray;
-  monthArray:Day[][] = [];
-  monthArrayUnorganized :Day[] = [];
-  weekArray :Day[]= [];
+  monthArray: Day[][] = [];
+  monthArrayUnorganized: Day[] = [];
+  weekArray: Day[] = [];
   month;
   year;
   startDay;
@@ -35,146 +35,137 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('testing date',this.getDaysInMonth(1,2020))
-    this.month= this.now.getMonth();
-    this.year= this.now.getFullYear();
-    this.displayMonth = new Date(this.year,this.month+1, 0).toLocaleString('default',{month:'long'})
+    this.month = this.now.getMonth();
+    this.year = this.now.getFullYear();
+    this.displayMonth = new Date(this.year, this.month + 1, 0).toLocaleString('default', { month: 'long' })
     this.displayNumbers();
     const rn = new Date()
-    
-    for(let i =0 ;i<5;i++){
+
+    for (let i = 0; i < 5; i++) {
       let locale: Day[] = []
-      for(let k = 0;k<7;k++){
-        locale.push(this.monthArrayUnorganized[i*7+k]);
+      for (let k = 0; k < 7; k++) {
+        locale.push(this.monthArrayUnorganized[i * 7 + k]);
       }
       this.monthArray.push(locale);
     }
-    
+
     this.viewArray = this.monthArray;
-    console.log('startDay',this.startDay.getDate())
-    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
-      let day:Day = {
-        isToday: rn.getDate() === i? true:false,
+    for (let i = this.startDay.getDate(); i < this.startDay.getDate() + 7; i++) {
+      let day: Day = {
+        isToday: rn.getDate() === i ? true : false,
         dayOf: i,
-        isEvents:  false,
+        isEvents: false,
         month: rn.getMonth(),
       }
       this.weekArray.push(day);
     }
     this.getFirstDayWeek(this.getFirstDayMonth());
-   this.populateEvents();
+    this.populateEvents();
 
   }
-  displayNumbers(){
+  displayNumbers() {
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
     const rn = new Date()
-    console.log(this.startMonth.getDate())
-    for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
-      let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
+    for (let i = this.startMonth.getDate(); i < this.startMonth.getDate() + 35; i++) {
+      let isFirstMonth = Math.floor(i / (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))) === 0;
       let day;
-      if(isFirstMonth){
+      if (isFirstMonth) {
         day = {
-          isToday: rn.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear()))+1? true:false,
-          dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.startMonth.getFullYear())),
-          isEvents:  false,
-          month: rn.getMonth()-1,
-        }        
+          isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())) + 1 ? true : false,
+          dayOf: i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())),
+          isEvents: false,
+          month: rn.getMonth() - 1,
+        }
       }
-      else if(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))===1){
+      else if (i / (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())) === 1) {
         console.log('does this ever happen')
         day = {
-          isToday: rn.getDate() === i? true:false,
+          isToday: rn.getDate() === i ? true : false,
           dayOf: i,
-          isEvents:  false,
-          month: rn.getMonth()-1,
-        } 
-      }else{
-        console.log(i)
-        if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
-          console.log('second else',this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))
+          isEvents: false,
+          month: rn.getMonth() - 1,
+        }
+      } else {
+        if (Math.floor(i / (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))) === 2) {
 
-          day= {
-            isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
-            dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
-            isEvents:  false,
-            month: rn.getMonth()+1,  
+          day = {
+            isToday: rn.getDate() === i % (this.getDaysInMonth(rn.getMonth(), rn.getFullYear())) + 1 ? true : false,
+            dayOf: i % (this.getDaysInMonth(this.now.getMonth(), this.now.getFullYear())) + 1,
+            isEvents: false,
+            month: rn.getMonth() + 1,
           }
         }
-        else{          
-          day= {
-            isToday: rn.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear()))? true:false,
-            dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear())),
-            isEvents:  false,
+        else {
+          day = {
+            isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear())) ? true : false,
+            dayOf: i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear())),
+            isEvents: false,
             month: rn.getMonth(),
 
-          } 
+          }
         }
       }
-      console.log(day)
       this.monthArrayUnorganized.push(day);
     }
   }
-  populateEvents(){
-    console.log('first day',this.getFirstDayMonth())
+  populateEvents() {
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
-      val=>{
-          if(val.body!=null){  
-            this.listOfEvents = val.body          
-            console.log(val);
-            let days: Date[];
-            for(let i =0;i<val.body.length;i++){
-              let day = new Date(val.body[i].start.date);
-              for(let j =0 ;j<5;j++){
-                let locale: Day[] = []
-                for(let k = 0;k<7;k++){
-                  if(day.getDate() === this.monthArray[j][k].dayOf && day.getMonth()=== this.monthArray[j][k].month){
-                    this.monthArray[j][k].isEvents = true;
-                  }
+      val => {
+        if (val.body != null) {
+          let days: Date[];
+          for (let i = 0; i < val.body.length; i++) {
+            let day = new Date(val.body[i].start.date);
+            for (let j = 0; j < 5; j++) {
+              let locale: Day[] = []
+              for (let k = 0; k < 7; k++) {
+                if (day.getDate() === this.monthArray[j][k].dayOf && day.getMonth() === this.monthArray[j][k].month) {
+                  this.monthArray[j][k].isEvents = true;
                 }
-                this.monthArray.push(locale);
               }
-              for(let b =0 ;b<7;b++){
-                let locale: Day[] = []
-                for(let k = 0;k<7;k++){
-                  if(day.getDate() === this.weekArray[b].dayOf && day.getMonth()=== this.weekArray[b].month){
-                    this.weekArray[b].isEvents = true;
-                  }
-                }
-                this.monthArray.push(locale);
-              }
+              this.monthArray.push(locale);
             }
-          }        
+            for (let b = 0; b < 7; b++) {
+              let locale: Day[] = []
+              for (let k = 0; k < 7; k++) {
+                if (day.getDate() === this.weekArray[b].dayOf && day.getMonth() === this.weekArray[b].month) {
+                  this.weekArray[b].isEvents = true;
+                }
+              }
+              this.monthArray.push(locale);
+            }
+          }
         }
-      );
+      }
+    );
   }
-  getFirstDayMonth(){
+  getFirstDayMonth() {
     let d = new Date();
     d.setDate(1);
     return d;
   }
 
-  getFirstDayWeek(today){
+  getFirstDayWeek(today) {
     let d = today;
-    d.setDate(d.getDate()-today.getDay());
+    d.setDate(d.getDate() - today.getDay());
     return d;
   }
-  clickEvent(val){
-    this.onCalendarClick.emit({day: val, events: this.listOfEvents});
+  clickEvent(val) {
+    this.onCalendarClick.emit({ day: val, events: this.listOfEvents });
   }
-  getDaysInMonth(month,year) {
+  getDaysInMonth(month, year) {
     // Here January is 1 based
     //Day 0 is the last day in the previous month
-   return new Date(year, month+1, 0).getDate();
-  // Here January is 0 based
-  // return new Date(year, month+1, 0).getDate();
+    return new Date(year, month + 1, 0).getDate();
+    // Here January is 0 based
+    // return new Date(year, month+1, 0).getDate();
   }
 
-  changeView (){
+  changeView() {
     this.isMonth = !this.isMonth;
-    if(this.isMonth){
+    if (this.isMonth) {
       this.viewArray = this.monthArray;
-    }else{
+    } else {
       this.viewArray = this.weekArray;
     }
   }
