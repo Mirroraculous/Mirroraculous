@@ -6,7 +6,7 @@
         <app-add-event></app-add-event>
     </div>
     <div *ngIf = "switchVal === 3">        
-        <app-details-event (sentToUpdate)="setEvent($event)"[emitVal]="today"></app-details-event>
+        <app-details-event [emitVal]="today" (sentToUpdate)="setEvent($event)" ></app-details-event>
     </div>
     <div *ngIf = "switchVal === 4">        
         <app-update-event [eventToUpdate]="event"></app-update-event>
@@ -14,5 +14,5 @@
     <div class = "sub-nav-bar">
         <p class="tabbutton" (click)="changeVal(1)">Calendar</p>
         <p class="tabbutton" (click)="changeVal(2)">Add Event</p>
-</div>
+    </div>
 </div>

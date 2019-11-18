@@ -70,6 +70,7 @@ export class EventComponent implements OnInit {
   }
   setEvent(event) {
     this.event = event;
+    console.log(this.event)
     this.changeVal(4);    
   }
 }

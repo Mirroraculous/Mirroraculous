@@ -47,6 +47,7 @@ import { OauthComponent } from './components/oauth/oauth.component'
     CalendarComponent,
     EventComponent,
     DetailsEventComponent,
+    UpdateEventComponent,
   ],
   imports: [
     BrowserModule,
