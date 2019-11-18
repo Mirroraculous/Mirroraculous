@@ -215,7 +215,7 @@ func GoogleEvents(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	e = linkers.AddListOfEvents(events, id)
+	e = linkers.AddListOfEvents(events, id, config.InsertEvent)
 	if e != nil {
 		context.JSON(500, e.Error())
 		return

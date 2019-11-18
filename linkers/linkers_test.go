@@ -2,7 +2,6 @@ package linkers
 
 import (
 	"errors"
-	"log"
 	"testing"
 	"time"
 
@@ -232,25 +231,36 @@ func TestSyncGoogleCalendar(t *testing.T) {
 		return nil, nil
 	}, func(service *calendar.Service) (*calendar.Events, error) {
 		return nil, nil
-	}); events != nil || status != 400 || e != errors.New("Invalid token") {
-		t.Errorf("Test failed, expected status code 400, nil events, and an \"Invalid Token\" error. Instead got: %d %s", status, e)
+	}); events != nil || status != 400 || e.Error() != "Invalid token" {
+		t.Errorf("Test failed, expected status code 400, nil events, and an \"Invalid token\" error. Instead got: %d %s", status, e)
 	}
 
 	if events, status, e := SyncGoogleCalendar(models.User{GoogleToken: validToken}, func(t *oauth2.Token) (*calendar.Service, error) {
 		return nil, errors.New("An error")
 	}, func(service *calendar.Service) (*calendar.Events, error) {
 		return nil, nil
-	}); events != nil || status != 400 || e != errors.New("Invalid token") {
+	}); events != nil || status != 400 || e.Error() != "An error" {
 		t.Errorf("Test failed, expected status code 400, nil events, and an error. Instead got: %d %s", status, e)
 	}
 
-	log.Println("we here")
 	if events, status, e := SyncGoogleCalendar(models.User{GoogleToken: validToken}, func(t *oauth2.Token) (*calendar.Service, error) {
-		var tmp calendar.Service
-		return &tmp, nil
-	}, func(service *calendar.Service) (*calendar.Events, error) {
 		return nil, nil
+	}, func(service *calendar.Service) (*calendar.Events, error) {
+		var tmp calendar.Events
+		return &tmp, nil
 	}); events != nil || status != 200 || e != nil {
 		t.Errorf("Test failed, expected status code 200, and no error. Instead got: %d %s", status, e.Error())
 	}
+}
+
+func TestAddListOfEvents(t *testing.T) {
+	var dummyEvents []*calendar.Event
+
+	if e := AddListOfEvents(dummyEvents, "Fake ID", func(event *models.Event) error {
+		return nil
+	}); e != nil {
+		t.Errorf("Expected nil error, got %s", e.Error())
+	}
+
+	// if e := AddListOfEvents()
 }
