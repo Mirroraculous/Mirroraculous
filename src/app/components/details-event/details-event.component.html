@@ -3,7 +3,8 @@
         Events Happening Today:
 
         <li class = "events" *ngFor="let event of events;">
-            <span class="summary">{{event.summary}}</span>
+            <span class="summary" *ngIf="eventColor(event)" [ngStyle]="{'color':event.colorId}">{{event.summary}}</span>
+            <span class="summary" *ngIf="!eventColor(event)">{{event.summary}}</span>
             <span class="time"> {{formattedTime(event.start.dateTime)}}</span>
             <img src = "../../../assets/editEventIcon.svg" class="update" (click) = "updateEvent(event)">
             <img src = "../../../assets/deleteEventIcon.svg" class="delete" (click) = "deleteEvent(event._id, event.summary)">

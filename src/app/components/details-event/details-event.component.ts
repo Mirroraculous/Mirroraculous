@@ -51,6 +51,10 @@ export class DetailsEventComponent implements OnInit {
     return (hours > 10? hours:"0"+hours) + ":" + (min > 10? min:"0"+min)
   }
 
+  eventColor(event) {
+    return event.colorId.length > 0
+  }
+
   updateEvent(event) {
    this.sentToUpdate.emit(event)
   }
