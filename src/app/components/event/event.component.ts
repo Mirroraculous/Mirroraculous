@@ -4,6 +4,7 @@ import { Time } from '@angular/common';
 import { AddEventService } from 'src/app/services/add-event.service';
 import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
+import { timer } from 'rxjs';
 
 interface DTO{
   summary: string;
@@ -72,5 +73,20 @@ export class EventComponent implements OnInit {
     this.event = event;
     console.log(this.event)
     this.changeVal(4);    
+  }
+  refresh(event){
+    console.log("refresh happens")
+    
+    timer(1000).subscribe(
+      val =>{
+        this.changeVal(10);        
+        timer(1000).subscribe(
+          val =>{
+            this.changeVal(3);
+          }
+        );
+      }
+    );
+
   }
 }

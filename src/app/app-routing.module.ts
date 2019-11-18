@@ -10,7 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   { path: 'register', component: RegisterPageComponent },
-  { path: '', redirectTo: 'weather', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent , canActivate:[AuthGuard]},
   { path: 'login', component: LoginComponent },
   { path: '**', component: PageNotFoundComponent }

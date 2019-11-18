@@ -11,6 +11,7 @@ export class DetailsEventComponent implements OnInit {
   message;
   day;
   events;
+  @Output() refreshMe: EventEmitter<any> = new EventEmitter<any>();
   @Output() sentToUpdate: EventEmitter<any> = new EventEmitter<any>();  
   @Input() emitVal;
   constructor(
@@ -39,7 +40,8 @@ export class DetailsEventComponent implements OnInit {
         else{
           this.message = 'Oops! Something went wrong, please try again.'
         }
-    })
+      this.refreshMe.emit(true);
+    });
     console.log(id)
   }
 

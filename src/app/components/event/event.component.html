@@ -6,7 +6,7 @@
         <app-add-event></app-add-event>
     </div>
     <div *ngIf = "switchVal === 3">        
-        <app-details-event [emitVal]="today" (sentToUpdate)="setEvent($event)" ></app-details-event>
+        <app-details-event [emitVal]="today" (refreshMe)='refresh($event)'(sentToUpdate)="setEvent($event)" ></app-details-event>
     </div>
     <div *ngIf = "switchVal === 4">        
         <app-update-event [eventToUpdate]="event"></app-update-event>
