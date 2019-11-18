@@ -1,10 +1,12 @@
 <div class = "background">
     <div *ngIf = 'switchVal === 1'>
         <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
-        <app-details-event></app-details-event>
     </div>
     <div *ngIf = 'switchVal === 2'>
         <app-add-event></app-add-event>
+    </div>
+    <div *ngIf = "switchVal === 3">        
+        <app-details-event [day]="today"></app-details-event>
     </div>
     <div class = "sub-nav-bar">
         <p class="tabbutton" (click)="changeVal(1)">Calendar</p>

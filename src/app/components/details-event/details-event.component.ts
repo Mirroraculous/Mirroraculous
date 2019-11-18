@@ -7,8 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DetailsEventComponent implements OnInit {
   constructor() { }
-
+  @Input() day;
   ngOnInit() {
+    console.log("day",this.day)
   }
 
 }

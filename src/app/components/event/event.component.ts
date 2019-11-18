@@ -63,7 +63,7 @@ export class EventComponent implements OnInit {
   }
   setInfo(info){
     this.today = info;
-    this.changeVal(2);
-    console.log(this.today);
+    this.changeVal(3);
+    console.log('the today val',this.today);
   }
 }
