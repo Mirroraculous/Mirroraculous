@@ -24,6 +24,7 @@ export class CalendarComponent implements OnInit {
   year;
   startDay;
   startMonth;
+  displayMonth;
   @Output() onCalendarClick: EventEmitter<any> = new EventEmitter<any>();
 
   now = new Date();
@@ -33,11 +34,41 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('testing date',this.getDaysInMonth(1,2020))
     this.month= this.now.getMonth();
     this.year= this.now.getFullYear();
+    this.displayMonth = new Date(this.year,this.month, 0).toLocaleString('default',{month:'long'})
+    this.displayNumbers();
+    const rn = new Date()
+    
+    for(let i =0 ;i<5;i++){
+      let locale: Day[] = []
+      for(let k = 0;k<7;k++){
+        locale.push(this.monthArrayUnorganized[i*7+k]);
+      }
+      this.monthArray.push(locale);
+    }
+    
+    this.viewArray = this.monthArray;
+    console.log('startDay',this.startDay.getDate())
+    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
+      let day:Day = {
+        isToday: rn.getDate() === i? true:false,
+        dayOf: i,
+        isEvents:  false,
+        month: rn.getMonth(),
+      }
+      this.weekArray.push(day);
+    }
+    this.getFirstDayWeek(this.getFirstDayMonth());
+   this.populateEvents();
+
+  }
+  displayNumbers(){
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
     const rn = new Date()
+    console.log(this.startMonth.getDate())
     for(let i = this.startMonth.getDate();i<this.startMonth.getDate()+35;i++){
       let isFirstMonth = Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===0;
       let day;
@@ -50,55 +81,41 @@ export class CalendarComponent implements OnInit {
         }        
       }
       else if(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))===1){
+        console.log('does this ever happen')
         day = {
           isToday: rn.getDate() === i? true:false,
           dayOf: i,
           isEvents:  false,
           month: rn.getMonth()-1,
-
         } 
       }else{
+        console.log(i)
         if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
+          console.log('second else',this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))
+
           day= {
             isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
             dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
             isEvents:  false,
-            month: rn.getMonth()+1,
-  
+            month: rn.getMonth()+1,  
           }
         }
         else{          
           day= {
-            isToday: rn.getDate() === i%(this.getDaysInMonth(rn.getMonth(),rn.getFullYear()))+1? true:false,
-            dayOf: i%(this.getDaysInMonth(this.now.getMonth(),this.now.getFullYear()))+1,
+            isToday: rn.getDate() === i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear()))? true:false,
+            dayOf: i%(this.getDaysInMonth(this.startMonth.getMonth(),this.now.getFullYear())),
             isEvents:  false,
             month: rn.getMonth(),
 
           } 
         }
       }
+      console.log(day)
       this.monthArrayUnorganized.push(day);
     }
-    for(let i =0 ;i<5;i++){
-      let locale: Day[] = []
-      for(let k = 0;k<7;k++){
-        locale.push(this.monthArrayUnorganized[i*7+k]);
-      }
-      this.monthArray.push(locale);
-    }
-
-    
-    for(let i = this.startDay.getDate();i<this.startDay.getDate()+7;i++){      
-      let day:Day = {
-        isToday: rn.getDate() === i? true:false,
-        dayOf: i,
-        isEvents:  false,
-        month: rn.getMonth(),
-      }
-      this.weekArray.push(day);
-    }
-    this.viewArray = this.monthArray;
-    this.getFirstDayWeek(this.getFirstDayMonth());
+  }
+  populateEvents(){
+    console.log('first day',this.getFirstDayMonth())
     this.calendar.sendEventInfo(this.getFirstDayWeek(this.getFirstDayMonth()).getTime()).subscribe(
       val=>{
           if(val.body!=null){            
@@ -126,12 +143,9 @@ export class CalendarComponent implements OnInit {
               }
             }
           }        
-        
-      }
-    );
-
+        }
+      );
   }
-
   getFirstDayMonth(){
     let d = new Date();
     d.setDate(1);

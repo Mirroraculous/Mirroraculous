@@ -1,4 +1,23 @@
 .home{
     max-height: 1920px;
-    max-width: 1080;
+    max-width: 1080px;
+    display: grid;
+    grid-template-columns: 20% 38% 42%;
+    grid-template-rows: 15% 5% 270% 78%;
+}
+.auth{
+    grid-column: 1;
+    grid-row:4;
+}
+.clock{
+    grid-column: 1;
+    grid-row:1;
+}
+.logout{
+    grid-column: 1;
+    grid-row:2;
+}
+.event{
+    grid-column: 3;
+    grid-row: 4;
 }

@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
       this.googleauth.sendCode(code).subscribe(
         val=> {
           console.log(val)
+          window.close()
         }
       )
       this.checkAuth()

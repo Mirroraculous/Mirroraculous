@@ -44,6 +44,7 @@ func main() {
 
 	server.GET("/api/googlelogin", handlers.GoogleLogin)
 	server.GET("/api/googleauth", handlers.GoogleAuth)
+	server.GET("/api/googleevents", handlers.GoogleEvents)
 
 	err := server.Run(":3000")
 	if err != nil {

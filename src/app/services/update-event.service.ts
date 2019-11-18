@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
-export class EventsService {
+export class UpdateEventService {
   private url = "http://localhost:3000/api/calendar";  // URL to web api
 
   constructor(
@@ -14,7 +14,7 @@ export class EventsService {
 
   // Send event info to the backend to get called later for popup
   sendEventInfo(eventInfo){
-    return this.http.post<any>(this.url, eventInfo,{observe: 'response'}).pipe(
+    return this.http.put<any>(this.url, eventInfo,{observe: 'response'}).pipe(
       catchError(this.handleError<any>(`eventInfo`, eventInfo))
     );
   }
