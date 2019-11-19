@@ -12,13 +12,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var User, Calendar *mongo.Collection
+var User, Calendar, Alarms *mongo.Collection
 
 type config struct {
 	MongoURI string `json:"mongoURI"`
 	DBname   string `json:"dbname"`
 	UserCol  string `json:"usercollection"`
 	CalCol   string `json:"calendarcollection"`
+	AlarmCol string `json:"alarmcollection"`
 }
 
 func Connect() error {
@@ -44,13 +45,14 @@ func Connect() error {
 		return e
 	}
 
-	if client.Ping(context.TODO(), nil) != nil {
+	if e := client.Ping(context.TODO(), nil); e != nil {
 		fmt.Println(e.Error())
 		return e
 	}
 
 	User = client.Database(conf.DBname).Collection(conf.UserCol)
 	Calendar = client.Database(conf.DBname).Collection(conf.CalCol)
+	Alarms = client.Database(conf.DBname).Collection(conf.AlarmCol)
 
 	fmt.Println("connected!")
 	return nil
@@ -106,4 +108,37 @@ func DeleteEvent(query bson.D) error {
 func UpdateUser(filter, update bson.M) error {
 	_, e := User.UpdateOne(context.Background(), filter, update)
 	return e
+}
+
+func UpdateAlarm(filter, update bson.M) error {
+	_, e := Alarms.UpdateOne(context.Background(), filter, update)
+	return e
+}
+
+func AddAlarm(alarm *models.Alarm) error {
+	_, e := Alarms.InsertOne(context.Background(), *alarm)
+	return e
+}
+
+func GetOneAlarm(query bson.M) (models.Alarm, error) {
+	var tmp models.Alarm
+	e := Alarms.FindOne(context.Background(), query).Decode(&tmp)
+	return tmp, e
+}
+
+func GetAlarms(query bson.D) ([]models.Alarm, error) {
+	var ret []models.Alarm
+	res, e := Alarms.Find(context.Background(), query)
+	if e != nil {
+		return ret, e
+	}
+	for res.Next(context.Background()) {
+		var tmp models.Alarm
+		e = res.Decode(&tmp)
+		if e != nil {
+			return ret, e
+		}
+		ret = append(ret, tmp)
+	}
+	return ret, nil
 }
