@@ -175,6 +175,7 @@ func AddListOfEvents(events []*calendar.Event, UserID string) error {
 				mevent := &models.Event{}
 				e = convGoogleToMirror(UserID, item, mevent)
 				if e == nil {
+					mevent.Start.Date = mevent.Start.DateTime
 					config.InsertEvent(mevent)
 				}
 			}
