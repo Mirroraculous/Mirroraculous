@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { AlarmService} from '../../../services/alarm.service';
+import { FormBuilder, FormControl } from '@angular/forms';
+
 interface Alarm{
   isActive: boolean;
   time: number;
@@ -12,6 +15,7 @@ interface Alarm{
 export class AlarmComponent implements OnInit {
   isMinified = false;
   alarms: Alarm[] = [];
+  alarmy;
   currentAdding = false;
   nowish;
   hours;
@@ -20,10 +24,18 @@ export class AlarmComponent implements OnInit {
   seconds;
   showClockOptions = false;
   extension;
+  message = '';
   military = false;
   timerId= null;
-  current_alarm_string;
-  constructor() { }
+  current_alarm_string = [];
+  constructor(
+    private alarm: AlarmService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.alarmy = this.formBuilder.group({
+      alarm: "",
+    });
+   }
 
   ngOnInit() {
     this.setTime();    
@@ -46,8 +58,10 @@ export class AlarmComponent implements OnInit {
     else{
       this.extension = "AM";
     }
-    this.current_alarm_string.append(this.hours+":"+this.minutes+" "+this.extension);
-    this.current_alarm_string.append(this.hours+":"+this.minutes+this.extension);
+    const space =this.hours+":"+this.minutes+" "+this.extension;
+    const no_space =this.hours+":"+this.minutes+this.extension; 
+    this.current_alarm_string.push(space);
+    this.current_alarm_string.push(no_space);
     this.alarms.forEach(element => {
       if(element){
         this.current_alarm_string.forEach(elements =>{
@@ -57,6 +71,7 @@ export class AlarmComponent implements OnInit {
         });
       }
     });
+    this.current_alarm_string = [];
     
   }
   makeNoise(){
@@ -70,6 +85,12 @@ export class AlarmComponent implements OnInit {
   }
   onSubmit(val){
     console.log("HEY LOOK AT THIS CONSOLE.LOG",val);
+    this.alarm.addAlarm(val.alarm).subscribe(
+      val=>{
+        if (val.status!=200){
+          this.message = 'Invalid alarm input'
+        }
+    });
     //add backend call
   }
   changeAdding(){
