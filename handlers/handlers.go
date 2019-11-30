@@ -70,6 +70,11 @@ func GetUser(context *gin.Context) {
 	context.JSON(http.StatusOK, user)
 }
 
+func DeleteUser(context *gin.Context) {
+	fmt.Println("Hello from DeleteUser")
+
+}
+
 // GetCalendar gets the calendar events for a user
 // GET to :3000/api/calendar/:day
 func GetCalendar(context *gin.Context) {
