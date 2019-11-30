@@ -6,19 +6,6 @@ import { SessionService } from '../../auth/session.service';
 import { Router } from "@angular/router";
 import { timer } from 'rxjs';
 
-interface DTO {
-  summary: string;
-  description: string;
-  start: {
-    date: string;
-    dateTime: string;
-  }
-  end: {
-    date: string;
-    dateTime: string;
-  }
-  endTimeUnspecified: boolean;
-}
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
@@ -28,35 +15,13 @@ interface DTO {
 export class EventComponent implements OnInit {
   event;
   switchVal = 1;
-  events;
   today;
-  isFilled = false;
-  clicked = false;
-  message = '';
-  DTO: DTO = {
-    summary: "",
-    description: "",
-    start: {
-      date: "",
-      dateTime: "",
-    },
-    end: {
-      date: "",
-      dateTime: "",
-    },
-    endTimeUnspecified: true,
-  }
+
   constructor(
     private router: Router,
     private eventsService: AddEventService,
     private session: SessionService,
     private formBuilder: FormBuilder) {
-    this.events = this.formBuilder.group({
-      summary: '',
-      dateTime: '',
-      date: '',
-      description: '',
-    });
   }
 
   ngOnInit() {
