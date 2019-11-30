@@ -167,7 +167,7 @@ describe('AppComponent', () => {
   });
   describe('Add Event', ()=>{
     let addEventService: AddEventService;
-    let authSpy: jasmine.Spy;
+    let addSpy: jasmine.Spy;
     let addEvent: AddEventComponent;
     let fixture: ComponentFixture<AddEventComponent>;
     beforeEach(()=>{
@@ -176,11 +176,11 @@ describe('AppComponent', () => {
       addEventService = TestBed.get(AddEventService);
       fixture.detectChanges();
     });
-    it(`should create add component`,()=>{
+    it(`should create add event component`,()=>{
       expect(addEvent).toBeTruthy();
     });
     it(`should not display error message when valid`, ()=>{
-      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":200}));
+      addSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":200}));
       let DTO={
         summary: "asdf",
         dateTime: "5:00 AM",
@@ -192,7 +192,7 @@ describe('AppComponent', () => {
       expect(addEvent.message).toEqual('');
     });
     it(`should display error message when invalid`, ()=>{
-      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":400}));
+      addSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":400}));
       let DTO={
         summary: "asdf",
         dateTime: "5:00 AM",
@@ -204,7 +204,7 @@ describe('AppComponent', () => {
       expect(addEvent.message).toEqual('You must fill summary and date/time fields.');
     });
     it(`should display error message when invalid`, ()=>{
-      authSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":500}));
+      addSpy = spyOn(addEventService, 'sendEventInfo').and.returnValue(of({"status":500}));
       let DTO={
         summary: "asdf",
         dateTime: "5:00 AM",
@@ -217,18 +217,22 @@ describe('AppComponent', () => {
     });
   });
   describe('Update Event', ()=>{
+    let updateEventService: UpdateEventService;
+    let updateSpy: jasmine.Spy;
     let updateEvent: UpdateEventComponent;
     let fixture: ComponentFixture<UpdateEventComponent>;
     beforeEach(()=>{
+      updateEventService = TestBed.get(UpdateEventService);
       fixture = TestBed.createComponent(UpdateEventComponent);
       updateEvent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
     });
-    it(`should create update component`,()=>{
+    it(`should create update event component`,()=>{
       expect(updateEvent).toBeTruthy();
     });
   });
   describe('Detail Events', ()=>{
+    let detailsSpy: jasmine.Spy;
     let detailEvent: DetailsEventComponent;
     let fixture: ComponentFixture<DetailsEventComponent>;
     beforeEach(()=>{
@@ -236,7 +240,7 @@ describe('AppComponent', () => {
       detailEvent = fixture.debugElement.componentInstance;
       fixture.detectChanges();
     });
-    it(`should create details component`,()=>{
+    it(`should create details event component`,()=>{
       expect(detailEvent).toBeTruthy();
     });
   });
