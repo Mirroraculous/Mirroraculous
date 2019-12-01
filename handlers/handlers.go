@@ -72,7 +72,19 @@ func GetUser(context *gin.Context) {
 
 func DeleteUser(context *gin.Context) {
 	fmt.Println("Hello from DeleteUser")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
 
+	e, status := linkers.DeleteUser(id, config.DeleteUser)
+	if status != 200 {
+		context.JSON(status, "User not deleted")
+		return
+	}
+	context.Status(status)
 }
 
 // GetCalendar gets the calendar events for a user
