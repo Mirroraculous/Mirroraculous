@@ -72,6 +72,15 @@ func GetUser(id string, find func(query bson.D) (*models.User, error)) (models.U
 	return *u, 200
 }
 
+func DeleteUser(id string, delete func(query bson.D) error) (error, int) {
+	primId, _ := primitive.ObjectIDFromHex(id)
+	err := delete(bson.D{{"_id", primId}})
+	if err != nil {
+		return err, 404
+	}
+	return err, 200
+}
+
 func AddEvent(id string, event models.Event, insert func(event *models.Event) error) (error, int) {
 	event.UserID = id
 	event.Created = time.Now()
