@@ -278,17 +278,23 @@ func UpdateAlarm(context *gin.Context) {
 	context.Status(status)
 }
 
+type alarms struct {
+	string `json:"alarm"`
+}
+
 func convertHTTPBodyToString(httpBody io.ReadCloser) (string, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
 		return "", 500, e
 	}
-	var res string
-	e = json.Unmarshal(body, &res)
+	alarm := struct {
+		Alarm string `json:"alarm"`
+	}{}
+	e = json.Unmarshal(body, &alarm)
 	if e != nil {
 		return "", 500, e
 	}
-	return res, 200, nil
+	return alarm.Alarm, 200, nil
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {

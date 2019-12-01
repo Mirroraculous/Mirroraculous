@@ -85,7 +85,7 @@ export class AlarmComponent implements OnInit {
   }
   onSubmit(val){
     console.log("HEY LOOK AT THIS CONSOLE.LOG",val);
-    this.alarm.addAlarm(val.alarm).subscribe(
+    this.alarm.addAlarm(val).subscribe(
       val=>{
         if (val.status!=200){
           this.message = 'Invalid alarm input'
