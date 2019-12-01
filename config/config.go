@@ -106,7 +106,7 @@ func DeleteEvent(query bson.D) error {
 }
 
 func DeleteUser(query bson.D) error {
-	_, e := Calendar.DeleteOne(context.Background(), query)
+	_, e := User.DeleteOne(context.Background(), query)
 	return e
 }
 

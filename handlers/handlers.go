@@ -81,7 +81,7 @@ func DeleteUser(context *gin.Context) {
 
 	e, status := linkers.DeleteUser(id, config.DeleteUser)
 	if status != 200 {
-		context.JSON(status, "User not deleted")
+		context.JSON(status, e.Error())
 		return
 	}
 	context.Status(status)
