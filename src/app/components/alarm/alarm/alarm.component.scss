@@ -12,6 +12,12 @@ $brown-orange-opacity: rgba(78,31,25, .1);
 .container{
   font-size:64px;
 }
+.arrow:hover{
+  cursor: pointer;
+}
+.plus{
+  cursor: pointer;
+}
 .switch {
     position: relative;
     display: inline-block;
@@ -75,7 +81,7 @@ $brown-orange-opacity: rgba(78,31,25, .1);
   }
   .inputs{
     box-sizing: border-box;
-    font-size: .5em;
+    font-size: 1em;
     display:block;
     background-color: $dirty-purple-opacity;
     color: #fff;
@@ -87,7 +93,7 @@ $brown-orange-opacity: rgba(78,31,25, .1);
     max-width: 100%;
   }
   .button{
-    font-size: .5em;
+    font-size: 1em;
     background-color: $red;
     color: $brown-orange;
     border: none;

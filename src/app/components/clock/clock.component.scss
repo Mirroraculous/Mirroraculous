@@ -1,20 +1,32 @@
+$blue-bright: #06A1C4; 
+$blue-bright-opacity: rgba(6,161,196, .1); 
+$blue: #176F98; 
+$blue-opacity: rgba(23,111,152, .1);
+$red: #D14E60;
+$red-opacity: rgba(209,78,96, .1);
+$dirty-purple: #8D546E;
+$dirty-purple-opacity: rgba(141,84,110, .1);
+$brown-orange: #4E1F19;
+$brown-orange-opacity: rgba(78,31,25, .1);
 .mat-icon{
-    font-size:22px;
-    
+    font-size:22px;    
 }
 .clock2{
     display:inline-block;
+    .options-group{
+        font-size: medium;
+        padding-left: 30px;
+        float: right;
+    }
 }
 .options-group:hover{
-    cursor:pointer;
-    
+    cursor:pointer;    
+}
+.clock{
+    padding-left: 20px;
 }
 .clock>h1{
     margin:0;
-}
-.options-group{    
-    margin-left:16*1px;    
-    display: inline-block;
 }
 .smoller{
     font-size:20px;
