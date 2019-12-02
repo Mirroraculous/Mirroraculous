@@ -40,6 +40,7 @@ export class AlarmComponent implements OnInit {
   ngOnInit() {
     this.setTime();    
     this.timerId = this.updateTime();
+    this.getAlarm();
   }
   private setTime(){          
     this.nowish = new Date();
@@ -65,8 +66,8 @@ export class AlarmComponent implements OnInit {
     this.alarms.forEach(element => {
       if(element){
         this.current_alarm_string.forEach(elements =>{
-          if(element == elements){
-            this.makeNoise();
+          if(element.time == elements && element.isActive){
+              this.makeNoise();
           }
         });
       }
@@ -76,19 +77,39 @@ export class AlarmComponent implements OnInit {
   }
   makeNoise(){
     let audio = new Audio();
-    audio.src = "../../../assets/audio/alarm.wav";
+    audio.src = "../../../assets/audio/Alarm-Fast-A1.mp3";
     audio.load();
     audio.play();
   }
   ngOnDestroy() {
     clearInterval(this.timerId);
   }
+  getAlarm(){
+    this.alarm.getAlarm().subscribe(
+      val=>{
+        if(val.status!=200){
+          this.message = 'Invalid alarm input'
+        }else{
+          console.log(val)
+          val.body.forEach(element => {
+            let new_thing: Alarm = {
+              isActive: element.isActive,
+              time: element.time
+            }
+            this.alarms.push(new_thing)
+          });
+        }
+      });
+  }
   onSubmit(val){
     console.log("HEY LOOK AT THIS CONSOLE.LOG",val);
     this.alarm.addAlarm(val).subscribe(
       val=>{
         if (val.status!=200){
-          this.message = 'Invalid alarm input'
+          this.message = 'Invalid alarm input';
+        }
+        else{
+          this.message = '';
         }
     });
     //add backend call

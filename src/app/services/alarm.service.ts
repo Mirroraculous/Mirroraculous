@@ -15,7 +15,13 @@ export class AlarmService {
   addAlarm(alarm){
     const url = `http://localhost:3000/api/alarms`;
     return this.http.post<any>(url, alarm,{observe: 'response'}).pipe(
-      catchError(this.err.handleError<any>(`eventInfo`, alarm))
+      catchError(this.err.handleError<any>(`alarm`, alarm))
+    );
+  }
+  getAlarm(){
+    const url = `http://localhost:3000/api/alarms`;
+    return this.http.get<any>(url,{observe: 'response'}).pipe(
+      catchError(this.err.handleError<any>(`get alarm`))
     );
   }
 }

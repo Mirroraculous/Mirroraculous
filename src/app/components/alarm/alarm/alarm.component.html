@@ -4,7 +4,8 @@
     <img *ngIf= '!isMinified'alt = "up" src = "../../../../assets/down_arrow.svg"(click) = "changeView()"/>
     <div *ngIf = 'isMinified'style = 'margin:0;'>
         <ul>
-            <li *ngFor= "let item of alarms">
+            <li *ngFor= "let item of alarms" style="text-decoration: none;">
+                {{item.time}}
                 <!-- <label class="switch">
                     <input type="checkbox">
                     <span class="slider round"></span>
@@ -15,6 +16,7 @@
         <form *ngIf='currentAdding' [formGroup]="alarmy" (ngSubmit)="onSubmit(alarmy.value)">            
             <input  type = 'text' class='inputs' formControlName="alarm" placeholder="Enter time in HH:MM AM/PM">
             <button type="submit" class="button">Add Alarm</button>
+            <span style='color:red;font-size: 10px;display:block;'>{{message}}</span>
         </form>
     </div>
 </div>
