@@ -1,9 +1,10 @@
 .home{
+    margin: 0;
     max-height: 1920px;
     max-width: 1080px;
     display: grid;
     grid-template-columns: 20% 40% 40%;
-    grid-template-rows: 35% 5% 185% 55%;
+    grid-template-rows: 35% 5% 220% 60%;
 
     .clock{
         grid-column: 1;
@@ -18,6 +19,8 @@
         grid-row:2;
     }
     .auth{
+        left: 0;
+        top: 0;
         grid-column: 1;
         grid-row:4;
     }
