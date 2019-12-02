@@ -1,8 +1,8 @@
 <div style="top: 0px;">
     <p *ngIf="weather.length == 0">Searching...</p>
-    <div class = "weather-info" *ngFor="let forecast of weather">
+    <div  *ngFor="let forecast of weather">
         <!-- <img style="height: 300px; width: 430px; top: 0px; right: 0px;" src="{{weatherIcon}}"> -->
-        <div style=" top: 0px; right: 10px;">
+        <div class = "weather-info" style=" top: 0px; right: 10px;">
             <h1 style="text-align: right;">{{forecast.city}}, {{forecast.state}}</h1>
             <div *ngIf="temperatureOption == 'celsius'"style="font-size: 32px; display: inline;">{{(forecast.temperature * 1).toFixed(1)}}C°</div>
             <div *ngIf="temperatureOption == 'fahrenheit'"style="font-size: 32px; display: inline;">{{(forecast.temperature * (9/5) + 32).toFixed(1)}}F°</div>
