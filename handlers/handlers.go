@@ -70,6 +70,29 @@ func GetUser(context *gin.Context) {
 	context.JSON(http.StatusOK, user)
 }
 
+func UpdateUser(context *gin.Context) {
+	fmt.Println("Hello from UpdateUser")
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+
+	user, status, e := convertHTTPBodyToUser(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+
+	e, status = linkers.UpdateUser(id, config.UpdateUser, user)
+	if status != 200 {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "User updated!")
+}
+
 func DeleteUser(context *gin.Context) {
 	fmt.Println("Hello from DeleteUser")
 	token := context.Request.Header.Get("x-auth-token")
@@ -84,7 +107,7 @@ func DeleteUser(context *gin.Context) {
 		context.JSON(status, e.Error())
 		return
 	}
-	context.Status(status)
+	context.JSON(status, "User deleted!")
 }
 
 // GetCalendar gets the calendar events for a user

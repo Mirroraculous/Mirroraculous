@@ -34,6 +34,7 @@ func main() {
 
 	server.POST("/api/user", handlers.RegisterUser)
 	server.DELETE("/api/user", handlers.DeleteUser)
+	server.PUT("/api/user", handlers.UpdateUser)
 
 	server.POST("/api/auth", handlers.LoginUser)
 	server.GET("/api/auth", handlers.GetUser)

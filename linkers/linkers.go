@@ -72,6 +72,15 @@ func GetUser(id string, find func(query bson.D) (*models.User, error)) (models.U
 	return *u, 200
 }
 
+func UpdateUser(id string, update func(filter, update bson.M) error, u models.User) (error, int) {
+	primId, _ := primitive.ObjectIDFromHex(id)
+	e := update(bson.M{"_id": bson.M{"$eq": primId}}, bson.M{"$set": bson.M{"name": u.Name, "password": u.Pwd, "email": u.Email}})
+	if e != nil {
+		return e, 500
+	}
+	return e, 200
+}
+
 func DeleteUser(id string, delete func(query bson.D) error) (error, int) {
 	primId, _ := primitive.ObjectIDFromHex(id)
 	err := delete(bson.D{{"_id", primId}})
