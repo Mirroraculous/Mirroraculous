@@ -59,7 +59,7 @@ export class LocationComponent implements OnInit {
         .pipe(map(result => (<any>result).observations.location[0]))
         .subscribe(result => {
             this.weather = result.observation;
-            this.weatherIcon = "assets/img/Cloudy.png"
+            this.weatherIcon = "assets/img/Cloudy.svg"
         }, error => {
             console.error(error);
         });
