@@ -18,5 +18,8 @@
             <button type="submit" class="button">Add Alarm</button>
             <span style='color:red;font-size: 10px;display:block;'>{{message}}</span>
         </form>
+        <div *ngIf='playing'>
+            <span (click)='pauseAlarm()'>Pause Alarm</span>
+        </div>
     </div>
 </div>

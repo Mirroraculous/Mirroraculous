@@ -30,7 +30,9 @@ export class AlarmComponent implements OnInit {
   military = false;
   timerId= null;
   playing = false;
+  paused = false;
   current_alarm_string = [];
+  audio = new Audio();
   constructor(
     private alarm: AlarmService,
     private formBuilder: FormBuilder,
@@ -72,7 +74,8 @@ export class AlarmComponent implements OnInit {
           if(element.time == elements && element.isActive){
               this.activeLength();
               for(let i =0; i<5;i++){
-                this.makeNoise();
+                this.makeNoise(this.makeAudioChoice(0));
+                this.playAlarm();
               }
           }
         });
@@ -89,12 +92,32 @@ export class AlarmComponent implements OnInit {
       }
     );
   }
-  makeNoise(){
-    let audio = new Audio();
-    audio.src = "../../../assets/audio/Alarm-Fast-A1.mp3";
-    audio.load();
-    audio.play();
+  pauseAlarm(){
+    console.log('happens')
+    this.audio.pause();
+    console.log(this.audio.src)
+    this.paused = true;
   }
+  makeAudioChoice(val){
+    switch (val) {
+      case 0:
+          return"../../../assets/audio/Alarm-Fast-A1.mp3"
+        break;
+    
+      default:
+        return '../../../assets/audio/Alarm-Fast-High-Pitch-A3.mp3'
+        break;
+    }
+  }
+  makeNoise(src){
+    this.audio.src = src;
+    this.audio.load();
+    this.audio.volume = .1;
+  }
+  playAlarm(){
+    this.audio.play();
+  }
+
   ngOnDestroy() {
     clearInterval(this.timerId);
   }
