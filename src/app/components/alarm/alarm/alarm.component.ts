@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 import { AlarmService} from '../../../services/alarm.service';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { Observable, timer } from 'rxjs';
+
 
 interface Alarm{
   isActive: boolean;
@@ -27,6 +29,7 @@ export class AlarmComponent implements OnInit {
   message = '';
   military = false;
   timerId= null;
+  playing = false;
   current_alarm_string = [];
   constructor(
     private alarm: AlarmService,
@@ -64,16 +67,27 @@ export class AlarmComponent implements OnInit {
     this.current_alarm_string.push(space);
     this.current_alarm_string.push(no_space);
     this.alarms.forEach(element => {
-      if(element){
+      if(element && !this.playing){
         this.current_alarm_string.forEach(elements =>{
           if(element.time == elements && element.isActive){
-              this.makeNoise();
+              this.activeLength();
+              for(let i =0; i<5;i++){
+                this.makeNoise();
+              }
           }
         });
       }
     });
     this.current_alarm_string = [];
     
+  }
+  activeLength(){
+    this.playing = true
+    const timer4 = timer(60000);
+    timer4.subscribe(val=>{
+      this.playing = false;
+      }
+    );
   }
   makeNoise(){
     let audio = new Audio();
@@ -96,7 +110,15 @@ export class AlarmComponent implements OnInit {
               isActive: element.isActive,
               time: element.time
             }
-            this.alarms.push(new_thing)
+            let exists = false;
+            this.alarms.forEach(element=>{
+              if (new_thing.time == element.time){
+                exists = true
+              }
+            })
+            if (!exists){
+              this.alarms.push(new_thing)
+            }
           });
         }
       });
@@ -112,6 +134,7 @@ export class AlarmComponent implements OnInit {
           this.message = '';
         }
     });
+  this.getAlarm();
     //add backend call
   }
   changeAdding(){
