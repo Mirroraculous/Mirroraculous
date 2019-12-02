@@ -30,6 +30,7 @@ import { LocationComponent } from './components/location/location.component';
 import { DetailsEventComponent } from './components/details-event/details-event.component';
 import { UpdateEventComponent } from './components/update-event/update-event.component';
 import { OauthComponent } from './components/oauth/oauth.component'
+import { AlarmComponent } from './components/alarm/alarm/alarm.component'
 
 
 
@@ -51,6 +52,7 @@ import { OauthComponent } from './components/oauth/oauth.component'
     LocationComponent,
     DetailsEventComponent,
     UpdateEventComponent,
+    AlarmComponent,
   ],
   imports: [
     BrowserModule,

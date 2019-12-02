@@ -223,6 +223,80 @@ func GoogleEvents(context *gin.Context) {
 	context.Status(200)
 }
 
+func GetAlarms(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	alarms, status, e := linkers.GetAlarms(id, config.GetAlarms)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(200, alarms)
+}
+
+func AddAlarm(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	time, status, e := convertHTTPBodyToString(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	status, e = linkers.AddAlarm(id, time, config.AddAlarm)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.Status(status)
+}
+
+func UpdateAlarm(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	time, status, e := convertHTTPBodyToString(context.Request.Body)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	status, e = linkers.ToggleAlarm(id, time, config.GetOneAlarm, config.UpdateAlarm)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.Status(status)
+}
+
+type alarms struct {
+	string `json:"alarm"`
+}
+
+func convertHTTPBodyToString(httpBody io.ReadCloser) (string, int, error) {
+	body, e := ioutil.ReadAll(httpBody)
+	if e != nil {
+		return "", 500, e
+	}
+	alarm := struct {
+		Alarm string `json:"alarm"`
+	}{}
+	e = json.Unmarshal(body, &alarm)
+	if e != nil {
+		return "", 500, e
+	}
+	return alarm.Alarm, 200, nil
+}
+
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
