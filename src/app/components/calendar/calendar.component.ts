@@ -116,23 +116,14 @@ export class CalendarComponent implements OnInit {
       val => {
         if (val.body != null) {
           this.listOfEvents = val.body
-          console.log('val',val.body);
           let days: Date[];
           for (let i = 0; i < val.body.length; i++) {
             let day = new Date(val.body[i].start.date);
             console.log('2');
             for (let j = 0; j < 5; j++) {
                 let locale: Day[] = []
-                console.log('3');
               for (let k = 0; k < 7; k++) {
-                console.log('4');
-                console.log('day',day.getDate())
-                console.log('dayof',this.monthArray[j][k].dayOf)
-                console.log('start month',this.startMonth)
-                console.log('month',day.getMonth())
-                console.log('calmonth',this.monthArray[j][k].month)
                 if (day.getDate() === this.monthArray[j][k].dayOf && day.getMonth() === this.monthArray[j][k].month) {
-                  console.log('day',day)
                   this.monthArray[j][k].isEvents = true;
                 }
               }
@@ -151,7 +142,6 @@ export class CalendarComponent implements OnInit {
         }
       }
     );
-    console.log('month array',this.monthArray)
   }
   getFirstDayMonth() {
     let d = new Date();
