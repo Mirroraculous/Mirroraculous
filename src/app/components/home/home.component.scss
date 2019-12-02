@@ -1,10 +1,9 @@
 .home{
-    margin: 0;
-    max-height: 1920px;
-    max-width: 1080px;
+    height: 1920px;
+    width: 1080px;
     display: grid;
     grid-template-columns: 20% 40% 40%;
-    grid-template-rows: 35% 5% 220% 60%;
+    grid-template-rows: 10% 5% 65% 20%;
 
     .clock{
         grid-column: 1;
