@@ -67,6 +67,7 @@ export class CalendarComponent implements OnInit {
   displayNumbers() {
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
+    let add_amount = this.startDay.getMonth()== this.startMonth.getMonth()?0:1
     const rn = new Date()
     console.log(this.startMonth.getDate())
     for (let i = this.startMonth.getDate(); i < this.startMonth.getDate() + 35; i++) {
@@ -74,7 +75,7 @@ export class CalendarComponent implements OnInit {
       let day;
       if (isFirstMonth) {
         day = {
-          isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())) + 1 ? true : false,
+          isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())) + add_amount ? true : false,
           dayOf: i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())),
           isEvents: false,
           month: this.startDay.getMonth()== this.startMonth.getMonth()?rn.getMonth():rn.getMonth()-1,
@@ -92,7 +93,7 @@ export class CalendarComponent implements OnInit {
         if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
 
           day = {
-            isToday: rn.getDate() === i % (this.getDaysInMonth(rn.getMonth(), rn.getFullYear())) + 1 ? true : false,
+            isToday: rn.getDate() === i % (this.getDaysInMonth(rn.getMonth(), rn.getFullYear())) + add_amount? true : false,
             dayOf: i % (this.getDaysInMonth(this.now.getMonth(), this.now.getFullYear())) + 1,
             isEvents: false,
             month: this.startDay.getMonth()== this.startMonth.getMonth()?(rn.getMonth()+2)%12:rn.getMonth()+1,
@@ -100,7 +101,7 @@ export class CalendarComponent implements OnInit {
         }
         else {
           day = {
-            isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear())) ? true : false,
+            isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear()))? true : false,
             dayOf: i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear())),
             isEvents: false,
             month: this.startDay.getMonth()== this.startMonth.getMonth()?(rn.getMonth()+1)%12:rn.getMonth(),
