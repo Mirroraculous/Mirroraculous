@@ -24,12 +24,12 @@ export class DetailsEventComponent implements OnInit {
     const date = new Date();
     const year = date.getFullYear();
     this.day = this.emitVal.day;
-    console.log(this.day)
+    // console.log(this.day)
 
     this.calendar.sendEventInfo(this.emitVal.searchTime).subscribe(
       val => {
 
-        console.log(val)
+        // console.log(val)
         this.events = val.body.filter(event => {
           return event.start.date.substring(0, 10) == `${year}-${this.day.month + 1}-${this.day.dayOf}`;
         });
