@@ -278,6 +278,21 @@ func UpdateAlarm(context *gin.Context) {
 	context.Status(status)
 }
 
+func DeleteAlarm(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	status, e := linkers.DeleteAlarm(id, context.Query("time"), config.DeleteAlarm)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "Deleted!")
+}
+
 type alarms struct {
 	string `json:"alarm"`
 }
