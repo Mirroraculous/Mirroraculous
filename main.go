@@ -46,6 +46,11 @@ func main() {
 	server.GET("/api/googleauth", handlers.GoogleAuth)
 	server.GET("/api/googleevents", handlers.GoogleEvents)
 
+	server.GET("/api/alarms", handlers.GetAlarms)
+	server.POST("/api/alarms", handlers.AddAlarm)
+	server.PUT("/api/alarms", handlers.UpdateAlarm)
+	server.DELETE("/api/alarms", handlers.DeleteAlarm)
+
 	err := server.Run(":3000")
 	if err != nil {
 		panic(err)

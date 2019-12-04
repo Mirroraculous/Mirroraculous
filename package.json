@@ -23,6 +23,7 @@
     "@angular/router": "~8.2.3",
     "@auth0/angular-jwt": "^1.2.0",
     "auth0": "^2.20.0",
+    "complexity-report": "^2.0.0-alpha",
     "karma-sonarqube-unit-reporter": "0.0.21",
     "karma-spec-reporter": "0.0.32",
     "rxjs": "~6.4.0",

@@ -1,8 +1,12 @@
 <div class="home">
     
+    <app-location class = "weather"></app-location>
     <!-- <app-overlay></app-overlay> -->
-    <app-clock class = "clock"></app-clock>            
-    <span class = "logout"  (click) = 'logout()'>Logout</span>
+    <app-clock class = "clock"></app-clock>          
+    <app-alarm class = "alarm" style="margin-left: 10px;"></app-alarm>
+    <div class="logout-container">
+        <a class = "logout"  (click) = 'logout()'>Logout</a>
+    </div>  
     <app-event class = "event"></app-event>
     <app-oauth class = "auth" *ngIf='!hasAuth'></app-oauth>
 </div>

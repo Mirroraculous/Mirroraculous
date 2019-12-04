@@ -52,6 +52,6 @@ matrix:
       script:
         # - go run main.go
         - ng test --watch=false --code-coverage
-        # - sonar-scanner
+        - sonar-scanner
 after_success:
-  - sonar-scanner
+  #- sonar-scanner
