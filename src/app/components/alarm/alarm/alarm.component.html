@@ -6,7 +6,6 @@
         <ul>
             <li *ngFor= "let item of alarms" style="text-decoration: none;">
                 {{item.time}}
-                {{item.isActive}}
                 <label class="switch">
                     <input [attr.checked]="item.isActive?'checked':null"type="checkbox"(click)='updateItem(item)'>
                     <span class="slider round"></span>
