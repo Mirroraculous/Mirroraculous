@@ -126,6 +126,11 @@ func GetOneAlarm(query bson.M) (models.Alarm, error) {
 	return tmp, e
 }
 
+func DeleteAlarm(query bson.M) error {
+	_, e := Alarms.DeleteOne(context.Background(), query)
+	return e
+}
+
 func GetAlarms(query bson.D) ([]models.Alarm, error) {
 	var ret []models.Alarm
 	res, e := Alarms.Find(context.Background(), query)

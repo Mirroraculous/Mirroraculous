@@ -220,6 +220,14 @@ func AddAlarm(uid string, time string, add func(alarm *models.Alarm) error) (int
 	return 200, nil
 }
 
+func DeleteAlarm(id string, alarm string, del func(filter bson.M) error) (int, error) {
+	e := del(bson.M{"userid": bson.M{"$eq": id}, "time": bson.M{"$eq": alarm}})
+	if e != nil {
+		return 500, e
+	}
+	return 200, nil
+}
+
 func salt(password string) (string, error) {
 	if hash, e := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost); e != nil {
 		return "", e
