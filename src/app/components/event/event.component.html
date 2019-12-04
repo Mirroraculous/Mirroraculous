@@ -1,18 +1,19 @@
-<div class = "background">
-    <div *ngIf = 'switchVal === 1'>
-        <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
-    </div>
-    <div *ngIf = 'switchVal === 2'>
-        <app-add-event></app-add-event>
-    </div>
-    <div *ngIf = "switchVal === 3">        
-        <app-details-event [emitVal]="today" (sentToUpdate)="setEvent($event)" ></app-details-event>
-    </div>
-    <div *ngIf = "switchVal === 4">        
-        <app-update-event [eventToUpdate]="event"></app-update-event>
-    </div>
-    <div class = "sub-nav-bar">
-        <p class="tabbutton" (click)="changeVal(1)">Calendar</p>
-        <p class="tabbutton" (click)="changeVal(2)">Add Event</p>
-    </div>
+<div class="background">
+  <div *ngIf='switchVal === 1'>
+    <app-calendar (onCalendarClick)="setInfo($event)"></app-calendar>
+  </div>
+  <div *ngIf='switchVal === 2'>
+    <app-add-event></app-add-event>
+  </div>
+  <div *ngIf="switchVal === 3">
+    <app-details-event [emitVal]="today" (refreshMe)='refresh($event)' (sentToUpdate)="setEvent($event)">
+    </app-details-event>
+  </div>
+  <div *ngIf="switchVal === 4">
+    <app-update-event [eventToUpdate]="event" (done)="goBack()"></app-update-event>
+  </div>
+  <div class="sub-nav-bar">
+    <p class="tabbutton" (click)="changeVal(1)">Calendar</p>
+    <p class="tabbutton" (click)="changeVal(2)">Add Event</p>
+  </div>
 </div>

@@ -318,17 +318,38 @@ func UpdateAlarm(context *gin.Context) {
 	context.Status(status)
 }
 
+func DeleteAlarm(context *gin.Context) {
+	token := context.Request.Header.Get("x-auth-token")
+	id, status := middleware.VerifyToken(token)
+	if status != 200 {
+		context.JSON(status, id)
+		return
+	}
+	status, e := linkers.DeleteAlarm(id, context.Query("time"), config.DeleteAlarm)
+	if e != nil {
+		context.JSON(status, e.Error())
+		return
+	}
+	context.JSON(status, "Deleted!")
+}
+
+type alarms struct {
+	string `json:"alarm"`
+}
+
 func convertHTTPBodyToString(httpBody io.ReadCloser) (string, int, error) {
 	body, e := ioutil.ReadAll(httpBody)
 	if e != nil {
 		return "", 500, e
 	}
-	var res string
-	e = json.Unmarshal(body, &res)
+	alarm := struct {
+		Alarm string `json:"alarm"`
+	}{}
+	e = json.Unmarshal(body, &alarm)
 	if e != nil {
 		return "", 500, e
 	}
-	return res, 200, nil
+	return alarm.Alarm, 200, nil
 }
 
 func convertHTTPBodyToUser(httpBody io.ReadCloser) (models.User, int, error) {

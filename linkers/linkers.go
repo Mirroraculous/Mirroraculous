@@ -223,16 +223,25 @@ func ToggleAlarm(uid string, time string, getOne func(filter bson.M) (models.Ala
 	return 200, nil
 }
 
-func AddAlarm(uid string, time string, add func(alarm *models.Alarm) error) (int, error) {
+func AddAlarm(uid string, time string, add func(alarm *models.Alarm, query bson.D) error) (int, error) {
 	if valid := validTime(time); !valid {
 		return 400, errors.New("Invalid time")
 	}
+
 	tmp := &models.Alarm{
 		UserID:   uid,
 		Time:     time,
 		IsActive: true,
 	}
-	e := add(tmp)
+	e := add(tmp, bson.D{{"userid", uid}})
+	if e != nil {
+		return 500, e
+	}
+	return 200, nil
+}
+
+func DeleteAlarm(id string, alarm string, del func(filter bson.M) error) (int, error) {
+	e := del(bson.M{"userid": bson.M{"$eq": id}, "time": bson.M{"$eq": alarm}})
 	if e != nil {
 		return 500, e
 	}

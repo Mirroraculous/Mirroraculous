@@ -139,8 +139,17 @@ func DeleteAllAlarms(query bson.D) error {
 	return e
 }
 
-func AddAlarm(alarm *models.Alarm) error {
-	_, e := Alarms.InsertOne(context.Background(), *alarm)
+func AddAlarm(alarm *models.Alarm, query bson.D) error {
+	alarms, e := GetAlarms(query)
+	if e != nil {
+		return e
+	}
+	for _, a := range alarms {
+		if a.Time[0:4] == alarm.Time[0:4] && a.Time[len(a.Time)-2:len(a.Time)] == alarm.Time[len(alarm.Time)-2:len(alarm.Time)] {
+			return errors.New("Alarm for that time already exists")
+		}
+	}
+	_, e = Alarms.InsertOne(context.Background(), *alarm)
 	return e
 }
 
@@ -148,6 +157,11 @@ func GetOneAlarm(query bson.M) (models.Alarm, error) {
 	var tmp models.Alarm
 	e := Alarms.FindOne(context.Background(), query).Decode(&tmp)
 	return tmp, e
+}
+
+func DeleteAlarm(query bson.M) error {
+	_, e := Alarms.DeleteOne(context.Background(), query)
+	return e
 }
 
 func GetAlarms(query bson.D) ([]models.Alarm, error) {
