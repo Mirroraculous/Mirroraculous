@@ -81,9 +81,9 @@ func UpdateUser(id string, update func(filter, update bson.M) error, u models.Us
 	return e, 200
 }
 
-func DeleteUser(id string, delete func(query bson.D) error) (error, int) {
+func DeleteUser(id string, delete func(query1, query2 bson.D) error) (error, int) {
 	primId, _ := primitive.ObjectIDFromHex(id)
-	err := delete(bson.D{{"_id", primId}})
+	err := delete(bson.D{{"_id", primId}}, bson.D{{"userid", id}})
 	if err != nil {
 		return err, 404
 	}
