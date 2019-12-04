@@ -1,19 +1,19 @@
-<div style="top: 0px;">
+<div style="margin-top: 0px;">
     <p *ngIf="weather.length == 0">Searching...</p>
     <div  *ngFor="let forecast of weather">
         <!-- <img style="height: 300px; width: 430px; top: 0px; right: 0px;" src="{{weatherIcon}}"> -->
+        <h1 class="location">{{forecast.city}}, {{forecast.state}}</h1>
         <div class = "weather-info" style=" top: 0px; right: 10px;">
-            <h1 style="text-align: right; margin: 0;">{{forecast.city}}, {{forecast.state}}</h1>
             <div *ngIf="temperatureOption == 'celsius'"style="font-size: 32px; display: inline;">{{(forecast.temperature * 1).toFixed(1)}}C°</div>
             <div *ngIf="temperatureOption == 'fahrenheit'"style="font-size: 32px; display: inline;">{{(forecast.temperature * (9/5) + 32).toFixed(1)}}F°</div>
-            <div class = "options-group">
-                <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="updateShow('temperature')">settings_applications</mat-icon>
-                <div *ngIf="showTemperatureOptions">
-                    <span style="display:block" (click) = "temperatureChoice('celsius')">Celsius</span>
-                    <span style="display:block" (click) = "temperatureChoice('fahrenheit')">Fahrenheit</span>
-                </div>
-            </div>
             <p style=" top: 50px; right: 0px; margin: 0;">{{forecast.description}}</p>
         </div>
+    </div>
+    <div class = "options-group">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="updateShow('temperature')">settings_applications</mat-icon>
+            <div *ngIf="showTemperatureOptions">
+                <span style="display:block" (click) = "temperatureChoice('celsius')">Celsius</span>
+                <span style="display:block" (click) = "temperatureChoice('fahrenheit')">Fahrenheit</span>
+            </div>
     </div>
 </div>
