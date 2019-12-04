@@ -24,4 +24,16 @@ export class AlarmService {
       catchError(this.err.handleError<any>(`get alarm`))
     );
   }
+  updateAlarm(item){
+    const url = `http://localhost:3000/api/alarms`;
+    return this.http.put<any>(url,item).pipe(
+      catchError(this.err.handleError<any>('update alarm',item))
+    )
+  }
+  deleteAlarm(item){
+    const url = `http://localhost:3000/api/alarms?time=${item}`;
+    return this.http.put<any>(url,item).pipe(
+      catchError(this.err.handleError<any>('update alarm',item))
+    )
+  }
 }

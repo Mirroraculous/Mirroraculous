@@ -70,7 +70,12 @@ $brown-orange-opacity: rgba(78,31,25, .1);
     -ms-transform: translateX(26px);
     transform: translateX(10px);
   }
-  
+  .delete {
+    max-width: 20px;
+    max-height: 20px;
+    padding-left: 20px;
+    filter: invert(64%) sepia(67%) saturate(5406%) hue-rotate(320deg) brightness(85%) contrast(90%);
+  }
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;

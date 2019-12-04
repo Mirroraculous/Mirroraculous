@@ -98,6 +98,18 @@ export class AlarmComponent implements OnInit {
     console.log(this.audio.src)
     this.paused = true;
   }
+  updateItem(item){
+    this.alarm.updateAlarm({"alarm":item.time}).subscribe(
+      val =>{
+        if(val.status!=200){
+          this.message = 'Failed to update alarm';
+        }
+        else{
+          this.message = '';
+        }
+      }
+    )
+  }
   makeAudioChoice(val){
     switch (val) {
       case 0:
@@ -109,9 +121,22 @@ export class AlarmComponent implements OnInit {
         break;
     }
   }
+  deleteAlarm(item){
+    this.alarm.deleteAlarm(item.time).subscribe(
+      val =>{
+        if(val.status!=200){
+          this.message = 'Failed to update alarm';
+        }
+        else{
+          this.message = '';
+        }
+      }
+    )
+  }
   makeNoise(src){
     this.audio.src = src;
     this.audio.load();
+    this.audio.loop = true;
     this.audio.volume = .1;
   }
   playAlarm(){

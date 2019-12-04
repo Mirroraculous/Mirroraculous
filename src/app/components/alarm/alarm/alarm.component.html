@@ -6,11 +6,12 @@
         <ul>
             <li *ngFor= "let item of alarms" style="text-decoration: none;">
                 {{item.time}}
+                {{item.isActive}}
                 <label class="switch">
-                    <input type="checkbox">
+                    <input [attr.checked]="item.isActive?'checked':null"type="checkbox"(click)='updateItem(item)'>
                     <span class="slider round"></span>
                 </label> -->
-                <img src = "../../../assets/deleteEventIcon.svg" style="color:#D14E60" class="delete" (click) = "deleteEvent(event._id, event.summary)">
+                <img src = "../../../assets/deleteEventIcon.svg" class="delete" (click) = "deleteEvent(item)">
             </li>
         </ul>        
         <p style = 'display: inline; padding-right: 5px; padding-bottom: 5px;'>Add an alarm </p> <p style = 'display:inline-block;font-size: 24px;color:#06A1C4;margin:0;' class="plus" (click)="changeAdding()"> +</p>
