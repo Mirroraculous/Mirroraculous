@@ -70,6 +70,9 @@ $brown-orange-opacity: rgba(78,31,25, .1);
     -ms-transform: translateX(26px);
     transform: translateX(10px);
   }
+  .delete:hover{
+    cursor: pointer;
+  }
   .delete {
     max-width: 20px;
     max-height: 20px;
