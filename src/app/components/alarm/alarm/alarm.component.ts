@@ -122,16 +122,28 @@ export class AlarmComponent implements OnInit {
     }
   }
   deleteAlarm(item){
+    console.log('does this activate?');
     this.alarm.deleteAlarm(item.time).subscribe(
       val =>{
         if(val.status!=200){
+          console.log(val.status);
           this.message = 'Failed to update alarm';
+          console.log('hi');
         }
         else{
+          console.log('hi2');
           this.message = '';
+          console.log('enter the lions den')
+          this.alarms = this.alarms.filter(val=>{
+            if (val!=item){
+              return val
+            }
+          });
+          console.log('alarms',this.alarms)
         }
-      }
-    )
+      });
+    console.log('hi3');
+    
   }
   makeNoise(src){
     this.audio.src = src;

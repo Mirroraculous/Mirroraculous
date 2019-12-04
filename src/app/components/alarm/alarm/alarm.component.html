@@ -10,8 +10,8 @@
                 <label class="switch">
                     <input [attr.checked]="item.isActive?'checked':null"type="checkbox"(click)='updateItem(item)'>
                     <span class="slider round"></span>
-                </label> -->
-                <img src = "../../../assets/deleteEventIcon.svg" class="delete" (click) = "deleteEvent(item)">
+                </label>
+                <img src = "../../../assets/deleteEventIcon.svg" class="delete" (click) = "deleteAlarm(item)">
             </li>
         </ul>        
         <p style = 'display: inline; padding-right: 5px; padding-bottom: 5px;'>Add an alarm </p> <p style = 'display:inline-block;font-size: 24px;color:#06A1C4;margin:0;' class="plus" (click)="changeAdding()"> +</p>
