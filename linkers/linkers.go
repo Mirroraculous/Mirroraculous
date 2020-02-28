@@ -72,6 +72,24 @@ func GetUser(id string, find func(query bson.D) (*models.User, error)) (models.U
 	return *u, 200
 }
 
+func UpdateUser(id string, update func(filter, update bson.M) error, u models.User) (error, int) {
+	primId, _ := primitive.ObjectIDFromHex(id)
+	e := update(bson.M{"_id": bson.M{"$eq": primId}}, bson.M{"$set": bson.M{"name": u.Name, "password": u.Pwd, "email": u.Email}})
+	if e != nil {
+		return e, 500
+	}
+	return e, 200
+}
+
+func DeleteUser(id string, delete func(query1, query2 bson.D) error) (error, int) {
+	primId, _ := primitive.ObjectIDFromHex(id)
+	err := delete(bson.D{{"_id", primId}}, bson.D{{"userid", id}})
+	if err != nil {
+		return err, 404
+	}
+	return err, 200
+}
+
 func AddEvent(id string, event models.Event, insert func(event *models.Event) error) (error, int) {
 	event.UserID = id
 	event.Created = time.Now()
@@ -166,7 +184,7 @@ func convGoogleToMirror(id string, gevent *calendar.Event, mevent *models.Event)
 	return nil
 }
 
-func AddListOfEvents(events []*calendar.Event, UserID string) error {
+func AddListOfEvents(events []*calendar.Event, UserID string, insertEvent func(event *models.Event) error) error {
 	if len(events) > 0 {
 		for _, item := range events {
 			foundEvent, e := config.FindEvent(bson.D{{"googleid", item.Id}}, 1)
@@ -176,6 +194,7 @@ func AddListOfEvents(events []*calendar.Event, UserID string) error {
 				mevent := &models.Event{}
 				e = convGoogleToMirror(UserID, item, mevent)
 				if e == nil {
+					mevent.Start.Date = mevent.Start.DateTime
 					config.InsertEvent(mevent)
 				}
 			}

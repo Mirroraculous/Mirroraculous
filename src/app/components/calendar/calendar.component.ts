@@ -35,9 +35,9 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.month= this.now.getMonth();
-    this.year= this.now.getFullYear();
-    this.displayMonth = new Date(this.year,this.month+1, 0).toLocaleString('default',{month:'long'})
+    this.month = this.now.getMonth();
+    this.year = this.now.getFullYear();
+    this.displayMonth = new Date(this.year, this.month + 1, 0).toLocaleString('default', { month: 'long' })
     this.displayNumbers();
     const rn = new Date()
 
@@ -67,7 +67,7 @@ export class CalendarComponent implements OnInit {
   displayNumbers() {
     this.startDay = this.getFirstDayWeek(this.now);
     this.startMonth = this.getFirstDayWeek(this.getFirstDayMonth());
-    let add_amount = this.startDay.getMonth()== this.startMonth.getMonth()?0:1
+    let add_amount = this.startDay.getMonth() == this.startMonth.getMonth() ? 0 : 1
     const rn = new Date()
     console.log(this.startMonth.getDate())
     for (let i = this.startMonth.getDate(); i < this.startMonth.getDate() + 35; i++) {
@@ -78,7 +78,7 @@ export class CalendarComponent implements OnInit {
           isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())) + add_amount ? true : false,
           dayOf: i % (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())),
           isEvents: false,
-          month: this.startDay.getMonth()== this.startMonth.getMonth()?rn.getMonth():rn.getMonth()-1,
+          month: this.startDay.getMonth() == this.startMonth.getMonth() ? rn.getMonth() : rn.getMonth() - 1,
         }
       }
       else if (i / (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())) === 1) {
@@ -86,17 +86,17 @@ export class CalendarComponent implements OnInit {
         day = {
           isToday: rn.getDate() === i ? true : false,
           dayOf: i,
-          isEvents:  false,
-          month: this.startDay.getMonth()== this.startMonth.getMonth()?rn.getMonth():rn.getMonth()-1,
-        } 
-      }else{
-        if(Math.floor(i/(this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear())))===2){
+          isEvents: false,
+          month: this.startDay.getMonth() == this.startMonth.getMonth() ? rn.getMonth() : rn.getMonth() - 1,
+        }
+      } else {
+        if (Math.floor(i / (this.getDaysInMonth(this.startMonth.getMonth(), this.startMonth.getFullYear()))) === 2) {
 
           day = {
-            isToday: rn.getDate() === i % (this.getDaysInMonth(rn.getMonth(), rn.getFullYear())) + add_amount? true : false,
+            isToday: rn.getDate() === i % (this.getDaysInMonth(rn.getMonth(), rn.getFullYear())) + add_amount ? true : false,
             dayOf: i % (this.getDaysInMonth(this.now.getMonth(), this.now.getFullYear())) + 1,
             isEvents: false,
-            month: this.startDay.getMonth()== this.startMonth.getMonth()?(rn.getMonth()+2)%12:rn.getMonth()+1,
+            month: this.startDay.getMonth() == this.startMonth.getMonth() ? (rn.getMonth() + 2) % 12 : rn.getMonth() + 1,
           }
         }
         else {
@@ -104,7 +104,7 @@ export class CalendarComponent implements OnInit {
             // isToday: rn.getDate() === i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear()))? true : false,
             dayOf: i % (this.getDaysInMonth(this.startMonth.getMonth(), this.now.getFullYear())),
             isEvents: false,
-            month: this.startDay.getMonth()== this.startMonth.getMonth()?(rn.getMonth()+1)%12:rn.getMonth(),
+            month: this.startDay.getMonth() == this.startMonth.getMonth() ? (rn.getMonth() + 1) % 12 : rn.getMonth(),
 
           }
         }
@@ -122,7 +122,7 @@ export class CalendarComponent implements OnInit {
             let day = new Date(val.body[i].start.date);
             console.log('2');
             for (let j = 0; j < 5; j++) {
-                let locale: Day[] = []
+              let locale: Day[] = []
               for (let k = 0; k < 7; k++) {
                 if (day.getDate() === this.monthArray[j][k].dayOf && day.getMonth() === this.monthArray[j][k].month) {
                   this.monthArray[j][k].isEvents = true;

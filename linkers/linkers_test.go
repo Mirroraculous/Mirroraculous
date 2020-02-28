@@ -8,6 +8,8 @@ import (
 	"github.com/mirroraculous/mirroraculous/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/oauth2"
+	"google.golang.org/api/calendar/v3"
 )
 
 func TestAddUser(t *testing.T) {
@@ -198,4 +200,67 @@ func TestDeleteEvent(t *testing.T) {
 	}); e != nil || status != 200 {
 		t.Errorf("Test failed, expected status 200 and nil error, got %d and %s", status, e.Error())
 	}
+}
+
+func TestAddGoogleToken(t *testing.T) {
+	var blankToken oauth2.Token
+
+	if status, e := AddGoogleToken("Brokenprimative", &blankToken, func(query, update bson.M) error { return nil }); status != 500 || e == nil {
+		t.Errorf("Test failed, expected status 500 and non-nil error, got %d and %s", status, e)
+	}
+
+	if status, e := AddGoogleToken("000000000000000000000000", &blankToken, func(query, update bson.M) error {
+		return errors.New("Broken database")
+	}); status != 500 || e.Error() != "Broken database" {
+		t.Errorf("Test failed, expected status 500 and \"Broken database\", got %d and %s", status, e)
+	}
+
+	if status, e := AddGoogleToken("000000000000000000000000", &blankToken, func(query, update bson.M) error { return nil }); status != 200 || e != nil {
+		t.Errorf("Test failed, expected status 200 and no error, got %d and %s", status, e.Error())
+	}
+}
+
+func TestSyncGoogleCalendar(t *testing.T) {
+	invalidToken := oauth2.Token{}
+	validToken := oauth2.Token{
+		Expiry:      time.Unix(time.Now().Unix()+500000, 0),
+		AccessToken: "FakeNews",
+	}
+
+	if events, status, e := SyncGoogleCalendar(models.User{GoogleToken: invalidToken}, func(t *oauth2.Token) (*calendar.Service, error) {
+		return nil, nil
+	}, func(service *calendar.Service) (*calendar.Events, error) {
+		return nil, nil
+	}); events != nil || status != 400 || e.Error() != "Invalid token" {
+		t.Errorf("Test failed, expected status code 400, nil events, and an \"Invalid token\" error. Instead got: %d %s", status, e)
+	}
+
+	if events, status, e := SyncGoogleCalendar(models.User{GoogleToken: validToken}, func(t *oauth2.Token) (*calendar.Service, error) {
+		return nil, errors.New("An error")
+	}, func(service *calendar.Service) (*calendar.Events, error) {
+		return nil, nil
+	}); events != nil || status != 400 || e.Error() != "An error" {
+		t.Errorf("Test failed, expected status code 400, nil events, and an error. Instead got: %d %s", status, e)
+	}
+
+	if events, status, e := SyncGoogleCalendar(models.User{GoogleToken: validToken}, func(t *oauth2.Token) (*calendar.Service, error) {
+		return nil, nil
+	}, func(service *calendar.Service) (*calendar.Events, error) {
+		var tmp calendar.Events
+		return &tmp, nil
+	}); events != nil || status != 200 || e != nil {
+		t.Errorf("Test failed, expected status code 200, and no error. Instead got: %d %s", status, e.Error())
+	}
+}
+
+func TestAddListOfEvents(t *testing.T) {
+	var dummyEvents []*calendar.Event
+
+	if e := AddListOfEvents(dummyEvents, "Fake ID", func(event *models.Event) error {
+		return nil
+	}); e != nil {
+		t.Errorf("Expected nil error, got %s", e.Error())
+	}
+
+	// if e := AddListOfEvents()
 }

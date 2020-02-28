@@ -1,4 +1,3 @@
-
 matrix:
   include:
     - language: go
@@ -19,7 +18,7 @@ matrix:
       script:
         - go test -v -json ./... > report.json
         - go test -cover -coverprofile=coverage.out ./...
-        # - sonar-scanner
+        - sonar-scanner
 
     - language: node_js
       dist: trusty

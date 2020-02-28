@@ -106,6 +106,24 @@ func DeleteEvent(query bson.D) error {
 	return e
 }
 
+func DeleteAllEvents(query bson.D) error {
+	_, e := Calendar.DeleteMany(context.Background(), query)
+	return e
+}
+
+func DeleteUser(query1, query2 bson.D) error {
+	e := DeleteAllEvents(query2)
+	if e != nil {
+		return errors.New("Could not delete the events for the user")
+	}
+	e = DeleteAllAlarms(query2)
+	if e != nil {
+		return errors.New("Could not delete the alarms for the user")
+	}
+	_, e = User.DeleteOne(context.Background(), query1)
+	return e
+}
+
 func UpdateUser(filter, update bson.M) error {
 	_, e := User.UpdateOne(context.Background(), filter, update)
 	return e
@@ -113,6 +131,11 @@ func UpdateUser(filter, update bson.M) error {
 
 func UpdateAlarm(filter, update bson.M) error {
 	_, e := Alarms.UpdateOne(context.Background(), filter, update)
+	return e
+}
+
+func DeleteAllAlarms(query bson.D) error {
+	_, e := Alarms.DeleteMany(context.Background(), query)
 	return e
 }
 
